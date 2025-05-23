@@ -65,20 +65,20 @@ export default {
 				},
 				// Custom AIX8C colors
 				aix: {
-					black: '#050505',
-					darkgray: '#121212',
-					gray: '#333333',
+					black: '#0a0a0a',
+					darkgray: '#1a1a1a',
+					gray: '#2a2a2a',
 					purple: {
-						light: '#7209b7',
-						DEFAULT: '#3a0ca3',
-						dark: '#240046'
+						light: '#8b5cf6',
+						DEFAULT: '#7c3aed',
+						dark: '#5b21b6'
 					},
 					gold: {
-						light: '#ffd60a',
-						DEFAULT: '#e8a20c',
-						dark: '#cc5803'
+						light: '#fbbf24',
+						DEFAULT: '#f59e0b',
+						dark: '#d97706'
 					},
-					cyan: '#4cc9f0'
+					cyan: '#06b6d4'
 				}
 			},
 			borderRadius: {
@@ -141,6 +141,16 @@ export default {
 				'neural-path': {
 					'0%': { strokeDashoffset: '1000' },
 					'100%': { strokeDashoffset: '0' }
+				},
+				'neural-pulse': {
+					'0%, 100%': { 
+						opacity: '0.6',
+						transform: 'scale(1)'
+					},
+					'50%': { 
+						opacity: '1',
+						transform: 'scale(1.05)'
+					}
 				}
 			},
 			animation: {
@@ -153,13 +163,15 @@ export default {
 				'typewriter-blink': 'typewriter-blink 0.7s infinite',
 				'rotate-coin': 'rotate-coin 6s infinite linear',
 				'shimmer': 'shimmer 3s infinite linear',
-				'neural-path': 'neural-path 2s forwards ease-out'
+				'neural-path': 'neural-path 2s forwards ease-out',
+				'neural-pulse': 'neural-pulse 2s infinite ease-in-out'
 			},
 			backgroundImage: {
-				'neural-gradient': 'radial-gradient(circle at 50% 50%, rgba(76, 201, 240, 0.1) 0%, rgba(58, 12, 163, 0.1) 50%, rgba(0, 0, 0, 0) 100%)',
-				'gradient-gold': 'linear-gradient(135deg, #ffd60a 0%, #e8a20c 50%, #cc5803 100%)',
-				'gradient-purple': 'linear-gradient(135deg, #4cc9f0 0%, #7209b7 50%, #3a0ca3 100%)',
-				'gradient-cyber': 'linear-gradient(90deg, #3a0ca3, #4cc9f0, #7209b7, #3a0ca3)',
+				'neural-gradient': 'radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.1) 0%, rgba(6, 182, 212, 0.05) 50%, rgba(0, 0, 0, 0) 100%)',
+				'gradient-gold': 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
+				'gradient-purple': 'linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #7c3aed 100%)',
+				'gradient-cyber': 'linear-gradient(90deg, #7c3aed, #06b6d4, #8b5cf6, #7c3aed)',
+				'constellation': 'radial-gradient(2px 2px at 20px 30px, #06b6d4, transparent), radial-gradient(2px 2px at 40px 70px, rgba(139, 92, 246, 0.6), transparent), radial-gradient(1px 1px at 90px 40px, #fbbf24, transparent), radial-gradient(1px 1px at 130px 80px, rgba(6, 182, 212, 0.4), transparent), radial-gradient(2px 2px at 160px 30px, rgba(251, 191, 36, 0.6), transparent)'
 			}
 		}
 	},
