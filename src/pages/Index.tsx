@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
+import SobreNosSection from "@/components/SobreNosSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import AussySection from "@/components/AussySection";
@@ -45,6 +46,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <AboutSection />
+        <SobreNosSection />
         <ExpertiseSection />
         <PortfolioSection />
         <AussySection />

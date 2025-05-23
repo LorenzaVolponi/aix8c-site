@@ -32,6 +32,7 @@ const Navbar = () => {
         
         <div className="hidden md:flex space-x-10">
           <NavLink href="#sobre">Sobre</NavLink>
+          <NavLink href="#sobre-nos">Sobre Nós</NavLink>
           <NavLink href="#expertise">Expertise</NavLink>
           <NavLink href="#portfolio">Portfólio</NavLink>
           <NavLink href="#aussy">Aussy</NavLink>
