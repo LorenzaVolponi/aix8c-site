@@ -30,7 +30,15 @@ const AussySection = () => {
     "creativity.level = 'max';",
     "connection.established();",
     "future.now();",
-    "8Experience.activate();"
+    "experience.activate();"
+  ];
+
+  // Icon components for animation
+  const iconComponents = [
+    { Icon: Code, delay: 0 },
+    { Icon: Sparkles, delay: 1 },
+    { Icon: Infinity, delay: 2 },
+    { Icon: Zap, delay: 3 }
   ];
 
   return (
@@ -62,6 +70,32 @@ const AussySection = () => {
             }}
           >
             {code}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Floating Icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {iconComponents.map(({ Icon, delay }, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-aix-gold/10"
+            style={{
+              left: `${20 + (i * 20)}%`,
+              top: `${30 + (i * 15)}%`,
+            }}
+            animate={{
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [0, 360, 0],
+              scale: [0.8, 1.2, 0.8],
+            }}
+            transition={{
+              duration: 12 + Math.random() * 6,
+              repeat: Infinity,
+              delay: delay * 2,
+            }}
+          >
+            <Icon size={16} />
           </motion.div>
         ))}
       </div>
@@ -198,12 +232,14 @@ const AussySection = () => {
               title="Possibilidades Infinitas"
               description="Como o símbolo do infinito, AUSSY representa que não há barreiras para a criatividade e inovação."
               code="const possibilities = ∞;"
+              icon={<Infinity size={20} />}
             />
             
             <StoryCard
               title="Conexão Instantânea"
               description="Criado para gerar lembrança duradoura, uma marca que conecta e permanece na memória."
               code="connect(human, memory);"
+              icon={<Zap size={20} />}
             />
           </div>
         </ScrollReveal>
@@ -242,20 +278,31 @@ const AussySection = () => {
 const StoryCard = ({ 
   title, 
   description, 
-  code 
+  code,
+  icon
 }: { 
   title: string; 
   description: string;
   code: string;
+  icon: React.ReactNode;
 }) => {
   return (
     <motion.div
       className="glass-card p-6 hover:transform hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group"
       whileHover={{ y: -5 }}
     >
+      {/* Icon */}
+      <motion.div
+        className="absolute top-4 right-4 text-aix-gold/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        initial={{ scale: 0.8 }}
+        whileHover={{ scale: 1 }}
+      >
+        {icon}
+      </motion.div>
+      
       {/* Code background */}
       <motion.div
-        className="absolute top-4 right-4 font-mono text-xs text-aix-gold/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute bottom-4 right-4 font-mono text-xs text-aix-gold/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         initial={{ x: 10 }}
         whileHover={{ x: 0 }}
       >
