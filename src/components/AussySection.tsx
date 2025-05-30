@@ -33,12 +33,12 @@ const AussySection = () => {
     "experience.activate();"
   ];
 
-  // Icon components for animation
-  const iconComponents = [
-    { Icon: Code, delay: 0 },
-    { Icon: Sparkles, delay: 1 },
-    { Icon: Infinity, delay: 2 },
-    { Icon: Zap, delay: 3 }
+  // Icon animation data
+  const iconAnimations = [
+    { component: Code, delay: 0, left: 20, top: 30 },
+    { component: Sparkles, delay: 1, left: 40, top: 45 },
+    { component: Infinity, delay: 2, left: 60, top: 60 },
+    { component: Zap, delay: 3, left: 80, top: 75 }
   ];
 
   return (
@@ -76,13 +76,13 @@ const AussySection = () => {
 
       {/* Floating Icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {iconComponents.map(({ Icon, delay }, i) => (
+        {iconAnimations.map(({ component: IconComponent, delay, left, top }, i) => (
           <motion.div
             key={i}
             className="absolute text-aix-gold/10"
             style={{
-              left: `${20 + (i * 20)}%`,
-              top: `${30 + (i * 15)}%`,
+              left: `${left}%`,
+              top: `${top}%`,
             }}
             animate={{
               opacity: [0.1, 0.3, 0.1],
@@ -95,7 +95,7 @@ const AussySection = () => {
               delay: delay * 2,
             }}
           >
-            <Icon size={16} />
+            <IconComponent size={16} />
           </motion.div>
         ))}
       </div>
