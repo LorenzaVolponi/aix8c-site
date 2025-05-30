@@ -23,6 +23,16 @@ const AussySection = () => {
     mouseY.set(event.clientY - centerY);
   };
 
+  // Floating Code Elements
+  const codeElements = [
+    "const aussy = 'unlimited';",
+    "AI + Human = ∞",
+    "creativity.level = 'max';",
+    "connection.established();",
+    "future.now();",
+    "8Experience.activate();"
+  ];
+
   return (
     <motion.section 
       ref={sectionRef}
@@ -30,22 +40,48 @@ const AussySection = () => {
       className="py-32 bg-gradient-to-br from-aix-black via-aix-darkgray to-aix-black relative overflow-hidden"
       onMouseMove={handleMouseMove}
     >
-      {/* Neural Background Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 15 }).map((_, i) => (
+      {/* Floating Code Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {codeElements.map((code, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-aix-gold/30 rounded-full"
+            className="absolute font-mono text-xs text-aix-gold/20 whitespace-nowrap"
+            style={{
+              left: `${10 + (i * 15)}%`,
+              top: `${15 + (i * 12)}%`,
+            }}
+            animate={{
+              opacity: [0.1, 0.4, 0.1],
+              x: [0, 50, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              delay: i * 2,
+            }}
+          >
+            {code}
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Neural Background Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-aix-gold/20 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              opacity: [0.3, 1, 0.3],
+              opacity: [0.2, 0.6, 0.2],
               scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
+              duration: 4 + Math.random() * 2,
               repeat: Infinity,
               delay: Math.random() * 2,
             }}
@@ -57,7 +93,7 @@ const AussySection = () => {
         <ScrollReveal direction="fade" delay={0.2}>
           <div className="text-center mb-20">
             <motion.h2 
-              className="text-5xl md:text-7xl font-bold mb-8 font-serif"
+              className="text-4xl md:text-6xl font-bold mb-8 font-serif"
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.3 }}
@@ -66,14 +102,14 @@ const AussySection = () => {
             </motion.h2>
             
             <motion.div
-              className="w-24 h-1 bg-gradient-gold mx-auto mb-8 rounded-full"
+              className="w-16 h-1 bg-gradient-gold mx-auto mb-8 rounded-full"
               initial={{ scaleX: 0 }}
               animate={isInView ? { scaleX: 1 } : {}}
               transition={{ duration: 0.8, delay: 0.6 }}
             />
             
             <motion.p 
-              className="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 1, delay: 0.8 }}
@@ -89,7 +125,7 @@ const AussySection = () => {
         <ScrollReveal direction="scale" delay={0.4}>
           <div className="flex justify-center mb-20">
             <motion.div
-              className="relative w-80 h-80 cursor-pointer perspective-1000"
+              className="relative w-64 h-64 cursor-pointer"
               style={{ 
                 rotateX,
                 rotateY,
@@ -107,47 +143,47 @@ const AussySection = () => {
               >
                 {/* Face 1 - Criatividade */}
                 <motion.div
-                  className="absolute inset-0 rounded-full glass-card border-4 border-aix-gold/50 flex items-center justify-center"
+                  className="absolute inset-0 rounded-full glass-card border-2 border-aix-gold/30 flex items-center justify-center"
                   style={{ 
                     backfaceVisibility: "hidden",
-                    background: "radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(10, 10, 10, 0.9) 100%)"
+                    background: "radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, rgba(10, 10, 10, 0.9) 100%)"
                   }}
                 >
                   <div className="text-center">
-                    <Sparkles className="w-16 h-16 text-aix-gold mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold gold-text-gradient mb-2">CRIATIVIDADE</h3>
-                    <p className="text-white/70 text-sm">Sem limites para imaginar</p>
+                    <Sparkles className="w-12 h-12 text-aix-gold mx-auto mb-3" />
+                    <h3 className="text-xl font-bold gold-text-gradient mb-2">CRIATIVIDADE</h3>
+                    <p className="text-white/60 text-sm">Sem limites para imaginar</p>
                   </div>
                 </motion.div>
 
                 {/* Face 2 - Tecnologia */}
                 <motion.div
-                  className="absolute inset-0 rounded-full glass-card border-4 border-aix-purple/50 flex items-center justify-center"
+                  className="absolute inset-0 rounded-full glass-card border-2 border-aix-purple/30 flex items-center justify-center"
                   style={{ 
                     backfaceVisibility: "hidden",
                     transform: "rotateY(180deg)",
-                    background: "radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(10, 10, 10, 0.9) 100%)"
+                    background: "radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, rgba(10, 10, 10, 0.9) 100%)"
                   }}
                 >
                   <div className="text-center">
-                    <Code className="w-16 h-16 text-aix-purple mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold purple-text-gradient mb-2">TECNOLOGIA</h3>
-                    <p className="text-white/70 text-sm">Conexões que transformam</p>
+                    <Code className="w-12 h-12 text-aix-purple mx-auto mb-3" />
+                    <h3 className="text-xl font-bold purple-text-gradient mb-2">TECNOLOGIA</h3>
+                    <p className="text-white/60 text-sm">Conexões que transformam</p>
                   </div>
                 </motion.div>
               </motion.div>
 
-              {/* Glow Effect */}
+              {/* Subtle Glow Effect */}
               <motion.div
-                className="absolute inset-0 rounded-full opacity-50 blur-2xl"
+                className="absolute inset-0 rounded-full opacity-30 blur-xl"
                 style={{
                   background: isFlipped 
-                    ? "radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)"
-                    : "radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%)"
+                    ? "radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%)"
+                    : "radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%)"
                 }}
                 animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
+                  scale: [1, 1.1, 1],
+                  opacity: [0.2, 0.4, 0.2]
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               />
@@ -157,16 +193,14 @@ const AussySection = () => {
 
         {/* Story Grid */}
         <ScrollReveal direction="up" delay={0.6}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
             <StoryCard
-              icon={<Infinity className="w-8 h-8" />}
               title="Possibilidades Infinitas"
               description="Como o símbolo do infinito, AUSSY representa que não há barreiras para a criatividade e inovação."
               code="const possibilities = ∞;"
             />
             
             <StoryCard
-              icon={<Zap className="w-8 h-8" />}
               title="Conexão Instantânea"
               description="Criado para gerar lembrança duradoura, uma marca que conecta e permanece na memória."
               code="connect(human, memory);"
@@ -174,40 +208,29 @@ const AussySection = () => {
           </div>
         </ScrollReveal>
 
-        {/* CTA Section */}
+        {/* Minimalist CTA */}
         <ScrollReveal direction="scale" delay={0.8}>
           <div className="text-center">
             <motion.div
-              className="inline-block"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-block group cursor-pointer"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <motion.div
-                className="relative overflow-hidden rounded-2xl"
-                initial={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)" }}
-                whileHover={{ 
-                  background: "linear-gradient(135deg, #f59e0b 0%, #8b5cf6 100%)" 
-                }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="px-12 py-6 text-xl font-bold">
-                  <motion.span
-                    initial={{ color: "#f59e0b" }}
-                    whileHover={{ color: "#000000" }}
-                    transition={{ duration: 0.3 }}
-                  >
+              <div className="relative overflow-hidden rounded-lg border border-aix-gold/20 bg-black/20 backdrop-blur-sm">
+                <div className="px-8 py-4">
+                  <span className="text-lg font-medium text-white group-hover:text-aix-gold transition-colors duration-300">
                     Descubra o AUSSY em Ação
-                  </motion.span>
+                  </span>
                 </div>
                 
-                {/* Shine effect */}
+                {/* Subtle shine effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-aix-gold/10 to-transparent"
                   initial={{ x: '-100%' }}
                   whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.8 }}
                 />
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </ScrollReveal>
@@ -217,45 +240,39 @@ const AussySection = () => {
 };
 
 const StoryCard = ({ 
-  icon, 
   title, 
   description, 
   code 
 }: { 
-  icon: React.ReactNode; 
   title: string; 
   description: string;
   code: string;
 }) => {
   return (
     <motion.div
-      className="glass-card p-8 hover:transform hover:scale-105 transition-all duration-500 relative overflow-hidden group"
-      whileHover={{ y: -10 }}
+      className="glass-card p-6 hover:transform hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group"
+      whileHover={{ y: -5 }}
     >
       {/* Code background */}
       <motion.div
-        className="absolute top-4 right-4 font-mono text-xs text-aix-gold/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        initial={{ x: 20 }}
+        className="absolute top-4 right-4 font-mono text-xs text-aix-gold/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        initial={{ x: 10 }}
         whileHover={{ x: 0 }}
       >
         {code}
       </motion.div>
       
-      <div className="mb-6 text-aix-cyan group-hover:text-aix-gold transition-colors duration-300">
-        {icon}
-      </div>
-      
-      <h3 className="text-2xl font-bold text-white mb-4 group-hover:gold-text-gradient transition-all duration-300">
+      <h3 className="text-xl font-bold text-white mb-3 group-hover:gold-text-gradient transition-all duration-300">
         {title}
       </h3>
       
-      <p className="text-white/70 leading-relaxed">
+      <p className="text-white/70 leading-relaxed text-sm">
         {description}
       </p>
       
       {/* Hover glow */}
       <motion.div
-        className="absolute inset-0 bg-gradient-gold opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl"
+        className="absolute inset-0 bg-gradient-gold opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-lg"
         initial={false}
       />
     </motion.div>
