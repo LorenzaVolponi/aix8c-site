@@ -360,7 +360,7 @@ const HeroSection = () => {
             />
             
             <motion.h1 
-              className="relative text-5xl md:text-8xl font-bold mb-8 font-serif"
+              className="relative text-4xl md:text-7xl font-bold mb-4 font-serif"
               variants={glitchVariants}
               style={{ scale: titleScale }}
             >
@@ -376,7 +376,7 @@ const HeroSection = () => {
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
-                Lorenza Volponi
+                AIX8C
               </motion.span>
               
               {/* Glitch effect lines */}
@@ -394,9 +394,18 @@ const HeroSection = () => {
                   times: [0, 0.5, 0.8, 1]
                 }}
               >
-                <span className="holographic-text text-aix-cyan">Lorenza Volponi</span>
+                <span className="holographic-text text-aix-cyan">AIX8C</span>
               </motion.div>
             </motion.h1>
+            
+            <motion.p 
+              className="text-lg md:text-xl text-white/80 mb-8 font-light tracking-wider"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 1 }}
+            >
+              ARTIFICIAL INTELLIGENCE 8 EXPERIENCE CREATIVE
+            </motion.p>
           </motion.div>
         </ScrollReveal>
         
@@ -405,11 +414,11 @@ const HeroSection = () => {
             className="w-full max-w-5xl mx-auto overflow-hidden mb-12"
             variants={itemVariants}
           >
-            <motion.p 
-              className="text-2xl md:text-4xl text-white font-mono relative"
+            <motion.h2 
+              className="text-3xl md:text-5xl text-white font-bold mb-8 relative"
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: "100%", opacity: 1 }}
-              transition={{ duration: 2.5, delay: 1 }}
+              transition={{ duration: 2.5, delay: 1.2 }}
               style={{
                 textShadow: "0 0 20px rgba(6, 182, 212, 0.4)"
               }}
@@ -420,7 +429,7 @@ const HeroSection = () => {
                 }}
                 transition={{ duration: 6, repeat: Infinity }}
               >
-                Estrategista de Inteligência Artificial
+                CRIATIVIDADE COM UM CLIQUE EM SEU NOVO FUTURO
               </motion.span>
               
               {/* Typing cursor */}
@@ -431,7 +440,7 @@ const HeroSection = () => {
               >
                 |
               </motion.span>
-            </motion.p>
+            </motion.h2>
           </motion.div>
         </ScrollReveal>
         

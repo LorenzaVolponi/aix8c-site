@@ -1,206 +1,264 @@
 
-import React, { useEffect, useRef } from 'react';
-import { ExternalLink } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, useInView, useMotionValue, useTransform } from 'framer-motion';
+import { Code, Sparkles, Infinity, Zap } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 const AussySection = () => {
-  const coinRef = useRef<HTMLDivElement>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
   
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-rotate-coin');
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-    
-    if (coinRef.current) {
-      observer.observe(coinRef.current);
-    }
-    
-    return () => {
-      if (coinRef.current) {
-        observer.unobserve(coinRef.current);
-      }
-    };
-  }, []);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   
+  const rotateX = useTransform(mouseY, [-300, 300], [10, -10]);
+  const rotateY = useTransform(mouseX, [-300, 300], [-10, 10]);
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set(event.clientX - centerX);
+    mouseY.set(event.clientY - centerY);
+  };
+
   return (
-    <section id="aussy" className="py-24 relative min-h-screen flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 overflow-hidden">
-      {/* Fundo de constelação neural */}
-      <div className="absolute inset-0 bg-constellation opacity-60"></div>
-      
-      {/* Partículas Flutuantes */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {Array.from({ length: 30 }).map((_, i) => (
-          <div 
+    <motion.section 
+      ref={sectionRef}
+      id="aussy" 
+      className="py-32 bg-gradient-to-br from-aix-black via-aix-darkgray to-aix-black relative overflow-hidden"
+      onMouseMove={handleMouseMove}
+    >
+      {/* Neural Background Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
             key={i}
-            className="absolute w-1 h-1 rounded-full bg-blue-300/40 animate-pulse-glow"
+            className="absolute w-1 h-1 bg-aix-gold/30 rounded-full"
             style={{
-              top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              opacity: [0.3, 1, 0.3],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
             }}
           />
         ))}
       </div>
-      
-      <div className="container mx-auto px-4 z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Header com título principal */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white font-serif">
-              Aussy AI
-            </h2>
-            <p className="text-lg md:text-xl text-blue-200 leading-relaxed max-w-3xl mx-auto">
-              Aussy, é o primeiro mascote brasileiro de IA e Engenharia de Prompt, uma 
-              inovação futurista da AIX8C! Através de soluções tecnológicas inovadoras, 
-              temos potencializar seu business com 77% de cortes de gastos. Aim de 
-              conectar humanos e máquinas, de forma criativa e eficiente. Transforme seu 
-              negócio com a tecnologia do futuro! 🚀
-            </p>
-          </div>
 
-          {/* Moeda 3D Neural */}
-          <div ref={coinRef} className="relative w-32 h-32 mx-auto mb-12 coin-3d">
-            <div className="coin-face absolute inset-0 rounded-full bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 flex items-center justify-center shadow-2xl border-4 border-yellow-300/30">
-              <div className="text-white text-5xl animate-neural-pulse">🤖</div>
-            </div>
-            <div className="coin-face coin-back absolute inset-0 rounded-full bg-gradient-to-br from-purple-500 via-blue-500 to-cyan-500 flex items-center justify-center shadow-2xl border-4 border-blue-300/30">
-              <div className="text-white text-5xl animate-neural-pulse">🧠</div>
-            </div>
-          </div>
-
-          {/* Seção de aprendizado */}
-          <div className="text-center mb-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-blue-200 mb-8">
-              Confira abaixo como o Aussy pode auxiliar seu aprendizado:
-            </h3>
-          </div>
-
-          {/* Cards dos serviços Aussy */}
-          <div className="space-y-8">
-            <AussyServiceCard
-              number="01"
-              title="Aussy Instructor Obsidian"
-              description="Especialista em ajudar em seu aprendizado na ferramenta"
-              linkText="Acessar"
-              link="https://aussy-instructor-obsidian.com"
+      <div className="container mx-auto px-4 relative z-10">
+        <ScrollReveal direction="fade" delay={0.2}>
+          <div className="text-center mb-20">
+            <motion.h2 
+              className="text-5xl md:text-7xl font-bold mb-8 font-serif"
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              <span className="holographic-text">AUSSY</span>
+            </motion.h2>
+            
+            <motion.div
+              className="w-24 h-1 bg-gradient-gold mx-auto mb-8 rounded-full"
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.6 }}
             />
             
-            <AussyServiceCard
-              number="02"
-              title="Aussy Creator Content Supreme"
-              description="Especialista em criar conteúdos de sucesso para suas mídias sociais"
-              linkText="Acessar"
-              link="https://aussy-creator-content.com"
+            <motion.p 
+              className="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              Um codinome nascido da imaginação, representando as{" "}
+              <span className="gold-text-gradient font-semibold">duas faces de uma moeda</span>{" "}
+              onde não há limites para criar conexões inesquecíveis.
+            </motion.p>
+          </div>
+        </ScrollReveal>
+
+        {/* Interactive Coin Component */}
+        <ScrollReveal direction="scale" delay={0.4}>
+          <div className="flex justify-center mb-20">
+            <motion.div
+              className="relative w-80 h-80 cursor-pointer perspective-1000"
+              style={{ 
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d"
+              }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => setIsFlipped(!isFlipped)}
+            >
+              {/* Coin Container */}
+              <motion.div
+                className="relative w-full h-full rounded-full"
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                {/* Face 1 - Criatividade */}
+                <motion.div
+                  className="absolute inset-0 rounded-full glass-card border-4 border-aix-gold/50 flex items-center justify-center"
+                  style={{ 
+                    backfaceVisibility: "hidden",
+                    background: "radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(10, 10, 10, 0.9) 100%)"
+                  }}
+                >
+                  <div className="text-center">
+                    <Sparkles className="w-16 h-16 text-aix-gold mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold gold-text-gradient mb-2">CRIATIVIDADE</h3>
+                    <p className="text-white/70 text-sm">Sem limites para imaginar</p>
+                  </div>
+                </motion.div>
+
+                {/* Face 2 - Tecnologia */}
+                <motion.div
+                  className="absolute inset-0 rounded-full glass-card border-4 border-aix-purple/50 flex items-center justify-center"
+                  style={{ 
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                    background: "radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(10, 10, 10, 0.9) 100%)"
+                  }}
+                >
+                  <div className="text-center">
+                    <Code className="w-16 h-16 text-aix-purple mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold purple-text-gradient mb-2">TECNOLOGIA</h3>
+                    <p className="text-white/70 text-sm">Conexões que transformam</p>
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Glow Effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full opacity-50 blur-2xl"
+                style={{
+                  background: isFlipped 
+                    ? "radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)"
+                    : "radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%)"
+                }}
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.6, 0.3]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </motion.div>
+          </div>
+        </ScrollReveal>
+
+        {/* Story Grid */}
+        <ScrollReveal direction="up" delay={0.6}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-20">
+            <StoryCard
+              icon={<Infinity className="w-8 h-8" />}
+              title="Possibilidades Infinitas"
+              description="Como o símbolo do infinito, AUSSY representa que não há barreiras para a criatividade e inovação."
+              code="const possibilities = ∞;"
             />
             
-            <AussyServiceCard
-              number="03"
-              title="Aussy Smart Business"
-              description="Especialista em analisar negócios, criar estratégias de vendas e desenvolver propostas para clientes"
-              linkText="Acessar"
-              link="https://aussy-smart-business.com"
+            <StoryCard
+              icon={<Zap className="w-8 h-8" />}
+              title="Conexão Instantânea"
+              description="Criado para gerar lembrança duradoura, uma marca que conecta e permanece na memória."
+              code="connect(human, memory);"
             />
           </div>
+        </ScrollReveal>
 
-          {/* Card principal com a dualidade */}
-          <div className="mt-16">
-            <div className="glass-card shimmer-border animate-float p-12 md:p-16 relative overflow-hidden">
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center font-serif">
-                <span className="gold-text-gradient">Aussy</span>
-                <span className="mx-3 text-white">—</span>
-                <span className="purple-text-gradient">As duas faces de uma moeda</span>
-              </h2>
-              
-              <div className="text-center mb-10">
-                <p className="text-2xl mb-8 font-serif text-white/90">Um nome. Dois universos.</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                  <div className="p-6 bg-aix-cyan/10 rounded-2xl border border-aix-cyan/30">
-                    <p className="text-lg font-mono text-aix-cyan mb-2">RAZÃO ALGORÍTMICA</p>
-                    <p className="text-white/90">De um lado, a lógica implacável das máquinas, processando dados em velocidade quântica.</p>
-                  </div>
-                  <div className="p-6 bg-aix-gold/10 rounded-2xl border border-aix-gold/30">
-                    <p className="text-lg font-serif text-aix-gold mb-2">ESSÊNCIA CRIATIVA</p>
-                    <p className="text-white/90">Do outro, a sensibilidade que só uma alma criativa carrega, interpretando nuances humanas.</p>
-                  </div>
+        {/* CTA Section */}
+        <ScrollReveal direction="scale" delay={0.8}>
+          <div className="text-center">
+            <motion.div
+              className="inline-block"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.div
+                className="relative overflow-hidden rounded-2xl"
+                initial={{ background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)" }}
+                whileHover={{ 
+                  background: "linear-gradient(135deg, #f59e0b 0%, #8b5cf6 100%)" 
+                }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="px-12 py-6 text-xl font-bold">
+                  <motion.span
+                    initial={{ color: "#f59e0b" }}
+                    whileHover={{ color: "#000000" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    Descubra o AUSSY em Ação
+                  </motion.span>
                 </div>
-              </div>
-              
-              <div className="text-center mb-8">
-                <p className="text-2xl font-bold mb-4">
-                  <span className="bg-gradient-cyber bg-clip-text text-transparent bg-[length:400%_100%] animate-shimmer">
-                    Aussy é o equilíbrio entre precisão e expressão.
-                  </span>
-                </p>
-                <p className="text-xl text-white/90 font-serif">
-                  Estratégia de dados com essência humana.
-                </p>
-              </div>
-              
-              <div className="text-center p-8 bg-aix-black/30 rounded-2xl border border-white/10">
-                <p className="text-lg italic text-white/80 leading-relaxed">
-                  Porque toda inteligência, por mais artificial que seja,<br />
-                  precisa refletir as duas faces de uma moeda:<br />
-                  <span className="font-bold text-2xl gold-text-gradient">Razão</span>
-                  <span className="mx-4 text-white">e</span>
-                  <span className="font-bold text-2xl purple-text-gradient">Emoção</span>
-                </p>
-              </div>
-            </div>
+                
+                {/* Shine effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
-const AussyServiceCard = ({ 
-  number, 
+const StoryCard = ({ 
+  icon, 
   title, 
   description, 
-  linkText, 
-  link 
-}: {
-  number: string;
-  title: string;
+  code 
+}: { 
+  icon: React.ReactNode; 
+  title: string; 
   description: string;
-  linkText: string;
-  link: string;
+  code: string;
 }) => {
   return (
-    <div className="glass-card p-8 hover:transform hover:scale-105 transition-all duration-500 group">
-      <div className="flex items-start space-x-6">
-        <div className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-full bg-gradient-purple flex items-center justify-center text-white font-bold text-xl">
-            {number}
-          </div>
-        </div>
-        <div className="flex-grow">
-          <h3 className="text-2xl font-bold text-white mb-3 group-hover:purple-text-gradient transition-all duration-300">
-            {title}
-          </h3>
-          <p className="text-blue-200 text-lg leading-relaxed mb-4">
-            {description}
-          </p>
-          <a 
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center text-aix-cyan hover:text-white transition-all duration-300 font-semibold group/link"
-          >
-            <span className="mr-2">{linkText}</span>
-            <ExternalLink className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-300" />
-          </a>
-        </div>
+    <motion.div
+      className="glass-card p-8 hover:transform hover:scale-105 transition-all duration-500 relative overflow-hidden group"
+      whileHover={{ y: -10 }}
+    >
+      {/* Code background */}
+      <motion.div
+        className="absolute top-4 right-4 font-mono text-xs text-aix-gold/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        initial={{ x: 20 }}
+        whileHover={{ x: 0 }}
+      >
+        {code}
+      </motion.div>
+      
+      <div className="mb-6 text-aix-cyan group-hover:text-aix-gold transition-colors duration-300">
+        {icon}
       </div>
-    </div>
+      
+      <h3 className="text-2xl font-bold text-white mb-4 group-hover:gold-text-gradient transition-all duration-300">
+        {title}
+      </h3>
+      
+      <p className="text-white/70 leading-relaxed">
+        {description}
+      </p>
+      
+      {/* Hover glow */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-gold opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl"
+        initial={false}
+      />
+    </motion.div>
   );
 };
 
