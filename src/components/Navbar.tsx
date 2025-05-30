@@ -7,8 +7,9 @@ import { cn } from "@/lib/utils";
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
-  const navOpacity = useTransform(scrollY, [0, 100], [0.9, 0.95]);
-  const navBlur = useTransform(scrollY, [0, 100], [0, 20]);
+  const navOpacity = useTransform(scrollY, [0, 100], [0.85, 0.98]);
+  const navBlur = useTransform(scrollY, [0, 100], [0, 25]);
+  const logoGlow = useTransform(scrollY, [0, 200], [0, 1]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,48 +49,73 @@ const Navbar = () => {
   return (
     <motion.nav 
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-500",
+        "fixed top-0 w-full z-50 transition-all duration-700",
         scrolled 
-          ? "bg-aix-black/95 backdrop-blur-md py-3 shadow-2xl border-b border-aix-purple/20" 
-          : "bg-transparent py-6"
+          ? "bg-aix-black/95 backdrop-blur-2xl py-4 shadow-2xl border-b border-aix-purple/30" 
+          : "bg-transparent py-8"
       )}
       style={{ 
         backdropFilter: `blur(${navBlur}px)`,
-        backgroundColor: scrolled ? `rgba(10, 10, 10, ${navOpacity.get()})` : 'transparent'
+        backgroundColor: scrolled ? `rgba(10, 10, 10, ${navOpacity.get()})` : 'transparent',
+        boxShadow: scrolled ? '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none'
       }}
       initial="hidden"
       animate="visible"
       variants={navVariants}
     >
-      <div className="container mx-auto flex justify-between items-center px-4">
-        {/* Logo with enhanced animation */}
+      <div className="container mx-auto flex justify-between items-center px-6">
+        {/* Enhanced Logo with Cinematic Effects */}
         <motion.a 
           href="#" 
-          className="text-3xl font-bold gold-text-gradient font-serif relative"
-          whileHover={{ scale: 1.05 }}
+          className="relative text-3xl md:text-4xl font-bold font-serif group"
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
         >
           <motion.span
-            initial={{ opacity: 0, x: -20 }}
+            className="relative z-10 holographic-text"
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            style={{
+              filter: `drop-shadow(0 0 ${logoGlow.get() * 10}px rgba(245, 158, 11, 0.6))`
+            }}
           >
             AIX8C
           </motion.span>
           
-          {/* Logo glow effect */}
+          {/* Enhanced logo glow effects */}
           <motion.div
-            className="absolute inset-0 gold-text-gradient opacity-0 blur-sm"
-            whileHover={{ opacity: 0.3 }}
-            transition={{ duration: 0.3 }}
+            className="absolute inset-0 holographic-text opacity-0 blur-sm group-hover:opacity-40 transition-opacity duration-500"
+            animate={{
+              textShadow: [
+                "0 0 20px rgba(245, 158, 11, 0.3)",
+                "0 0 40px rgba(139, 92, 246, 0.3)",
+                "0 0 20px rgba(6, 182, 212, 0.3)",
+                "0 0 20px rgba(245, 158, 11, 0.3)"
+              ]
+            }}
+            transition={{ duration: 4, repeat: Infinity }}
           >
             AIX8C
           </motion.div>
+          
+          {/* Cinematic particle effect */}
+          <motion.div
+            className="absolute -inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            animate={{
+              background: [
+                "radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%)"
+              ]
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
         </motion.a>
         
-        {/* Navigation Links with improved spacing and alignment */}
+        {/* Enhanced Navigation Links */}
         <motion.div 
-          className="hidden md:flex space-x-12 items-center"
+          className="hidden md:flex space-x-16 items-center"
           variants={{
             hidden: {},
             visible: {
@@ -107,25 +133,53 @@ const Navbar = () => {
           ))}
         </motion.div>
         
-        {/* CTA Button with enhanced effects */}
+        {/* Enhanced CTA Button */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 1.2, duration: 1 }}
+          className="relative"
         >
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
+            className="relative group"
           >
-            <Button className="bg-gradient-purple hover:opacity-90 transition-all duration-300 px-6 py-3 rounded-xl relative overflow-hidden group">
-              {/* Button shine effect */}
+            {/* Button background glow */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-purple rounded-xl opacity-0 blur-lg group-hover:opacity-60 transition-all duration-500"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0, 0.3, 0]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            
+            <Button className="relative bg-gradient-purple hover:bg-gradient-to-r hover:from-purple-600 hover:to-cyan-500 transition-all duration-500 px-8 py-4 rounded-xl border border-aix-purple/30 backdrop-blur-sm overflow-hidden group">
+              {/* Enhanced shine effect */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                 initial={{ x: '-100%', skewX: -20 }}
                 whileHover={{ x: '100%' }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 1, ease: "easeInOut" }}
               />
-              <a href="#contato" className="px-2 relative z-10">Contato Neural</a>
+              
+              {/* Holographic overlay */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-aix-cyan/20 via-aix-purple/20 to-aix-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                animate={{
+                  background: [
+                    "linear-gradient(45deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2), rgba(245, 158, 11, 0.2))",
+                    "linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2))",
+                    "linear-gradient(225deg, rgba(139, 92, 246, 0.2), rgba(245, 158, 11, 0.2), rgba(6, 182, 212, 0.2))"
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              
+              <a href="#contato" className="relative z-10 font-semibold text-lg">
+                Contato Neural
+              </a>
             </Button>
           </motion.div>
         </motion.div>
@@ -137,25 +191,37 @@ const Navbar = () => {
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <motion.a 
     href={href} 
-    className="relative text-white/80 hover:text-white transition-all duration-300 font-medium text-lg group"
-    whileHover={{ y: -2 }}
+    className="relative text-white/90 hover:text-white transition-all duration-500 font-medium text-lg group"
+    whileHover={{ y: -3 }}
   >
-    {children}
+    <span className="relative z-10">{children}</span>
     
     {/* Enhanced underline animation */}
     <motion.div
-      className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-aix-cyan to-aix-purple origin-left"
+      className="absolute -bottom-2 left-0 h-0.5 bg-gradient-to-r from-aix-cyan via-aix-purple to-aix-gold origin-left"
       initial={{ scaleX: 0 }}
       whileHover={{ scaleX: 1 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{ width: '100%' }}
     />
     
+    {/* Holographic text effect */}
+    <motion.div
+      className="absolute inset-0 opacity-0 blur-sm group-hover:opacity-40 transition-all duration-500"
+      animate={{
+        color: ["#06b6d4", "#8b5cf6", "#f59e0b", "#06b6d4"]
+      }}
+      transition={{ duration: 3, repeat: Infinity }}
+    >
+      {children}
+    </motion.div>
+    
     {/* Glow effect on hover */}
     <motion.div
-      className="absolute inset-0 text-aix-cyan opacity-0 blur-sm"
-      whileHover={{ opacity: 0.3 }}
-      transition={{ duration: 0.3 }}
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      style={{
+        textShadow: "0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(139, 92, 246, 0.3)"
+      }}
     >
       {children}
     </motion.div>
