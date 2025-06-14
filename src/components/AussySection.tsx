@@ -1,328 +1,290 @@
 
-import React, { useState, useRef } from 'react';
-import { motion, useInView, useMotionValue, useTransform } from 'framer-motion';
-import { Code, Sparkles, Infinity, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Button } from "@/components/ui/button";
+import { Brain, Zap, Target, Users, TrendingUp, Award, CheckCircle, Star } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 const AussySection = () => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
-  
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const rotateX = useTransform(mouseY, [-300, 300], [10, -10]);
-  const rotateY = useTransform(mouseX, [-300, 300], [-10, 10]);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const handleMouseMove = (event: React.MouseEvent) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(event.clientX - centerX);
-    mouseY.set(event.clientY - centerY);
-  };
-
-  // Floating Code Elements
-  const codeElements = [
-    "const aussy = 'unlimited';",
-    "AI + Human = ∞",
-    "creativity.level = 'max';",
-    "connection.established();",
-    "future.now();",
-    "experience.activate();"
+  const services = [
+    {
+      icon: Brain,
+      title: "Consultoria em IA Estratégica",
+      description: "Implementação de soluções de inteligência artificial personalizadas para transformar processos empresariais e maximizar resultados.",
+      features: ["Análise de viabilidade", "Roadmap personalizado", "Implementação guiada", "Treinamento de equipes"],
+      price: "A partir de R$ 15.000"
+    },
+    {
+      icon: Zap,
+      title: "Automação Inteligente",
+      description: "Desenvolvimento de sistemas automatizados que otimizam operações, reduzem custos e aumentam a produtividade empresarial.",
+      features: ["Chatbots avançados", "Workflows automatizados", "Integração de sistemas", "Monitoramento 24/7"],
+      price: "A partir de R$ 8.000"
+    },
+    {
+      icon: Target,
+      title: "Estratégia Digital Completa",
+      description: "Planejamento e execução de estratégias digitais integradas que conectam tecnologia, pessoas e resultados de negócio.",
+      features: ["Auditoria digital", "Estratégia omnichannel", "KPIs personalizados", "Relatórios executivos"],
+      price: "A partir de R$ 12.000"
+    }
   ];
 
-  // Icon animation data
-  const iconAnimations = [
-    { component: Code, delay: 0, left: 20, top: 30 },
-    { component: Sparkles, delay: 1, left: 40, top: 45 },
-    { component: Infinity, delay: 2, left: 60, top: 60 },
-    { component: Zap, delay: 3, left: 80, top: 75 }
+  const testimonials = [
+    {
+      name: "Carlos Mendes",
+      company: "TechCorp Brasil",
+      role: "CEO",
+      content: "Lorenza transformou completamente nossa operação com soluções de IA. Aumentamos a eficiência em 300% e reduzimos custos em 40%. Sua visão estratégica é incomparável.",
+      rating: 5,
+      image: "/placeholder.svg"
+    },
+    {
+      name: "Ana Silva",
+      company: "InnovateLab",
+      role: "CTO",
+      content: "A consultoria em automação da Lorenza revolucionou nossos processos. Implementamos chatbots que atendem 80% das demandas automaticamente, liberando nossa equipe para inovação.",
+      rating: 5,
+      image: "/placeholder.svg"
+    },
+    {
+      name: "Roberto Santos",
+      company: "FutureVision",
+      role: "Diretor de Inovação",
+      content: "Parceira estratégica excepcional. Lorenza não apenas implementa tecnologia, mas ensina nossa equipe a pensar digitalmente. ROI de 400% em 6 meses.",
+      rating: 5,
+      image: "/placeholder.svg"
+    }
+  ];
+
+  const stats = [
+    { number: "150+", label: "Projetos Entregues", icon: CheckCircle },
+    { number: "95%", label: "Taxa de Sucesso", icon: TrendingUp },
+    { number: "50+", label: "Empresas Transformadas", icon: Users },
+    { number: "R$ 2M+", label: "Em Economia Gerada", icon: Award }
   ];
 
   return (
-    <motion.section 
-      ref={sectionRef}
-      id="aussy" 
-      className="py-32 bg-gradient-to-br from-aix-black via-aix-darkgray to-aix-black relative overflow-hidden"
-      onMouseMove={handleMouseMove}
-    >
-      {/* Floating Code Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {codeElements.map((code, i) => (
-          <motion.div
-            key={i}
-            className="absolute font-mono text-xs text-aix-gold/20 whitespace-nowrap"
-            style={{
-              left: `${10 + (i * 15)}%`,
-              top: `${15 + (i * 12)}%`,
-            }}
-            animate={{
-              opacity: [0.1, 0.4, 0.1],
-              x: [0, 50, 0],
-              y: [0, -20, 0],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 4,
-              repeat: Infinity,
-              delay: i * 2,
-            }}
-          >
-            {code}
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Floating Icons */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {iconAnimations.map(({ component: IconComponent, delay, left, top }, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-aix-gold/10"
-            style={{
-              left: `${left}%`,
-              top: `${top}%`,
-            }}
-            animate={{
-              opacity: [0.1, 0.3, 0.1],
-              rotate: [0, 360, 0],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 12 + Math.random() * 6,
-              repeat: Infinity,
-              delay: delay * 2,
-            }}
-          >
-            <IconComponent size={16} />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Neural Background Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-aix-gold/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 4 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
+    <section id="consultoria" className="py-24 bg-gradient-to-b from-aix-black via-gray-900 to-aix-black relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-aix-gold/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-aix-purple/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-aix-cyan/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <ScrollReveal direction="fade" delay={0.2}>
+        {/* Header */}
+        <ScrollReveal direction="up" delay={0.2}>
           <div className="text-center mb-20">
             <motion.h2 
-              className="text-4xl md:text-6xl font-bold mb-8 font-serif"
+              className="text-5xl md:text-7xl font-bold mb-8 font-serif"
               initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1, delay: 0.3 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <span className="holographic-text">AUSSY</span>
+              <span className="holographic-text">CONSULTORIA AUSSIE</span>
             </motion.h2>
-            
-            <motion.div
-              className="w-16 h-1 bg-gradient-gold mx-auto mb-8 rounded-full"
-              initial={{ scaleX: 0 }}
-              animate={isInView ? { scaleX: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            />
-            
             <motion.p 
-              className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 1, delay: 0.8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Um codinome nascido da imaginação, representando as{" "}
-              <span className="gold-text-gradient font-semibold">duas faces de uma moeda</span>{" "}
-              onde não há limites para criar conexões inesquecíveis.
+              Transforme sua empresa com soluções de IA personalizadas. 
+              Da estratégia à implementação, construímos o futuro digital do seu negócio.
             </motion.p>
           </div>
         </ScrollReveal>
 
-        {/* Interactive Coin Component */}
-        <ScrollReveal direction="scale" delay={0.4}>
-          <div className="flex justify-center mb-20">
-            <motion.div
-              className="relative w-64 h-64 cursor-pointer"
-              style={{ 
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d"
-              }}
-              whileHover={{ scale: 1.05 }}
-              onClick={() => setIsFlipped(!isFlipped)}
-            >
-              {/* Coin Container */}
-              <motion.div
-                className="relative w-full h-full rounded-full"
-                animate={{ rotateY: isFlipped ? 180 : 0 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                {/* Face 1 - Criatividade */}
+        {/* Stats Section */}
+        <ScrollReveal direction="up" delay={0.3}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
+            {stats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
                 <motion.div
-                  className="absolute inset-0 rounded-full glass-card border-2 border-aix-gold/30 flex items-center justify-center"
-                  style={{ 
-                    backfaceVisibility: "hidden",
-                    background: "radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, rgba(10, 10, 10, 0.9) 100%)"
-                  }}
+                  key={index}
+                  className="text-center group"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-center">
-                    <Sparkles className="w-12 h-12 text-aix-gold mx-auto mb-3" />
-                    <h3 className="text-xl font-bold gold-text-gradient mb-2">CRIATIVIDADE</h3>
-                    <p className="text-white/60 text-sm">Sem limites para imaginar</p>
+                  <div className="relative mb-4">
+                    <div className="w-20 h-20 mx-auto bg-gradient-gold rounded-full flex items-center justify-center mb-4 group-hover:shadow-2xl group-hover:shadow-aix-gold/50 transition-all duration-300">
+                      <IconComponent className="w-10 h-10 text-black" />
+                    </div>
                   </div>
+                  <motion.h3 
+                    className="text-4xl md:text-5xl font-bold gold-text-gradient mb-2"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                  >
+                    {stat.number}
+                  </motion.h3>
+                  <p className="text-white/70 font-medium">{stat.label}</p>
                 </motion.div>
-
-                {/* Face 2 - Tecnologia */}
-                <motion.div
-                  className="absolute inset-0 rounded-full glass-card border-2 border-aix-purple/30 flex items-center justify-center"
-                  style={{ 
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                    background: "radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, rgba(10, 10, 10, 0.9) 100%)"
-                  }}
-                >
-                  <div className="text-center">
-                    <Code className="w-12 h-12 text-aix-purple mx-auto mb-3" />
-                    <h3 className="text-xl font-bold purple-text-gradient mb-2">TECNOLOGIA</h3>
-                    <p className="text-white/60 text-sm">Conexões que transformam</p>
-                  </div>
-                </motion.div>
-              </motion.div>
-
-              {/* Subtle Glow Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-full opacity-30 blur-xl"
-                style={{
-                  background: isFlipped 
-                    ? "radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%)"
-                    : "radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%)"
-                }}
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  opacity: [0.2, 0.4, 0.2]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-            </motion.div>
+              );
+            })}
           </div>
         </ScrollReveal>
 
-        {/* Story Grid */}
-        <ScrollReveal direction="up" delay={0.6}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-            <StoryCard
-              title="Possibilidades Infinitas"
-              description="Como o símbolo do infinito, AUSSY representa que não há barreiras para a criatividade e inovação."
-              code="const possibilities = ∞;"
-              icon={<Infinity size={20} />}
-            />
+        {/* Services Grid */}
+        <ScrollReveal direction="up" delay={0.4}>
+          <div className="grid md:grid-cols-3 gap-8 mb-20">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              return (
+                <motion.div
+                  key={index}
+                  className="relative group"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {/* Card Background with Glassmorphism */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md border border-white/20 rounded-2xl group-hover:border-aix-gold/50 transition-all duration-500"></div>
+                  
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-gold opacity-0 group-hover:opacity-20 rounded-2xl blur-xl transition-all duration-500"></div>
+                  
+                  <div className="relative p-8 h-full">
+                    <div className="flex items-center mb-6">
+                      <div className="w-16 h-16 bg-gradient-gold rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-8 h-8 text-black" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white group-hover:text-aix-gold transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                    </div>
+                    
+                    <p className="text-white/80 mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+                    
+                    <ul className="space-y-3 mb-8">
+                      {service.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-center text-white/70">
+                          <CheckCircle className="w-5 h-5 text-aix-gold mr-3 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold gold-text-gradient">
+                        {service.price}
+                      </span>
+                      <Button className="bg-gradient-gold hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-500 text-black font-bold px-6 py-3 rounded-xl transition-all duration-300 group-hover:scale-105">
+                        Solicitar Proposta
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+
+        {/* Testimonials */}
+        <ScrollReveal direction="up" delay={0.5}>
+          <div className="mb-20">
+            <h3 className="text-4xl md:text-5xl font-bold text-center mb-12 holographic-text">
+              O QUE NOSSOS CLIENTES DIZEM
+            </h3>
             
-            <StoryCard
-              title="Conexão Instantânea"
-              description="Criado para gerar lembrança duradoura, uma marca que conecta e permanece na memória."
-              code="connect(human, memory);"
-              icon={<Zap size={20} />}
-            />
-          </div>
-        </ScrollReveal>
-
-        {/* Minimalist CTA */}
-        <ScrollReveal direction="scale" delay={0.8}>
-          <div className="text-center">
-            <motion.div
-              className="inline-block group cursor-pointer"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="relative overflow-hidden rounded-lg border border-aix-gold/20 bg-black/20 backdrop-blur-sm">
-                <div className="px-8 py-4">
-                  <span className="text-lg font-medium text-white group-hover:text-aix-gold transition-colors duration-300">
-                    Descubra o AUSSY em Ação
-                  </span>
+            <div className="relative max-w-4xl mx-auto">
+              <motion.div
+                key={activeTestimonial}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                className="bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md border border-white/20 rounded-2xl p-8 text-center"
+              >
+                <div className="flex justify-center mb-6">
+                  {[...Array(testimonials[activeTestimonial].rating)].map((_, i) => (
+                    <Star key={i} className="w-6 h-6 text-aix-gold fill-current" />
+                  ))}
                 </div>
                 
-                {/* Subtle shine effect */}
+                <blockquote className="text-xl md:text-2xl text-white/90 mb-8 italic leading-relaxed">
+                  "{testimonials[activeTestimonial].content}"
+                </blockquote>
+                
+                <div className="flex items-center justify-center">
+                  <img 
+                    src={testimonials[activeTestimonial].image} 
+                    alt={testimonials[activeTestimonial].name}
+                    className="w-16 h-16 rounded-full mr-4 border-2 border-aix-gold"
+                  />
+                  <div className="text-left">
+                    <h4 className="text-xl font-bold text-white">
+                      {testimonials[activeTestimonial].name}
+                    </h4>
+                    <p className="text-aix-gold font-medium">
+                      {testimonials[activeTestimonial].role}
+                    </p>
+                    <p className="text-white/60">
+                      {testimonials[activeTestimonial].company}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+              
+              {/* Navigation Dots */}
+              <div className="flex justify-center mt-8 space-x-3">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveTestimonial(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === activeTestimonial 
+                        ? 'bg-aix-gold scale-125' 
+                        : 'bg-white/30 hover:bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* CTA Section */}
+        <ScrollReveal direction="up" delay={0.6}>
+          <div className="text-center">
+            <motion.div
+              className="relative max-w-3xl mx-auto"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="absolute inset-0 bg-gradient-gold opacity-20 rounded-3xl blur-2xl"></div>
+              <div className="relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-md border border-white/20 rounded-3xl p-12">
+                <h3 className="text-3xl md:text-4xl font-bold mb-6 holographic-text">
+                  PRONTO PARA TRANSFORMAR SEU NEGÓCIO?
+                </h3>
+                <p className="text-xl text-white/80 mb-8 leading-relaxed">
+                  Agende uma consulta estratégica gratuita e descubra como a IA pode 
+                  revolucionar sua empresa em 90 dias.
+                </p>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-aix-gold/10 to-transparent"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.8 }}
-                />
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button className="bg-gradient-gold hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-500 text-black font-bold px-12 py-6 text-xl rounded-2xl shadow-2xl">
+                    <a href="#contato">Agendar Consulta Gratuita</a>
+                  </Button>
+                </motion.div>
               </div>
             </motion.div>
           </div>
         </ScrollReveal>
       </div>
-    </motion.section>
-  );
-};
-
-const StoryCard = ({ 
-  title, 
-  description, 
-  code,
-  icon
-}: { 
-  title: string; 
-  description: string;
-  code: string;
-  icon: React.ReactNode;
-}) => {
-  return (
-    <motion.div
-      className="glass-card p-6 hover:transform hover:scale-[1.02] transition-all duration-300 relative overflow-hidden group"
-      whileHover={{ y: -5 }}
-    >
-      {/* Icon */}
-      <motion.div
-        className="absolute top-4 right-4 text-aix-gold/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        initial={{ scale: 0.8 }}
-        whileHover={{ scale: 1 }}
-      >
-        {icon}
-      </motion.div>
-      
-      {/* Code background */}
-      <motion.div
-        className="absolute bottom-4 right-4 font-mono text-xs text-aix-gold/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        initial={{ x: 10 }}
-        whileHover={{ x: 0 }}
-      >
-        {code}
-      </motion.div>
-      
-      <h3 className="text-xl font-bold text-white mb-3 group-hover:gold-text-gradient transition-all duration-300">
-        {title}
-      </h3>
-      
-      <p className="text-white/70 leading-relaxed text-sm">
-        {description}
-      </p>
-      
-      {/* Hover glow */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-gold opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-lg"
-        initial={false}
-      />
-    </motion.div>
+    </section>
   );
 };
 
