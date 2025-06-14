@@ -12,6 +12,8 @@ interface Particle {
   opacity: number;
   pulsePhase: number;
   glowRadius: number;
+  update(): void;
+  draw(): void;
 }
 
 interface NeuralConnection {
@@ -20,6 +22,8 @@ interface NeuralConnection {
   opacity: number;
   animated: boolean;
   animationProgress: number;
+  update(): void;
+  draw(): void;
 }
 
 const NeuralCanvas = () => {
@@ -33,8 +37,12 @@ const NeuralCanvas = () => {
     if (!ctx) return;
 
     const setCanvasDimensions = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(dpr, dpr);
     };
     
     setCanvasDimensions();
@@ -42,6 +50,7 @@ const NeuralCanvas = () => {
 
     let particles: Particle[] = [];
     let neuralConnections: NeuralConnection[] = [];
+    let animationId: number;
     
     class ParticleClass implements Particle {
       x: number;
@@ -55,41 +64,42 @@ const NeuralCanvas = () => {
       glowRadius: number;
       
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 4 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.8;
-        this.speedY = (Math.random() - 0.5) * 0.8;
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
         this.color = Math.random() > 0.6 ? '#f59e0b' : Math.random() > 0.4 ? '#06b6d4' : '#8b5cf6';
-        this.opacity = Math.random() * 0.9 + 0.3;
+        this.opacity = Math.random() * 0.8 + 0.2;
         this.pulsePhase = Math.random() * Math.PI * 2;
-        this.glowRadius = Math.random() * 20 + 10;
+        this.glowRadius = Math.random() * 15 + 8;
       }
       
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        this.pulsePhase += 0.03;
+        this.pulsePhase += 0.02;
         
-        if (this.x > canvas.width || this.x < 0) {
-          this.speedX = -this.speedX * 0.9;
-          this.x = Math.max(0, Math.min(canvas.width, this.x));
+        if (this.x > window.innerWidth || this.x < 0) {
+          this.speedX = -this.speedX * 0.95;
+          this.x = Math.max(0, Math.min(window.innerWidth, this.x));
         }
-        if (this.y > canvas.height || this.y < 0) {
-          this.speedY = -this.speedY * 0.9;
-          this.y = Math.max(0, Math.min(canvas.height, this.y));
+        if (this.y > window.innerHeight || this.y < 0) {
+          this.speedY = -this.speedY * 0.95;
+          this.y = Math.max(0, Math.min(window.innerHeight, this.y));
         }
       }
       
       draw() {
         if (!ctx) return;
-        const pulseSize = this.size + Math.sin(this.pulsePhase) * 1;
-        const pulseOpacity = this.opacity + Math.sin(this.pulsePhase) * 0.2;
-        const glowPulse = this.glowRadius + Math.sin(this.pulsePhase * 2) * 5;
+        const pulseSize = this.size + Math.sin(this.pulsePhase) * 0.8;
+        const pulseOpacity = this.opacity + Math.sin(this.pulsePhase) * 0.15;
+        const glowPulse = this.glowRadius + Math.sin(this.pulsePhase * 1.5) * 3;
         
+        // Optimized gradient creation
         const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowPulse);
         gradient.addColorStop(0, this.color.replace(')', `, ${pulseOpacity})`).replace('rgb', 'rgba'));
-        gradient.addColorStop(0.4, this.color.replace(')', `, ${pulseOpacity * 0.4})`).replace('rgb', 'rgba'));
+        gradient.addColorStop(0.3, this.color.replace(')', `, ${pulseOpacity * 0.3})`).replace('rgb', 'rgba'));
         gradient.addColorStop(1, 'transparent');
         
         ctx.fillStyle = gradient;
@@ -115,7 +125,7 @@ const NeuralCanvas = () => {
         this.p1 = p1;
         this.p2 = p2;
         this.opacity = 0;
-        this.animated = Math.random() > 0.7;
+        this.animated = Math.random() > 0.8;
         this.animationProgress = 0;
       }
       
@@ -124,10 +134,10 @@ const NeuralCanvas = () => {
         const dy = this.p1.y - this.p2.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 200) {
-          this.opacity = Math.min(0.4, (200 - distance) / 200 * 0.4);
+        if (distance < 180) {
+          this.opacity = Math.min(0.35, (180 - distance) / 180 * 0.35);
           if (this.animated) {
-            this.animationProgress += 0.02;
+            this.animationProgress += 0.015;
             if (this.animationProgress > 1) this.animationProgress = 0;
           }
         } else {
@@ -140,16 +150,19 @@ const NeuralCanvas = () => {
         
         const gradient = ctx.createLinearGradient(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
         gradient.addColorStop(0, `rgba(6, 182, 212, ${this.opacity})`);
-        gradient.addColorStop(0.5, `rgba(139, 92, 246, ${this.opacity * 0.8})`);
-        gradient.addColorStop(1, `rgba(245, 158, 11, ${this.opacity})`);
+        gradient.addColorStop(0.4, `rgba(139, 92, 246, ${this.opacity * 0.9})`);
+        gradient.addColorStop(0.6, `rgba(245, 158, 11, ${this.opacity * 0.7})`);
+        gradient.addColorStop(1, `rgba(6, 182, 212, ${this.opacity})`);
         
         ctx.strokeStyle = gradient;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.5;
         ctx.lineCap = 'round';
         
         if (this.animated) {
-          ctx.setLineDash([5, 5]);
-          ctx.lineDashOffset = -this.animationProgress * 10;
+          const dashLength = 8;
+          const gapLength = 6;
+          ctx.setLineDash([dashLength, gapLength]);
+          ctx.lineDashOffset = -this.animationProgress * (dashLength + gapLength);
         } else {
           ctx.setLineDash([]);
         }
@@ -166,7 +179,7 @@ const NeuralCanvas = () => {
     const init = () => {
       particles = [];
       neuralConnections = [];
-      const particleCount = Math.min(Math.floor(window.innerWidth / 12), 80);
+      const particleCount = Math.min(Math.floor(window.innerWidth / 15), 60);
       
       for (let i = 0; i < particleCount; i++) {
         particles.push(new ParticleClass());
@@ -174,26 +187,32 @@ const NeuralCanvas = () => {
       
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          neuralConnections.push(new NeuralConnectionClass(particles[i], particles[j]));
+          if (Math.random() > 0.7) { // Reduce connection density
+            neuralConnections.push(new NeuralConnectionClass(particles[i], particles[j]));
+          }
         }
       }
     };
     
     const animate = () => {
       if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
+      // Use efficient clearing
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      
+      // Update and draw connections first (behind particles)
       neuralConnections.forEach(connection => {
         connection.update();
         connection.draw();
       });
       
+      // Update and draw particles
       particles.forEach(particle => {
         particle.update();
         particle.draw();
       });
       
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
     
     init();
@@ -201,6 +220,9 @@ const NeuralCanvas = () => {
     
     return () => {
       window.removeEventListener('resize', setCanvasDimensions);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
     };
   }, []);
 
@@ -208,6 +230,9 @@ const NeuralCanvas = () => {
     <motion.canvas 
       ref={canvasRef} 
       className="absolute inset-0 z-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
     />
   );
 };
