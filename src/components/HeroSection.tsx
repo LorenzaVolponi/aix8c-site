@@ -1,5 +1,4 @@
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import ScrollReveal from './ScrollReveal';
@@ -8,6 +7,7 @@ const HeroSection = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const [isTyping, setIsTyping] = useState(true);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -17,14 +17,14 @@ const HeroSection = () => {
   // Smooth spring animations
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   
-  // Parallax transforms with cinematic effects
+  // Parallax transforms with cinematic effects - modified to keep content visible longer
   const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "80%"]);
-  const imageScale = useTransform(smoothProgress, [0, 0.3, 1], [1, 1.1, 0.8]);
-  const imageOpacity = useTransform(smoothProgress, [0, 0.2, 0.5], [1, 0.8, 0]);
+  const imageScale = useTransform(smoothProgress, [0, 0.5, 1], [1, 1.1, 0.6]);
+  const imageOpacity = useTransform(smoothProgress, [0, 0.3, 0.7], [1, 0.8, 0]);
   const imageRotate = useTransform(smoothProgress, [0, 1], [0, -5]);
-  const contentY = useTransform(smoothProgress, [0, 1], ["0%", "-30%"]);
-  const titleScale = useTransform(smoothProgress, [0, 0.5], [1, 0.9]);
-  const glitchIntensity = useTransform(smoothProgress, [0, 0.3], [0, 2]);
+  const contentY = useTransform(smoothProgress, [0, 1], ["0%", "-20%"]);
+  const contentOpacity = useTransform(smoothProgress, [0, 0.6, 1], [1, 1, 0]);
+  const titleScale = useTransform(smoothProgress, [0, 0.7], [1, 0.8]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -72,7 +72,6 @@ const HeroSection = () => {
         this.y += this.speedY;
         this.pulsePhase += 0.03;
         
-        // Enhanced boundary behavior
         if (this.x > canvas.width || this.x < 0) {
           this.speedX = -this.speedX * 0.9;
           this.x = Math.max(0, Math.min(canvas.width, this.x));
@@ -89,7 +88,6 @@ const HeroSection = () => {
         const pulseOpacity = this.opacity + Math.sin(this.pulsePhase) * 0.2;
         const glowPulse = this.glowRadius + Math.sin(this.pulsePhase * 2) * 5;
         
-        // Enhanced glow effect
         const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowPulse);
         gradient.addColorStop(0, this.color.replace(')', `, ${pulseOpacity})`).replace('rgb', 'rgba'));
         gradient.addColorStop(0.4, this.color.replace(')', `, ${pulseOpacity * 0.4})`).replace('rgb', 'rgba'));
@@ -100,7 +98,6 @@ const HeroSection = () => {
         ctx.arc(this.x, this.y, glowPulse, 0, Math.PI * 2);
         ctx.fill();
         
-        // Core particle
         ctx.fillStyle = this.color.replace(')', `, ${pulseOpacity})`).replace('rgb', 'rgba');
         ctx.beginPath();
         ctx.arc(this.x, this.y, pulseSize, 0, Math.PI * 2);
@@ -234,19 +231,6 @@ const HeroSection = () => {
     }
   };
 
-  const glitchVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: "spring",
-        damping: 20,
-        stiffness: 100
-      }
-    }
-  };
-
   return (
     <motion.section 
       ref={sectionRef}
@@ -278,7 +262,7 @@ const HeroSection = () => {
         transition={{ duration: 2 }}
       />
       
-      {/* Disruptive Photo Integration */}
+      {/* Photo Integration */}
       <motion.div
         ref={imageRef}
         className="absolute top-6 right-6 md:top-8 md:right-8 w-28 h-28 md:w-40 md:h-40 z-20 overflow-hidden"
@@ -309,11 +293,9 @@ const HeroSection = () => {
             alt="Lorenza Volponi"
             className="w-full h-full object-cover filter sepia-0 contrast-110 brightness-105 hover:sepia-0 hover:contrast-125 hover:brightness-110 transition-all duration-1000"
           />
-          {/* Holographic overlay */}
           <div className="absolute inset-0 bg-gradient-to-tr from-aix-gold/30 via-transparent to-aix-purple/20 mix-blend-overlay" />
           <div className="absolute inset-0 bg-gradient-to-bl from-aix-cyan/20 via-transparent to-aix-gold/30 mix-blend-color-dodge opacity-60" />
           
-          {/* Glitch effect overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
             animate={{
@@ -330,15 +312,14 @@ const HeroSection = () => {
         </div>
       </motion.div>
       
-      {/* Main Content with Enhanced Cinematography */}
+      {/* Main Content */}
       <motion.div 
         className="container mx-auto px-4 z-30 text-center relative"
-        style={{ y: contentY }}
+        style={{ y: contentY, opacity: contentOpacity }}
         variants={containerVariants}
       >
         <ScrollReveal direction="scale" delay={0.2}>
           <motion.div className="mb-12 relative" variants={itemVariants}>
-            {/* Enhanced background glow */}
             <motion.div 
               className="absolute inset-0 rounded-full opacity-30 blur-3xl"
               style={{
@@ -361,7 +342,6 @@ const HeroSection = () => {
             
             <motion.h1 
               className="relative text-4xl md:text-7xl font-bold mb-4 font-serif"
-              variants={glitchVariants}
               style={{ scale: titleScale }}
             >
               <motion.span
@@ -376,35 +356,19 @@ const HeroSection = () => {
                 }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
-                AIX8C
+                LORENZA VOLPONI
               </motion.span>
-              
-              {/* Glitch effect lines */}
-              <motion.div
-                className="absolute inset-0 overflow-hidden"
-                style={{ clipPath: "inset(40% 0 50% 0)" }}
-                animate={{
-                  x: [0, 2, -2, 0],
-                  opacity: [0, 0.8, 0]
-                }}
-                transition={{
-                  duration: 0.1,
-                  repeat: Infinity,
-                  repeatDelay: 3,
-                  times: [0, 0.5, 0.8, 1]
-                }}
-              >
-                <span className="holographic-text text-aix-cyan">AIX8C</span>
-              </motion.div>
             </motion.h1>
             
             <motion.p 
-              className="text-lg md:text-xl text-white/80 mb-8 font-light tracking-wider"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 1 }}
+              className="text-lg md:text-xl text-white/80 mb-8 font-light tracking-wider overflow-hidden border-r-2 border-aix-gold whitespace-nowrap"
+              style={{ 
+                width: isTyping ? "100%" : "100%",
+                animation: "typewriter 4s steps(40) 1s both, typewriter-blink 0.75s infinite"
+              }}
+              onAnimationEnd={() => setIsTyping(false)}
             >
-              ARTIFICIAL INTELLIGENCE 8 EXPERIENCE CREATIVE
+              ESTRATEGISTA DE INTELIGÊNCIA ARTIFICIAL
             </motion.p>
           </motion.div>
         </ScrollReveal>
@@ -416,30 +380,15 @@ const HeroSection = () => {
           >
             <motion.h2 
               className="text-3xl md:text-5xl text-white font-bold mb-8 relative"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "100%", opacity: 1 }}
-              transition={{ duration: 2.5, delay: 1.2 }}
+              animate={{
+                color: ["#06b6d4", "#8b5cf6", "#f59e0b", "#06b6d4"]
+              }}
+              transition={{ duration: 6, repeat: Infinity }}
               style={{
                 textShadow: "0 0 20px rgba(6, 182, 212, 0.4)"
               }}
             >
-              <motion.span
-                animate={{
-                  color: ["#06b6d4", "#8b5cf6", "#f59e0b", "#06b6d4"]
-                }}
-                transition={{ duration: 6, repeat: Infinity }}
-              >
-                CRIATIVIDADE COM UM CLIQUE EM SEU NOVO FUTURO
-              </motion.span>
-              
-              {/* Typing cursor */}
-              <motion.span
-                className="border-r-2 border-aix-gold"
-                animate={{ opacity: [1, 0] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-              >
-                |
-              </motion.span>
+              ARQUITETA DE FUTUROS DIGITAIS
             </motion.h2>
           </motion.div>
         </ScrollReveal>
@@ -549,19 +498,6 @@ const HeroSection = () => {
                   transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 />
               </motion.div>
-              
-              {/* Glow effect */}
-              <motion.div
-                className="absolute inset-0 w-8 h-12 rounded-full"
-                animate={{
-                  boxShadow: [
-                    "0 0 0px rgba(6, 182, 212, 0)",
-                    "0 0 30px rgba(6, 182, 212, 0.4)",
-                    "0 0 0px rgba(6, 182, 212, 0)"
-                  ]
-                }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-              />
             </motion.div>
           </motion.div>
         </ScrollReveal>
