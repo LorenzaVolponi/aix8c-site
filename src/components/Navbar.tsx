@@ -1,26 +1,44 @@
 
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Menu, X, Calendar, Zap, Navigation, Home, User, Briefcase, FolderOpen, Bot } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  
   const { scrollY } = useScroll();
-  const navOpacity = useTransform(scrollY, [0, 100], [0.85, 0.98]);
-  const navBlur = useTransform(scrollY, [0, 100], [0, 25]);
-  const logoGlow = useTransform(scrollY, [0, 200], [0, 1]);
+  const navOpacity = useTransform(scrollY, [0, 100], [0.95, 0.98]);
+  const navBlur = useTransform(scrollY, [0, 100], [15, 30]);
+  const logoScale = useTransform(scrollY, [0, 200], [1, 0.9]);
 
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 20;
       setScrolled(isScrolled);
+
+      // Update active section based on scroll position
+      const sections = ['home', 'sobre', 'sobre-nos', 'expertise', 'portfolio', 'aussy'];
+      let current = 'home';
+
+      sections.forEach(section => {
+        const element = document.getElementById(section === 'home' ? '' : section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            current = section;
+          }
+        }
+      });
+
+      setActiveSection(current);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navVariants = {
@@ -37,203 +55,258 @@ const Navbar = () => {
     }
   };
 
-  const linkVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring", damping: 20 }
+  const navLinks = [
+    { href: "#sobre", label: "Sobre", icon: User, id: 'sobre' },
+    { href: "#sobre-nos", label: "Sobre Nós", icon: Navigation, id: 'sobre-nos' },
+    { href: "#expertise", label: "Expertise", icon: Zap, id: 'expertise' },
+    { href: "#portfolio", label: "Portfólio", icon: FolderOpen, id: 'portfolio' },
+    { href: "#aussy", label: "Aussy", icon: Bot, id: 'aussy' }
+  ];
+
+  const handleNavClick = (href: string) => {
+    setMobileMenuOpen(false);
+    const elementId = href.replace('#', '');
+    const element = document.getElementById(elementId);
+    
+    if (element) {
+      const yOffset = -80;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
-    <motion.nav 
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-700",
-        scrolled 
-          ? "bg-aix-black/95 backdrop-blur-2xl py-4 shadow-2xl border-b border-aix-purple/30" 
-          : "bg-transparent py-8"
-      )}
-      style={{ 
-        backdropFilter: `blur(${navBlur}px)`,
-        backgroundColor: scrolled ? `rgba(10, 10, 10, ${navOpacity.get()})` : 'transparent',
-        boxShadow: scrolled ? '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)' : 'none'
-      }}
-      initial="hidden"
-      animate="visible"
-      variants={navVariants}
-    >
-      <div className="container mx-auto flex justify-between items-center px-6">
-        {/* Enhanced Logo with Cinematic Effects */}
-        <motion.a 
-          href="#" 
-          className="relative text-3xl md:text-4xl font-bold font-serif group"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <motion.span
-            className="relative z-10 holographic-text"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            style={{
-              filter: `drop-shadow(0 0 ${logoGlow.get() * 10}px rgba(245, 158, 11, 0.6))`
-            }}
-          >
-            AIX8C
-          </motion.span>
-          
-          {/* Enhanced logo glow effects */}
-          <motion.div
-            className="absolute inset-0 holographic-text opacity-0 blur-sm group-hover:opacity-40 transition-opacity duration-500"
-            animate={{
-              textShadow: [
-                "0 0 20px rgba(245, 158, 11, 0.3)",
-                "0 0 40px rgba(139, 92, 246, 0.3)",
-                "0 0 20px rgba(6, 182, 212, 0.3)",
-                "0 0 20px rgba(245, 158, 11, 0.3)"
-              ]
-            }}
-            transition={{ duration: 4, repeat: Infinity }}
-          >
-            AIX8C
-          </motion.div>
-          
-          {/* Cinematic particle effect */}
-          <motion.div
-            className="absolute -inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            animate={{
-              background: [
-                "radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%)",
-                "radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%)",
-                "radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%)"
-              ]
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
-        </motion.a>
-        
-        {/* Enhanced Navigation Links */}
-        <motion.div 
-          className="hidden md:flex space-x-16 items-center"
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.8
-              }
-            }
-          }}
-        >
-          {navLinks.map((link, index) => (
-            <motion.div key={index} variants={linkVariants}>
-              <NavLink href={link.href}>{link.label}</NavLink>
-            </motion.div>
-          ))}
-        </motion.div>
-        
-        {/* Enhanced CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.2, duration: 1 }}
-          className="relative"
-        >
-          <motion.div
-            whileHover={{ scale: 1.08 }}
+    <>
+      <motion.nav 
+        className={cn(
+          "fixed top-0 w-full z-50 transition-all duration-700",
+          scrolled 
+            ? "bg-aix-black/95 backdrop-blur-2xl py-3 shadow-2xl border-b border-aix-gold/20" 
+            : "bg-transparent py-6"
+        )}
+        style={{ 
+          backdropFilter: `blur(${navBlur.get()}px)`,
+          backgroundColor: scrolled ? `rgba(10, 10, 10, ${navOpacity.get()})` : 'transparent',
+        }}
+        initial="hidden"
+        animate="visible"
+        variants={navVariants}
+      >
+        <div className="container mx-auto flex justify-between items-center px-6">
+          {/* Enhanced Logo */}
+          <motion.a 
+            href="#" 
+            className="relative text-2xl md:text-3xl font-bold font-serif group z-10"
+            style={{ scale: logoScale }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="relative group"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
-            {/* Button background glow */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-purple rounded-xl opacity-0 blur-lg group-hover:opacity-60 transition-all duration-500"
+            <motion.span
+              className="relative z-10 bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold bg-clip-text text-transparent"
               animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0, 0.3, 0]
+                backgroundPosition: ['0%', '100%', '0%'],
               }}
               transition={{ duration: 3, repeat: Infinity }}
+              style={{ backgroundSize: '200% auto' }}
+            >
+              AIX8C
+            </motion.span>
+            
+            {/* Logo glow effect */}
+            <motion.div
+              className="absolute inset-0 blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+              animate={{
+                textShadow: [
+                  "0 0 20px rgba(245, 158, 11, 0.5)",
+                  "0 0 30px rgba(245, 158, 11, 0.7)",
+                  "0 0 20px rgba(245, 158, 11, 0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              AIX8C
+            </motion.div>
+          </motion.a>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-8 items-center">
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1 }}
+              >
+                <NavLink 
+                  href={link.href} 
+                  isActive={activeSection === link.id}
+                  onClick={() => handleNavClick(link.href)}
+                  icon={link.icon}
+                >
+                  {link.label}
+                </NavLink>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.2 }}
+            className="hidden md:block"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button 
+                className="relative bg-gradient-to-r from-aix-gold to-yellow-500 hover:from-yellow-500 hover:to-aix-gold text-black font-semibold px-6 py-3 rounded-xl transition-all duration-300 overflow-hidden group"
+                onClick={() => window.open('https://calendly.com/lorenzavolponi', '_blank')}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.6 }}
+                />
+                <Calendar className="w-4 h-4 mr-2" />
+                <span className="relative z-10">Agendar</span>
+              </Button>
+            </motion.div>
+          </motion.div>
+
+          {/* Mobile Menu Button */}
+          <motion.button
+            className="md:hidden z-10 p-2 text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </motion.button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-aix-black/95 backdrop-blur-xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
             />
             
-            <Button className="relative bg-gradient-purple hover:bg-gradient-to-r hover:from-purple-600 hover:to-cyan-500 transition-all duration-500 px-8 py-4 rounded-xl border border-aix-purple/30 backdrop-blur-sm overflow-hidden group">
-              {/* Enhanced shine effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                initial={{ x: '-100%', skewX: -20 }}
-                whileHover={{ x: '100%' }}
-                transition={{ duration: 1, ease: "easeInOut" }}
-              />
+            <motion.div
+              className="relative h-full flex flex-col justify-center items-center space-y-8"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 20 }}
+            >
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <button
+                    onClick={() => handleNavClick(link.href)}
+                    className="flex items-center space-x-3 text-2xl text-white/90 hover:text-aix-gold transition-colors duration-300"
+                  >
+                    <link.icon size={24} />
+                    <span>{link.label}</span>
+                  </button>
+                </motion.div>
+              ))}
               
-              {/* Holographic overlay */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-aix-cyan/20 via-aix-purple/20 to-aix-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                animate={{
-                  background: [
-                    "linear-gradient(45deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2), rgba(245, 158, 11, 0.2))",
-                    "linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2))",
-                    "linear-gradient(225deg, rgba(139, 92, 246, 0.2), rgba(245, 158, 11, 0.2), rgba(6, 182, 212, 0.2))"
-                  ]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-              
-              <a href="#contato" className="relative z-10 font-semibold text-lg">
-                Contato Neural
-              </a>
-            </Button>
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.1 }}
+              >
+                <Button 
+                  className="bg-gradient-to-r from-aix-gold to-yellow-500 text-black font-semibold px-8 py-4 text-lg rounded-xl"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    window.open('https://calendly.com/lorenzavolponi', '_blank');
+                  }}
+                >
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Agendar Conversa
+                </Button>
+              </motion.div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
-    </motion.nav>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <motion.a 
-    href={href} 
-    className="relative text-white/90 hover:text-white transition-all duration-500 font-medium text-lg group"
-    whileHover={{ y: -3 }}
+const NavLink = ({ 
+  href, 
+  children, 
+  isActive, 
+  onClick, 
+  icon: Icon 
+}: { 
+  href: string; 
+  children: React.ReactNode; 
+  isActive?: boolean;
+  onClick?: () => void;
+  icon: React.ComponentType<any>;
+}) => (
+  <motion.button 
+    onClick={onClick}
+    className={cn(
+      "relative text-white/90 hover:text-white transition-all duration-300 font-medium text-lg group flex items-center space-x-2",
+      isActive && "text-aix-gold"
+    )}
+    whileHover={{ y: -2 }}
   >
+    <Icon size={18} className={cn("transition-colors", isActive ? "text-aix-gold" : "text-white/70")} />
     <span className="relative z-10">{children}</span>
     
-    {/* Enhanced underline animation */}
+    {/* Active indicator */}
     <motion.div
-      className="absolute -bottom-2 left-0 h-0.5 bg-gradient-to-r from-aix-cyan via-aix-purple to-aix-gold origin-left"
+      className="absolute -bottom-3 left-0 h-0.5 bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold"
       initial={{ scaleX: 0 }}
+      animate={{ scaleX: isActive ? 1 : 0 }}
       whileHover={{ scaleX: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      style={{ width: '100%' }}
+      transition={{ duration: 0.3 }}
+      style={{ width: '100%', originX: 0 }}
     />
     
-    {/* Holographic text effect */}
+    {/* Glow effect */}
     <motion.div
-      className="absolute inset-0 opacity-0 blur-sm group-hover:opacity-40 transition-all duration-500"
-      animate={{
-        color: ["#06b6d4", "#8b5cf6", "#f59e0b", "#06b6d4"]
-      }}
-      transition={{ duration: 3, repeat: Infinity }}
-    >
-      {children}
-    </motion.div>
-    
-    {/* Glow effect on hover */}
-    <motion.div
-      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
       style={{
-        textShadow: "0 0 15px rgba(6, 182, 212, 0.4), 0 0 30px rgba(139, 92, 246, 0.3)"
+        textShadow: "0 0 15px rgba(245, 158, 11, 0.5)"
       }}
     >
       {children}
     </motion.div>
-  </motion.a>
+  </motion.button>
 );
-
-const navLinks = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#sobre-nos", label: "Sobre Nós" },
-  { href: "#expertise", label: "Expertise" },
-  { href: "#portfolio", label: "Portfólio" },
-  { href: "#aussy", label: "Aussy" }
-];
 
 export default Navbar;

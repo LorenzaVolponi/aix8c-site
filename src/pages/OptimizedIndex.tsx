@@ -1,35 +1,111 @@
 
-import React, { useEffect, lazy, Suspense } from "react";
+import React, { useEffect, lazy, Suspense, useState } from "react";
 import Navbar from "@/components/Navbar";
+import IntelligentLoader from "@/components/ui/IntelligentLoader";
+import MicroInteractions from "@/components/ui/MicroInteractions";
+import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 
-// Lazy load components for optimal performance
-const CinematicHeroSection = lazy(() => import("@/components/hero/CinematicHeroSection"));
-const AboutSection = lazy(() => import("@/components/AboutSection"));
-const SobreNosSection = lazy(() => import("@/components/SobreNosSection"));
-const JornadaSection = lazy(() => import("@/components/JornadaSection"));
-const PortfolioSection = lazy(() => import("@/components/PortfolioSection"));
-const AussySection = lazy(() => import("@/components/AussySection"));
-const ContactSection = lazy(() => import("@/components/ContactSection"));
-const Footer = lazy(() => import("@/components/Footer"));
+// Lazy load components with intelligent loading
+const CinematicHeroSection = lazy(() => 
+  import("@/components/hero/CinematicHeroSection").then(module => ({ 
+    default: module.default 
+  }))
+);
 
-// Premium loading component with cinematic theme
-const PremiumLoader = () => (
-  <div className="flex items-center justify-center h-64 bg-aix-black">
-    <div className="flex space-x-3">
-      {[...Array(3)].map((_, i) => (
-        <div
-          key={i}
-          className="w-4 h-4 bg-gradient-to-r from-aix-gold to-yellow-500 rounded-full animate-pulse"
-          style={{ animationDelay: `${i * 0.3}s` }}
-        />
-      ))}
-    </div>
+const AboutSection = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/AboutSection"));
+    }, 100);
+  })
+);
+
+const SobreNosSection = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/SobreNosSection"));
+    }, 200);
+  })
+);
+
+const JornadaSection = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/JornadaSection"));
+    }, 300);
+  })
+);
+
+const PortfolioSection = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/PortfolioSection"));
+    }, 400);
+  })
+);
+
+const AussySection = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/AussySection"));
+    }, 500);
+  })
+);
+
+const ContactSection = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/ContactSection"));
+    }, 600);
+  })
+);
+
+const Footer = lazy(() => 
+  new Promise<{ default: React.ComponentType<any> }>(resolve => {
+    setTimeout(() => {
+      resolve(import("@/components/Footer"));
+    }, 700);
+  })
+);
+
+const PremiumLoader = ({ message }: { message?: string }) => (
+  <div className="flex items-center justify-center h-96 bg-aix-black">
+    <IntelligentLoader 
+      isLoading={true} 
+      progress={75} 
+      message={message || "Carregando seção..."} 
+      type="premium"
+    />
   </div>
 );
 
 const OptimizedIndex = () => {
-  // Enhanced smooth scroll with performance optimization
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const { isLowPerformance, fps } = usePerformanceMonitor();
+
   useEffect(() => {
+    // Simulate progressive loading
+    const loadingSteps = [
+      { progress: 20, message: "Inicializando experiência..." },
+      { progress: 40, message: "Carregando interface..." },
+      { progress: 60, message: "Preparando conteúdo..." },
+      { progress: 80, message: "Otimizando performance..." },
+      { progress: 100, message: "Finalizando..." }
+    ];
+
+    let currentStep = 0;
+    const loadingInterval = setInterval(() => {
+      if (currentStep < loadingSteps.length) {
+        setLoadingProgress(loadingSteps[currentStep].progress);
+        currentStep++;
+      } else {
+        clearInterval(loadingInterval);
+        setTimeout(() => setIsInitialLoading(false), 500);
+      }
+    }, 400);
+
+    // Enhanced smooth scroll with performance optimization
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
@@ -51,15 +127,15 @@ const OptimizedIndex = () => {
       }
     };
     
-    // Performance optimization for scroll events
+    // Performance-optimized scroll handler
     let ticking = false;
     const handleScroll = () => {
-      if (!ticking) {
+      if (!ticking && !isLowPerformance) {
         requestAnimationFrame(() => {
           const scrolled = window.pageYOffset;
-          const rate = scrolled * -0.3;
+          const rate = scrolled * -0.2;
           
-          // Apply parallax effects to background elements
+          // Apply parallax effects only if performance allows
           const parallaxElements = document.querySelectorAll('.parallax-bg');
           parallaxElements.forEach((element) => {
             (element as HTMLElement).style.transform = `translateY(${rate}px)`;
@@ -72,20 +148,38 @@ const OptimizedIndex = () => {
     };
     
     document.addEventListener('click', handleAnchorClick);
-    window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Enhanced preload critical resources
+    if (!isLowPerformance) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    // Preload critical resources with priority
     const preloadCriticalResources = () => {
-      // Preload profile image
+      // Preload hero image with high priority
       const img = new Image();
       img.src = "/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png";
+      img.loading = 'eager';
       
-      // Preload key fonts for better performance
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.href = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
-      link.as = 'style';
-      document.head.appendChild(link);
+      // Preload critical fonts
+      const fontLink = document.createElement('link');
+      fontLink.rel = 'preload';
+      fontLink.href = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
+      fontLink.as = 'style';
+      fontLink.onload = () => {
+        fontLink.rel = 'stylesheet';
+      };
+      document.head.appendChild(fontLink);
+
+      // Preload critical CSS
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          // Use idle time for non-critical preloading
+          const cssLink = document.createElement('link');
+          cssLink.rel = 'prefetch';
+          cssLink.href = '/src/index.css';
+          document.head.appendChild(cssLink);
+        });
+      }
     };
     
     preloadCriticalResources();
@@ -93,43 +187,67 @@ const OptimizedIndex = () => {
     return () => {
       document.removeEventListener('click', handleAnchorClick);
       window.removeEventListener('scroll', handleScroll);
+      clearInterval(loadingInterval);
     };
-  }, []);
+  }, [isLowPerformance]);
+
+  // Show initial loading screen
+  if (isInitialLoading) {
+    return (
+      <div className="min-h-screen bg-aix-black">
+        <IntelligentLoader 
+          isLoading={true} 
+          progress={loadingProgress} 
+          message="Preparando experiência AIX8C..."
+          type="neural"
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-aix-black text-white">
+    <div className="min-h-screen bg-aix-black text-white relative">
+      {/* Performance warning for users */}
+      {isLowPerformance && (
+        <div className="fixed top-20 right-4 z-50 bg-yellow-500/90 text-black px-4 py-2 rounded-lg text-sm font-medium">
+          Performance otimizada ativa (FPS: {fps})
+        </div>
+      )}
+
       <Navbar />
+      <MicroInteractions />
+      
       <main>
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando experiência heroica..." />}>
           <CinematicHeroSection />
         </Suspense>
         
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
           <AboutSection />
         </Suspense>
         
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando nossa história..." />}>
           <SobreNosSection />
         </Suspense>
         
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando jornada..." />}>
           <JornadaSection />
         </Suspense>
         
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando portfólio..." />}>
           <PortfolioSection />
         </Suspense>
         
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
           <AussySection />
         </Suspense>
         
-        <Suspense fallback={<PremiumLoader />}>
+        <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
           <ContactSection />
         </Suspense>
       </main>
       
-      <Suspense fallback={<PremiumLoader />}>
+      <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
         <Footer />
       </Suspense>
     </div>
