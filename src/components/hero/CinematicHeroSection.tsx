@@ -1,8 +1,9 @@
 
 import React, { useRef, Suspense, lazy } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { Zap, ArrowRight, Calendar, Anchor, Compass, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import AIX8CLogoAnimation from './AIX8CLogoAnimation';
 
 // Lazy load components for optimal performance
 const OptimizedNeuralCanvas = lazy(() => import('./OptimizedNeuralCanvas'));
@@ -112,6 +113,14 @@ const CinematicHeroSection = () => {
         transition={{ duration: 3 }}
       />
 
+      {/* AIX8C Logo Animation - Centro da tela */}
+      <motion.div 
+        className="absolute inset-0 z-20 flex items-center justify-center"
+        style={{ opacity: contentOpacity }}
+      >
+        <AIX8CLogoAnimation />
+      </motion.div>
+
       {/* Floating Navigation Elements */}
       <motion.div className="absolute top-8 left-8 z-40">
         <motion.div
@@ -133,34 +142,6 @@ const CinematicHeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Column - Content */}
           <div className="space-y-8">
-            {/* AIX8C Brand Badge */}
-            <motion.div
-              custom={0}
-              variants={itemVariants}
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-aix-gold/20 via-blue-400/10 to-aix-gold/20 border border-aix-gold/30 backdrop-blur-md"
-            >
-              <Navigation className="w-5 h-5 text-aix-gold animate-pulse" />
-              <span className="text-aix-gold font-bold text-lg tracking-wider">AIX8C</span>
-              <div className="w-1 h-1 bg-aix-gold rounded-full animate-pulse" />
-              <span className="text-blue-300 font-medium text-sm">Artificial Intelligence Experience Creative</span>
-            </motion.div>
-
-            {/* Hero Title with Naval Theme */}
-            <motion.div custom={1} variants={itemVariants}>
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                <span className="block text-white/90 font-serif text-3xl md:text-4xl font-light mb-2">
-                  Navegando pelos
-                </span>
-                <span className="block bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold bg-clip-text text-transparent animate-shimmer bg-[length:200%_100%]">
-                  Mares da IA
-                </span>
-                <span className="block text-white/80 text-2xl md:text-3xl font-light mt-2 flex items-center gap-3">
-                  <Compass className="w-8 h-8 text-blue-400 animate-spin" style={{ animationDuration: '8s' }} />
-                  Transformando Conexões
-                </span>
-              </h1>
-            </motion.div>
-
             {/* Mission & Vision Cards */}
             <motion.div custom={2} variants={itemVariants} className="grid md:grid-cols-2 gap-4">
               <div className="glass-card p-6 border border-blue-400/20 hover:border-blue-400/40 transition-all duration-300 group">

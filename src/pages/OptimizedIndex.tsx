@@ -1,4 +1,3 @@
-
 import React, { useEffect, lazy, Suspense, useState } from "react";
 import Navbar from "@/components/Navbar";
 import IntelligentLoader from "@/components/ui/IntelligentLoader";
@@ -82,7 +81,7 @@ const PremiumLoader = ({ message }: { message?: string }) => (
 const OptimizedIndex = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const { isLowPerformance, fps } = usePerformanceMonitor();
+  const { isLowPerformance } = usePerformanceMonitor();
 
   useEffect(() => {
     // Simulate progressive loading
@@ -207,13 +206,6 @@ const OptimizedIndex = () => {
 
   return (
     <div className="min-h-screen bg-aix-black text-white relative">
-      {/* Performance warning for users */}
-      {isLowPerformance && (
-        <div className="fixed top-20 right-4 z-50 bg-yellow-500/90 text-black px-4 py-2 rounded-lg text-sm font-medium">
-          Performance otimizada ativa (FPS: {fps})
-        </div>
-      )}
-
       <Navbar />
       <MicroInteractions />
       
