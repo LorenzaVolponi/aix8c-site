@@ -3,7 +3,7 @@ import React, { useEffect, lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 
 // Lazy load components for optimal performance
-const EnhancedHeroSection = lazy(() => import("@/components/hero/EnhancedHeroSection"));
+const CinematicHeroSection = lazy(() => import("@/components/hero/CinematicHeroSection"));
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const SobreNosSection = lazy(() => import("@/components/SobreNosSection"));
 const JornadaSection = lazy(() => import("@/components/JornadaSection"));
@@ -12,14 +12,14 @@ const AussySection = lazy(() => import("@/components/AussySection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 const Footer = lazy(() => import("@/components/Footer"));
 
-// Enhanced loading component with gold theme
-const SectionLoader = () => (
+// Premium loading component with cinematic theme
+const PremiumLoader = () => (
   <div className="flex items-center justify-center h-64 bg-aix-black">
     <div className="flex space-x-3">
       {[...Array(3)].map((_, i) => (
         <div
           key={i}
-          className="w-4 h-4 bg-gradient-gold rounded-full animate-pulse"
+          className="w-4 h-4 bg-gradient-to-r from-aix-gold to-yellow-500 rounded-full animate-pulse"
           style={{ animationDelay: `${i * 0.3}s` }}
         />
       ))}
@@ -43,7 +43,6 @@ const OptimizedIndex = () => {
           const yOffset = -80;
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
           
-          // Use optimized scroll behavior with enhanced smoothness
           window.scrollTo({
             top: y,
             behavior: 'smooth'
@@ -57,9 +56,8 @@ const OptimizedIndex = () => {
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          // Enhanced scroll-based optimizations
           const scrolled = window.pageYOffset;
-          const rate = scrolled * -0.5;
+          const rate = scrolled * -0.3;
           
           // Apply parallax effects to background elements
           const parallaxElements = document.querySelectorAll('.parallax-bg');
@@ -102,36 +100,36 @@ const OptimizedIndex = () => {
     <div className="min-h-screen bg-aix-black text-white">
       <Navbar />
       <main>
-        <Suspense fallback={<SectionLoader />}>
-          <EnhancedHeroSection />
+        <Suspense fallback={<PremiumLoader />}>
+          <CinematicHeroSection />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PremiumLoader />}>
           <AboutSection />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PremiumLoader />}>
           <SobreNosSection />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PremiumLoader />}>
           <JornadaSection />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PremiumLoader />}>
           <PortfolioSection />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PremiumLoader />}>
           <AussySection />
         </Suspense>
         
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PremiumLoader />}>
           <ContactSection />
         </Suspense>
       </main>
       
-      <Suspense fallback={<SectionLoader />}>
+      <Suspense fallback={<PremiumLoader />}>
         <Footer />
       </Suspense>
     </div>
