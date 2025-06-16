@@ -7,21 +7,20 @@ const EnhancedHeroSection = lazy(() => import("@/components/hero/EnhancedHeroSec
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const SobreNosSection = lazy(() => import("@/components/SobreNosSection"));
 const JornadaSection = lazy(() => import("@/components/JornadaSection"));
-const ExpertiseSection = lazy(() => import("@/components/ExpertiseSection"));
 const PortfolioSection = lazy(() => import("@/components/PortfolioSection"));
 const AussySection = lazy(() => import("@/components/AussySection"));
 const ContactSection = lazy(() => import("@/components/ContactSection"));
 const Footer = lazy(() => import("@/components/Footer"));
 
-// Loading component with cinematic style
+// Enhanced loading component with gold theme
 const SectionLoader = () => (
   <div className="flex items-center justify-center h-64 bg-aix-black">
-    <div className="flex space-x-2">
+    <div className="flex space-x-3">
       {[...Array(3)].map((_, i) => (
         <div
           key={i}
-          className="w-3 h-3 bg-aix-gold rounded-full animate-pulse"
-          style={{ animationDelay: `${i * 0.2}s` }}
+          className="w-4 h-4 bg-gradient-gold rounded-full animate-pulse"
+          style={{ animationDelay: `${i * 0.3}s` }}
         />
       ))}
     </div>
@@ -44,7 +43,7 @@ const OptimizedIndex = () => {
           const yOffset = -80;
           const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
           
-          // Use optimized scroll behavior
+          // Use optimized scroll behavior with enhanced smoothness
           window.scrollTo({
             top: y,
             behavior: 'smooth'
@@ -58,7 +57,16 @@ const OptimizedIndex = () => {
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          // Add any scroll-based optimizations here
+          // Enhanced scroll-based optimizations
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * -0.5;
+          
+          // Apply parallax effects to background elements
+          const parallaxElements = document.querySelectorAll('.parallax-bg');
+          parallaxElements.forEach((element) => {
+            (element as HTMLElement).style.transform = `translateY(${rate}px)`;
+          });
+          
           ticking = false;
         });
         ticking = true;
@@ -68,11 +76,18 @@ const OptimizedIndex = () => {
     document.addEventListener('click', handleAnchorClick);
     window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Preload critical resources
+    // Enhanced preload critical resources
     const preloadCriticalResources = () => {
       // Preload profile image
       const img = new Image();
       img.src = "/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png";
+      
+      // Preload key fonts for better performance
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.href = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
+      link.as = 'style';
+      document.head.appendChild(link);
     };
     
     preloadCriticalResources();
@@ -101,10 +116,6 @@ const OptimizedIndex = () => {
         
         <Suspense fallback={<SectionLoader />}>
           <JornadaSection />
-        </Suspense>
-        
-        <Suspense fallback={<SectionLoader />}>
-          <ExpertiseSection />
         </Suspense>
         
         <Suspense fallback={<SectionLoader />}>
