@@ -5,8 +5,8 @@ import MicroInteractions from "@/components/ui/MicroInteractions";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 
 // Lazy load components with intelligent loading
-const TypewriterHeroSection = lazy(() => 
-  import("@/components/hero/TypewriterHeroSection").then(module => ({ 
+const CinematicHeroSection = lazy(() => 
+  import("@/components/hero/CinematicHeroSection").then(module => ({ 
     default: module.default 
   }))
 );
@@ -211,7 +211,7 @@ const OptimizedIndex = () => {
       
       <main>
         <Suspense fallback={<PremiumLoader message="Carregando experiência heroica..." />}>
-          <TypewriterHeroSection />
+          <CinematicHeroSection />
         </Suspense>
         
         <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
