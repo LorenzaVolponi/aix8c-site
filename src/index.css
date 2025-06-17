@@ -56,7 +56,6 @@
     @apply bg-aix-black text-foreground font-sans;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    /* Enhanced font rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -64,11 +63,10 @@
 
   html {
     scroll-behavior: smooth;
-    /* Improved scroll performance */
     scroll-padding-top: 80px;
   }
 
-  /* Ultra-premium scrollbar with enhanced gold theme */
+  /* Enhanced scrollbar styles */
   ::-webkit-scrollbar {
     width: 12px;
   }
@@ -97,7 +95,6 @@
     transform: scale(1.05);
   }
 
-  /* Enhanced selection styles */
   ::selection {
     background: rgba(245, 158, 11, 0.3);
     color: white;
@@ -122,7 +119,7 @@
     font-family: 'Playfair Display', serif;
   }
   
-  /* Ultra-premium Glass Card with enhanced physics */
+  /* Enhanced Glass Card with perfect positioning */
   .glass-card {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(35px) saturate(2) brightness(1.1);
@@ -173,7 +170,26 @@
     left: 100%;
   }
 
-  /* Enhanced loading animations with GPU acceleration */
+  /* Perfect centering utility */
+  .center-absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Enhanced logo positioning */
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 2rem;
+  }
+
+  /* Optimized animations */
   .premium-loader {
     background: linear-gradient(
       90deg,
@@ -188,7 +204,6 @@
     will-change: background-position;
   }
 
-  /* Advanced micro-interactions */
   .interactive-element {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
@@ -203,7 +218,6 @@
     transform: translateY(0) scale(0.98);
   }
 
-  /* Ultra-smooth button animations */
   .premium-button {
     background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
     box-shadow: 
@@ -250,7 +264,6 @@
     transform: translateY(-1px) scale(1.02);
   }
 
-  /* Enhanced neural glow effects */
   .neural-glow {
     box-shadow: 
       0 0 40px rgba(245, 158, 11, 0.5), 
@@ -267,14 +280,12 @@
       0 0 180px rgba(245, 158, 11, 0.2);
   }
 
-  /* Performance-optimized animations */
   .optimized-animation {
     will-change: transform, opacity;
     backface-visibility: hidden;
     perspective: 1000px;
   }
 
-  /* Enhanced vignette effects */
   .cinematic-vignette {
     background: radial-gradient(
       ellipse at center,
@@ -286,7 +297,7 @@
   }
 }
 
-/* Ultra-smooth keyframe animations with GPU acceleration */
+/* Enhanced keyframe animations */
 @keyframes shimmer {
   0% { background-position: -400% 0; }
   50% { background-position: 0% 0; }
@@ -331,7 +342,7 @@
   }
 }
 
-/* Novas animações para o logo AIX8C */
+/* Enhanced logo animations */
 @keyframes particle-formation {
   0% {
     opacity: 0;
@@ -365,11 +376,12 @@
   }
 }
 
-/* Enhanced responsive optimizations */
+/* Responsive optimizations */
 @media (max-width: 768px) {
   .glass-card {
     backdrop-filter: blur(25px);
     border-radius: 16px;
+    margin: 0.5rem;
   }
   
   .neural-glow {
@@ -381,6 +393,16 @@
   .premium-button {
     padding: 12px 24px;
     font-size: 16px;
+  }
+
+  .logo-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-container {
+    padding: 0.5rem;
   }
 }
 
@@ -404,7 +426,6 @@
   }
 }
 
-/* High contrast and accessibility improvements */
 @media (prefers-contrast: high) {
   .glass-card {
     border: 2px solid rgba(245, 158, 11, 0.6);
@@ -416,7 +437,6 @@
   }
 }
 
-/* Dark mode enhancements */
 @media (prefers-color-scheme: dark) {
   .glass-card {
     background: rgba(255, 255, 255, 0.05);
@@ -424,7 +444,6 @@
   }
 }
 
-/* Print styles */
 @media print {
   .glass-card {
     background: white !important;
@@ -434,12 +453,10 @@
 }
 
 @layer utilities {
-  /* Gradiente radial personalizado para efeitos de luz */
   .bg-gradient-radial {
     background: radial-gradient(var(--tw-gradient-stops));
   }
   
-  /* Efeito de texto brilhante */
   .text-glow {
     text-shadow: 
       0 0 10px currentColor,
@@ -447,13 +464,23 @@
       0 0 40px currentColor;
   }
   
-  /* Animação de formação de partículas */
   .particle-formation {
     animation: particle-formation 3s ease-out forwards;
   }
   
-  /* Efeito de assembly digital */
   .digital-assembly {
     animation: digital-assembly 2s ease-out forwards;
+  }
+
+  /* Perfect centering utilities */
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .grid-center {
+    display: grid;
+    place-items: center;
   }
 }

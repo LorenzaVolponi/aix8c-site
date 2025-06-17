@@ -31,7 +31,9 @@ const CinematicHeroSection = () => {
   });
   
   const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
-  const contentOpacity = useTransform(smoothProgress, [0, 0.5, 1], [1, 1, 0.3]);
+  const logoOpacity = useTransform(smoothProgress, [0, 0.3, 0.8], [1, 1, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0.3, 0.6, 1], [0, 1, 1]);
+  const contentY = useTransform(scrollYProgress, [0.3, 1], ["100%", "0%"]);
 
   const handleMouseMove = (event: React.MouseEvent) => {
     const { clientX, clientY } = event;
@@ -56,7 +58,7 @@ const CinematicHeroSection = () => {
   return (
     <motion.section 
       ref={sectionRef}
-      className="relative h-screen flex items-center justify-center overflow-hidden bg-aix-black"
+      className="relative min-h-screen flex flex-col overflow-hidden bg-aix-black"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -84,15 +86,15 @@ const CinematicHeroSection = () => {
         className="absolute inset-0 z-10"
         style={{
           background: `
-            radial-gradient(ellipse at 20% 30%, rgba(245, 158, 11, 0.2) 0%, transparent 60%),
-            radial-gradient(ellipse at 80% 70%, rgba(251, 191, 36, 0.15) 0%, transparent 55%),
-            radial-gradient(ellipse at 50% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+            radial-gradient(ellipse at 20% 30%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 70%, rgba(251, 191, 36, 0.1) 0%, transparent 55%),
+            radial-gradient(ellipse at 50% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
             linear-gradient(135deg, 
-              rgba(0, 0, 0, 0.9) 0%, 
-              rgba(10, 10, 10, 0.7) 30%,
-              rgba(5, 15, 20, 0.8) 50%,
-              rgba(10, 10, 10, 0.7) 70%,
-              rgba(0, 0, 0, 0.9) 100%
+              rgba(0, 0, 0, 0.95) 0%, 
+              rgba(10, 10, 10, 0.8) 30%,
+              rgba(5, 15, 20, 0.85) 50%,
+              rgba(10, 10, 10, 0.8) 70%,
+              rgba(0, 0, 0, 0.95) 100%
             )
           `
         }}
@@ -100,14 +102,6 @@ const CinematicHeroSection = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 3 }}
       />
-
-      {/* AIX8C Logo Animation - Centro da tela */}
-      <motion.div 
-        className="absolute inset-0 z-20 flex items-center justify-center"
-        style={{ opacity: contentOpacity }}
-      >
-        <AIX8CLogoAnimation />
-      </motion.div>
 
       {/* Floating Navigation Elements */}
       <motion.div className="absolute top-8 left-8 z-40">
@@ -122,29 +116,49 @@ const CinematicHeroSection = () => {
         </motion.div>
       </motion.div>
 
-      {/* Main Content Container */}
+      {/* Main Logo Section - Centered and Prominent */}
       <motion.div 
-        className="container mx-auto px-4 z-30 relative"
-        style={{ opacity: contentOpacity }}
+        className="flex-1 flex items-center justify-center z-30 relative"
+        style={{ opacity: logoOpacity }}
       >
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Content */}
-          <div className="space-y-8">
-            {/* Mission & Vision Cards */}
-            <MissionVisionCards />
-
-            {/* About Section Enhanced */}
-            <AboutSection />
-
-            {/* CTA Button */}
-            <CTAButton />
-          </div>
-
-          {/* Right Column - Professional Image with 3D Effects */}
-          <ProfessionalImage />
+        <div className="w-full max-w-6xl mx-auto px-4">
+          <AIX8CLogoAnimation />
         </div>
+      </motion.div>
 
-        {/* Enhanced Scroll Indicator with Naval Theme */}
+      {/* Content Section - Slides up after logo animation */}
+      <motion.div 
+        className="absolute inset-0 z-25 flex items-center justify-center"
+        style={{ 
+          opacity: contentOpacity,
+          y: contentY
+        }}
+      >
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Column - Content */}
+            <div className="space-y-8">
+              {/* Mission & Vision Cards */}
+              <MissionVisionCards />
+
+              {/* About Section Enhanced */}
+              <AboutSection />
+
+              {/* CTA Button */}
+              <CTAButton />
+            </div>
+
+            {/* Right Column - Professional Image with 3D Effects */}
+            <ProfessionalImage />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Enhanced Scroll Indicator with Naval Theme */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 z-40"
+        style={{ opacity: logoOpacity }}
+      >
         <NavalScrollIndicator />
       </motion.div>
 
@@ -152,7 +166,7 @@ const CinematicHeroSection = () => {
       <motion.div
         className="absolute inset-0 pointer-events-none z-20"
         style={{
-          background: `radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.3) 80%)`
+          background: `radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.4) 85%)`
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
