@@ -5,8 +5,8 @@ import MicroInteractions from "@/components/ui/MicroInteractions";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 
 // Lazy load components with intelligent loading
-const RefinedCinematicHero = lazy(() => 
-  import("@/components/hero/RefinedCinematicHero").then(module => ({ 
+const CinematicHeroSection = lazy(() => 
+  import("@/components/hero/CinematicHeroSection").then(module => ({ 
     default: module.default 
   }))
 );
@@ -68,7 +68,7 @@ const Footer = lazy(() =>
 );
 
 const PremiumLoader = ({ message }: { message?: string }) => (
-  <div className="flex items-center justify-center h-96 bg-neutral-950">
+  <div className="flex items-center justify-center h-96 bg-aix-black">
     <IntelligentLoader 
       isLoading={true} 
       progress={75} 
@@ -193,7 +193,7 @@ const OptimizedIndex = () => {
   // Show initial loading screen
   if (isInitialLoading) {
     return (
-      <div className="min-h-screen bg-neutral-950">
+      <div className="min-h-screen bg-aix-black">
         <IntelligentLoader 
           isLoading={true} 
           progress={loadingProgress} 
@@ -205,13 +205,13 @@ const OptimizedIndex = () => {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white relative">
+    <div className="min-h-screen bg-aix-black text-white relative">
       <Navbar />
       <MicroInteractions />
       
       <main>
-        <Suspense fallback={<PremiumLoader message="Carregando experiência cinematográfica..." />}>
-          <RefinedCinematicHero />
+        <Suspense fallback={<PremiumLoader message="Carregando experiência heroica..." />}>
+          <CinematicHeroSection />
         </Suspense>
         
         <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>

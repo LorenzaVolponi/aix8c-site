@@ -295,73 +295,6 @@
       rgba(0, 0, 0, 0.7) 100%
     );
   }
-  
-  /* Refined Glass Card - Premium Aesthetic */
-  .refined-glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px) saturate(1.8);
-    -webkit-backdrop-filter: blur(20px) saturate(1.8);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .refined-glass-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 
-      0 16px 48px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-  }
-
-  /* Premium Button Styles */
-  .refined-premium-button {
-    border-radius: 6px;
-    box-shadow: 
-      0 4px 16px rgba(0, 0, 0, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .refined-premium-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    transition: left 0.6s ease;
-  }
-
-  .refined-premium-button:hover::before {
-    left: 100%;
-  }
-
-  .refined-secondary-button {
-    border-radius: 6px;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(10px);
-  }
-
-  .refined-secondary-button:hover {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-  }
 }
 
 /* Enhanced keyframe animations */
@@ -549,38 +482,5 @@
   .grid-center {
     display: grid;
     place-items: center;
-  }
-  
-  .refined-fade-in {
-    animation: refined-fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  .refined-scale-in {
-    animation: refined-scale-in 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-}
-
-/* Refined Animation Keyframes */
-@keyframes refined-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.98);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-@keyframes refined-scale-in {
-  from {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
   }
 }
