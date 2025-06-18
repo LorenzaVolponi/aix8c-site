@@ -1,9 +1,14 @@
 import React, { useEffect, lazy, Suspense, useState } from "react";
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from "@/components/Navbar";
 import IntelligentLoader from "@/components/ui/IntelligentLoader";
 import MicroInteractions from "@/components/ui/MicroInteractions";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
+import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import IntroSequence from "@/components/hero/intro/IntroSequence";
+import SEOManager from "@/components/SEO/SEOManager";
+import SchemaMarkup from "@/components/SEO/SchemaMarkup";
+import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
 
 // Lazy load components with intelligent loading
 const AboutSection = lazy(() => 
@@ -79,6 +84,35 @@ const OptimizedIndex = () => {
   const [showMainContent, setShowMainContent] = useState(false);
   const { isLowPerformance } = usePerformanceMonitor();
 
+  // Advanced SEO Configuration
+  useAdvancedSEO({
+    title: "AIX8C - Lorenza Volponi | Líder Mundial em Prompt Engineering e IA Conversacional",
+    description: "🚀 Descubra o futuro da IA com Lorenza Volponi! Pioneira brasileira em prompt engineering, automação de chatbots, vibe coding e mentoria com IA. Transforme sua comunicação com máquinas e domine a revolução da inteligência artificial.",
+    keywords: [
+      "prompt engineering",
+      "engenharia de prompts", 
+      "IA conversacional",
+      "chatbot automation",
+      "automação chatbot",
+      "mentoria IA",
+      "aprendizado com IA",
+      "vibe coding",
+      "Lorenza Volponi",
+      "AIX8C",
+      "inteligência artificial Brasil",
+      "conversational AI",
+      "AI mentorship",
+      "machine learning prompts",
+      "GPT prompts",
+      "ChatGPT engineering",
+      "AI coaching",
+      "prompt optimization",
+      "AI consultant Brazil",
+      "artificial intelligence expert"
+    ],
+    canonical: "https://aix8c.com"
+  });
+
   useEffect(() => {
     // Simulate progressive loading
     const loadingSteps = [
@@ -105,7 +139,7 @@ const OptimizedIndex = () => {
       setShowMainContent(true);
     }, 8000); // 8 seconds for complete intro sequence
 
-    // ... keep existing code (enhanced smooth scroll with performance optimization)
+    // Enhanced smooth scroll with performance optimization
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
@@ -183,7 +217,72 @@ const OptimizedIndex = () => {
     };
     
     preloadCriticalResources();
-    
+
+    // Advanced Analytics and Performance Tracking
+    const trackAdvancedMetrics = () => {
+      // Core Web Vitals tracking
+      if ('web-vital' in window) {
+        import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+          getCLS(console.log);
+          getFID(console.log); 
+          getFCP(console.log);
+          getLCP(console.log);
+          getTTFB(console.log);
+        });
+      }
+
+      // AI-specific event tracking
+      const trackAIInteractions = () => {
+        document.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          if (target.closest('[data-ai-interaction]')) {
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'ai_interaction', {
+                'event_category': 'AI Features',
+                'event_label': target.dataset.aiInteraction || 'unknown',
+                'value': 1
+              });
+            }
+          }
+        });
+      };
+
+      trackAIInteractions();
+    };
+
+    // SEO-optimized meta tag injection
+    const injectAdvancedMeta = () => {
+      const metaTags = [
+        { name: 'subject', content: 'Inteligência Artificial e Prompt Engineering' },
+        { name: 'topic', content: 'AI, Machine Learning, Conversational AI, Chatbots' },
+        { name: 'summary', content: 'Plataforma líder em educação e consultoria de IA conversacional' },
+        { name: 'classification', content: 'Technology, Artificial Intelligence, Education' },
+        { name: 'designer', content: 'Lorenza Volponi' },
+        { name: 'reply-to', content: 'contato@aix8c.com' },
+        { name: 'owner', content: 'Lorenza Volponi - AIX8C' },
+        { name: 'url', content: 'https://aix8c.com' },
+        { name: 'identifier-URL', content: 'https://aix8c.com' },
+        { name: 'category', content: 'AI Technology, Prompt Engineering, Conversational AI' },
+        { name: 'coverage', content: 'Worldwide' },
+        { name: 'distribution', content: 'Global' },
+        { name: 'rating', content: 'General' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:locale', content: 'pt_BR' },
+        { property: 'og:locale:alternate', content: 'en_US' }
+      ];
+
+      metaTags.forEach(tag => {
+        const meta = document.createElement('meta');
+        if (tag.name) meta.name = tag.name;
+        if (tag.property) meta.setAttribute('property', tag.property);
+        meta.content = tag.content;
+        document.head.appendChild(meta);
+      });
+    };
+
+    trackAdvancedMetrics();
+    injectAdvancedMeta();
+
     return () => {
       document.removeEventListener('click', handleAnchorClick);
       window.removeEventListener('scroll', handleScroll);
@@ -212,40 +311,51 @@ const OptimizedIndex = () => {
   }
 
   return (
-    <div className="min-h-screen bg-aix-black text-white relative">
-      <Navbar />
-      <MicroInteractions />
-      
-      <main>        
-        <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
-          <AboutSection />
-        </Suspense>
+    <HelmetProvider>
+      <div className="min-h-screen bg-aix-black text-white relative">
+        {/* Advanced SEO Components */}
+        <SEOManager 
+          title="AIX8C - Lorenza Volponi | Referência Mundial em Prompt Engineering 🚀"
+          description="🌟 Lorenza Volponi, pioneira brasileira em engenharia de prompts e IA conversacional. Domine chatbots, automação IA, vibe coding e transforme sua comunicação com máquinas. Certificada MTF Portugal. Mentoria premium em IA."
+          keywords="prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, Lorenza Volponi, AIX8C, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant"
+        />
+        <SchemaMarkup />
+        <PerformanceOptimizer />
         
-        <Suspense fallback={<PremiumLoader message="Carregando nossa história..." />}>
-          <SobreNosSection />
-        </Suspense>
+        <Navbar />
+        <MicroInteractions />
         
-        <Suspense fallback={<PremiumLoader message="Carregando jornada..." />}>
-          <JornadaSection />
-        </Suspense>
+        <main>        
+          <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
+            <AboutSection />
+          </Suspense>
+          
+          <Suspense fallback={<PremiumLoader message="Carregando nossa história..." />}>
+            <SobreNosSection />
+          </Suspense>
+          
+          <Suspense fallback={<PremiumLoader message="Carregando jornada..." />}>
+            <JornadaSection />
+          </Suspense>
+          
+          <Suspense fallback={<PremiumLoader message="Carregando portfólio..." />}>
+            <PortfolioSection />
+          </Suspense>
+          
+          <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
+            <AussySection />
+          </Suspense>
+          
+          <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
+            <ContactSection />
+          </Suspense>
+        </main>
         
-        <Suspense fallback={<PremiumLoader message="Carregando portfólio..." />}>
-          <PortfolioSection />
+        <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
+          <Footer />
         </Suspense>
-        
-        <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
-          <AussySection />
-        </Suspense>
-        
-        <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
-          <ContactSection />
-        </Suspense>
-      </main>
-      
-      <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
-        <Footer />
-      </Suspense>
-    </div>
+      </div>
+    </HelmetProvider>
   );
 };
 
