@@ -3,14 +3,9 @@ import Navbar from "@/components/Navbar";
 import IntelligentLoader from "@/components/ui/IntelligentLoader";
 import MicroInteractions from "@/components/ui/MicroInteractions";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
+import IntroSequence from "@/components/hero/intro/IntroSequence";
 
 // Lazy load components with intelligent loading
-const CinematicHeroSection = lazy(() => 
-  import("@/components/hero/CinematicHeroSection").then(module => ({ 
-    default: module.default 
-  }))
-);
-
 const AboutSection = lazy(() => 
   new Promise<{ default: React.ComponentType<any> }>(resolve => {
     setTimeout(() => {
@@ -81,6 +76,7 @@ const PremiumLoader = ({ message }: { message?: string }) => (
 const OptimizedIndex = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [showMainContent, setShowMainContent] = useState(false);
   const { isLowPerformance } = usePerformanceMonitor();
 
   useEffect(() => {
@@ -104,7 +100,12 @@ const OptimizedIndex = () => {
       }
     }, 400);
 
-    // Enhanced smooth scroll with performance optimization
+    // Show main content after intro sequence
+    const mainContentTimer = setTimeout(() => {
+      setShowMainContent(true);
+    }, 8000); // 8 seconds for complete intro sequence
+
+    // ... keep existing code (enhanced smooth scroll with performance optimization)
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
@@ -187,6 +188,7 @@ const OptimizedIndex = () => {
       document.removeEventListener('click', handleAnchorClick);
       window.removeEventListener('scroll', handleScroll);
       clearInterval(loadingInterval);
+      clearTimeout(mainContentTimer);
     };
   }, [isLowPerformance]);
 
@@ -204,16 +206,17 @@ const OptimizedIndex = () => {
     );
   }
 
+  // Show intro sequence
+  if (!showMainContent) {
+    return <IntroSequence />;
+  }
+
   return (
     <div className="min-h-screen bg-aix-black text-white relative">
       <Navbar />
       <MicroInteractions />
       
-      <main>
-        <Suspense fallback={<PremiumLoader message="Carregando experiência heroica..." />}>
-          <CinematicHeroSection />
-        </Suspense>
-        
+      <main>        
         <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
           <AboutSection />
         </Suspense>
