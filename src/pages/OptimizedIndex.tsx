@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import IntelligentLoader from "@/components/ui/IntelligentLoader";
 import MicroInteractions from "@/components/ui/MicroInteractions";
 import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
+import CinematicIntroSequence from "@/components/hero/CinematicIntroSequence";
 
 // Lazy load components with intelligent loading
 const CinematicHeroSection = lazy(() => 
@@ -81,6 +82,7 @@ const PremiumLoader = ({ message }: { message?: string }) => (
 const OptimizedIndex = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [introComplete, setIntroComplete] = useState(false);
   const { isLowPerformance } = usePerformanceMonitor();
 
   useEffect(() => {
@@ -183,10 +185,16 @@ const OptimizedIndex = () => {
     
     preloadCriticalResources();
     
+    // Tempo total da sequência cinematográfica (intro + transição)
+    const introTimer = setTimeout(() => {
+      setIntroComplete(true);
+    }, 7500); // 6s da animação AIX8C + 1.5s da transição
+
     return () => {
       document.removeEventListener('click', handleAnchorClick);
       window.removeEventListener('scroll', handleScroll);
       clearInterval(loadingInterval);
+      clearTimeout(introTimer);
     };
   }, [isLowPerformance]);
 
@@ -204,16 +212,18 @@ const OptimizedIndex = () => {
     );
   }
 
+  // Show cinematic intro sequence
+  if (!introComplete) {
+    return <CinematicIntroSequence />;
+  }
+
+  // Main content after intro
   return (
     <div className="min-h-screen bg-aix-black text-white relative">
       <Navbar />
       <MicroInteractions />
       
       <main>
-        <Suspense fallback={<PremiumLoader message="Carregando experiência heroica..." />}>
-          <CinematicHeroSection />
-        </Suspense>
-        
         <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
           <AboutSection />
         </Suspense>
