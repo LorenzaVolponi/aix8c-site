@@ -8,6 +8,13 @@ interface SEOConfig {
   canonical?: string;
 }
 
+// Declare gtag as a global function
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export const useAdvancedSEO = (config: SEOConfig) => {
   useEffect(() => {
     // Dynamic title optimization
@@ -56,8 +63,8 @@ export const useAdvancedSEO = (config: SEOConfig) => {
 
     // Advanced tracking and analytics
     const trackPageView = () => {
-      if (typeof gtag !== 'undefined') {
-        gtag('config', 'GA_MEASUREMENT_ID', {
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('config', 'GA_MEASUREMENT_ID', {
           page_title: config.title,
           page_location: window.location.href,
           content_group1: 'AI & Prompt Engineering',
