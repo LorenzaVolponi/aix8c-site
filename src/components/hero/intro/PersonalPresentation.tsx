@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, Star, Brain, Anchor, Zap, Navigation, Compass } from 'lucide-react';
+import { Calendar, ArrowRight, Star, Brain, Anchor } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const PersonalPresentation = () => {
@@ -18,16 +18,15 @@ const PersonalPresentation = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 40, filter: "blur(5px)" },
-    visible: (i: number) => ({
+    visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
       transition: {
-        delay: i * 0.2,
         duration: 0.8,
         ease: "easeOut"
       }
-    })
+    }
   };
 
   return (
@@ -58,12 +57,12 @@ const PersonalPresentation = () => {
       </div>
 
       <motion.div
-        className="container mx-auto max-w-7xl"
+        className="container mx-auto max-w-6xl"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Professional Content */}
           <div className="space-y-8">
             {/* Header with Naval Theme */}
@@ -77,57 +76,42 @@ const PersonalPresentation = () => {
 
             {/* Name and Title */}
             <motion.div variants={itemVariants} className="space-y-4">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-aix-gold via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-aix-gold via-cyan-300 to-blue-400 bg-clip-text text-transparent">
                 Lorenza Volponi
               </h1>
-              <p className="text-lg md:text-xl text-cyan-300 font-light leading-relaxed">
+              <p className="text-xl md:text-2xl text-cyan-300 font-light leading-relaxed">
                 Brasileira, polímata e nexialista.<br />
                 <span className="text-aix-gold">Tradutora entre almas humanas e mentes artificiais.</span>
               </p>
             </motion.div>
 
-            {/* About Section */}
-            <motion.div custom={3} variants={itemVariants}>
+            {/* Professional Description */}
+            <motion.div variants={itemVariants}>
               <div className="glass-card p-6 border border-purple-400/20 hover:border-purple-400/30 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 bg-aix-gold rounded-full animate-pulse" />
-                  <h3 className="text-purple-300 font-semibold">🌟 Sobre Mim</h3>
+                  <Brain className="w-5 h-5 text-purple-400" />
+                  <h3 className="text-purple-300 font-semibold text-lg">Expertise em IA</h3>
                 </div>
-                <div className="space-y-3 text-gray-300 text-sm leading-relaxed">
-                  <p>
-                    <span className="text-aix-gold font-medium">Lorenza Volponi</span> - 
-                    Brasileira, polímata e nexialista. <span className="text-blue-300">Tradutora entre almas humanas e mentes artificiais.</span>
-                  </p>
-                  <p>
-                    Pioneira na engenharia de prompts no Brasil, certificada pelo <span className="text-aix-gold">MTF de Portugal</span>, 
-                    democratizando o conhecimento em IA com impactos transformadores.
-                  </p>
-                  <p className="text-purple-300 italic">
-                    "Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. ✦"
-                  </p>
-                </div>
+                <p className="text-gray-300 leading-relaxed">
+                  Pioneira na engenharia de prompts no Brasil, certificada pelo 
+                  <span className="text-aix-gold font-medium"> MTF de Portugal</span>, 
+                  democratizando o conhecimento em IA com impactos transformadores 
+                  para empresas e profissionais.
+                </p>
               </div>
             </motion.div>
 
-            {/* Mission Vision Cards */}
-            <motion.div custom={2} variants={itemVariants} className="grid md:grid-cols-2 gap-4">
-              <div className="glass-card p-6 border border-blue-400/20 hover:border-blue-400/40 transition-all duration-300 group">
-                <div className="flex items-center gap-2 mb-3">
-                  <Zap className="w-5 h-5 text-blue-400" />
-                  <h3 className="text-blue-400 font-semibold">🚀 Missão</h3>
+            {/* Mission Statement */}
+            <motion.div variants={itemVariants}>
+              <div className="glass-card p-6 border border-aix-gold/20 hover:border-aix-gold/30 transition-all duration-300">
+                <div className="flex items-center gap-2 mb-4">
+                  <Star className="w-5 h-5 text-aix-gold" />
+                  <h3 className="text-aix-gold font-semibold text-lg">Missão</h3>
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Transformar a comunicação entre humanos e máquinas, criando pontes tecnológicas com soluções inovadoras em IA.
-                </p>
-              </div>
-              
-              <div className="glass-card p-6 border border-aix-gold/20 hover:border-aix-gold/40 transition-all duration-300 group">
-                <div className="flex items-center gap-2 mb-3">
-                  <Navigation className="w-5 h-5 text-aix-gold" />
-                  <h3 className="text-aix-gold font-semibold">✨ Visão</h3>
-                </div>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Liderar na criação de experiências imersivas e únicas em IA, democratizando o conhecimento tecnológico.
+                <p className="text-gray-300 leading-relaxed italic">
+                  "Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção 
+                  para criar experiências transformadoras que elevam o potencial humano 
+                  através da inteligência artificial."
                 </p>
               </div>
             </motion.div>
@@ -147,7 +131,54 @@ const PersonalPresentation = () => {
           </div>
 
           {/* Right Column - Professional Image */}
-          <ProfessionalImage />
+          <motion.div 
+            variants={itemVariants}
+            className="relative"
+          >
+            <div className="relative group">
+              {/* Glowing background effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-aix-gold/20 via-cyan-400/15 to-purple-500/20 blur-3xl rounded-3xl"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.8, 0.5]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Professional Image Container */}
+              <div className="relative glass-card p-8 rounded-3xl border border-aix-gold/30 overflow-hidden">
+                <div className="aspect-square bg-gradient-to-br from-aix-gold/10 to-cyan-400/10 rounded-2xl flex items-center justify-center">
+                  <img
+                    src="/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png"
+                    alt="Lorenza Volponi - AI Expert"
+                    className="w-full h-full object-cover rounded-2xl shadow-2xl"
+                    loading="eager"
+                  />
+                </div>
+                
+                {/* Floating badge */}
+                <motion.div
+                  className="absolute -top-3 -right-3 bg-gradient-to-r from-aix-gold to-yellow-500 text-black px-4 py-2 rounded-full font-bold text-sm shadow-lg"
+                  animate={{
+                    y: [0, -5, 0],
+                    rotate: [0, 5, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  AI Pioneer 🚀
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Bottom scroll indicator */}
@@ -166,123 +197,6 @@ const PersonalPresentation = () => {
         </motion.div>
       </motion.div>
     </div>
-  );
-};
-
-const ProfessionalImage = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const rotateX = useTransform(mouseY, [-300, 300], [15, -15]);
-  const rotateY = useTransform(mouseX, [-300, 300], [-15, 15]);
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.2,
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
-  const handleMouseMove = (event: React.MouseEvent) => {
-    const { clientX, clientY } = event;
-    const { left, top, width, height } = event.currentTarget.getBoundingClientRect();
-    
-    mouseX.set((clientX - left - width / 2) / 20);
-    mouseY.set((clientY - top - height / 2) / 20);
-  };
-
-  return (
-    <motion.div 
-      custom={5} 
-      variants={itemVariants}
-      className="relative flex justify-center lg:justify-end"
-      onMouseMove={handleMouseMove}
-    >
-      <motion.div
-        className="relative group cursor-pointer"
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-          transformPerspective: 1000,
-        }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      >
-        {/* Enhanced glowing background with naval theme */}
-        <div className="absolute inset-0 bg-gradient-to-r from-aix-gold/20 via-blue-400/10 to-aix-gold/20 rounded-3xl blur-2xl scale-110 group-hover:scale-125 transition-transform duration-500" />
-        
-        {/* Floating compass elements */}
-        <div className="absolute -top-6 -right-6 w-12 h-12 border-2 border-aix-gold/30 rounded-full flex items-center justify-center backdrop-blur-md group-hover:rotate-180 transition-transform duration-700">
-          <Compass className="w-6 h-6 text-aix-gold" />
-        </div>
-        
-        {/* Main image container */}
-        <div className="relative w-80 h-96 rounded-3xl overflow-hidden glass-card border-2 border-aix-gold/30 group-hover:border-aix-gold/50 transition-all duration-300">
-          <img 
-            src="/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png"
-            alt="Lorenza Volponi - Capitã da Nave AIX8C"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="eager"
-          />
-          
-          {/* Enhanced overlay effects */}
-          <div className="absolute inset-0 bg-gradient-to-t from-aix-gold/10 via-transparent to-blue-400/5 group-hover:from-aix-gold/20 transition-all duration-300" />
-          
-          {/* Animated caption with naval theme */}
-          <motion.div 
-            className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 2 }}
-          >
-            <div className="flex items-center gap-3">
-              <div>
-                <h3 className="text-white font-bold text-lg">Lorenza Volponi</h3>
-                <p className="text-aix-gold text-sm">Capitã da Nave AIX8C</p>
-                <p className="text-blue-300 text-xs">Pioneira em Engenharia de Prompts</p>
-              </div>
-              <div className="ml-auto">
-                <div className="flex items-center gap-1 px-3 py-1 bg-aix-gold/20 rounded-full">
-                  <Anchor className="w-3 h-3 text-aix-gold" />
-                  <span className="text-xs text-aix-gold font-medium">Navigator</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Floating golden particles around image */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-aix-gold rounded-full"
-            style={{
-              right: `${-20 - i * 15}px`,
-              top: `${30 + i * 25}px`
-            }}
-            animate={{
-              x: [0, 25, 0],
-              y: [0, -15, 0],
-              opacity: [0, 1, 0],
-              scale: [0.5, 1.2, 0.5]
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              delay: i * 0.8,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </motion.div>
-    </motion.div>
   );
 };
 
