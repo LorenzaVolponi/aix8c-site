@@ -65,10 +65,10 @@ const OptimizedIndex = () => {
   });
 
   useEffect(() => {
-    // Show main content after intro sequence
+    // Enhanced timing for the improved introduction sequence
     const mainContentTimer = setTimeout(() => {
       setShowMainContent(true);
-    }, 8000); // 8 seconds for complete intro sequence
+    }, 9000); // 9 seconds for complete enhanced intro sequence
 
     // Initialize optimizations
     preloadCriticalResources();
@@ -84,7 +84,7 @@ const OptimizedIndex = () => {
     return <LoadingScreen progress={loadingProgress} />;
   }
 
-  // Show intro sequence
+  // Show enhanced intro sequence
   if (!showMainContent) {
     return <IntroSequence />;
   }

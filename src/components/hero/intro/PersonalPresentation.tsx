@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, Star, Brain, Anchor } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Sparkles, Star, Zap } from 'lucide-react';
 
 const PersonalPresentation = () => {
   const containerVariants = {
@@ -10,190 +9,260 @@ const PersonalPresentation = () => {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40, filter: "blur(5px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
+        delayChildren: 0.5,
+        staggerChildren: 0.3,
         ease: "easeOut"
       }
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative">
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-aix-gold/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -150, 0],
-              opacity: [0, 0.8, 0],
-              scale: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 10 + Math.random() * 5,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 100,
+        duration: 1.2
+      }
+    }
+  };
 
+  const iconVariants = {
+    hidden: { scale: 0, rotate: -180 },
+    visible: {
+      scale: 1,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        damping: 15,
+        stiffness: 200,
+        delay: 1.5
+      }
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center relative">
+      {/* Floating Icons */}
       <motion.div
-        className="container mx-auto max-w-6xl"
+        className="absolute top-20 left-20"
+        variants={iconVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <Sparkles className="w-8 h-8 text-aix-gold opacity-60" />
+      </motion.div>
+      
+      <motion.div
+        className="absolute top-32 right-24"
+        variants={iconVariants}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 2 }}
+      >
+        <Star className="w-6 h-6 text-aix-purple opacity-50" />
+      </motion.div>
+      
+      <motion.div
+        className="absolute bottom-40 left-32"
+        variants={iconVariants}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 2.5 }}
+      >
+        <Zap className="w-7 h-7 text-cyan-400 opacity-40" />
+      </motion.div>
+
+      <motion.div 
+        className="container mx-auto px-4 text-center max-w-5xl"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Professional Content */}
-          <div className="space-y-8">
-            {/* Header with Naval Theme */}
-            <motion.div 
-              variants={itemVariants}
-              className="flex items-center gap-3 mb-6"
-            >
-              <Anchor className="w-6 h-6 text-aix-gold" />
-              <span className="text-aix-gold font-medium">Welcome aboard, marujos!</span>
-            </motion.div>
-
-            {/* Name and Title */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-aix-gold via-cyan-300 to-blue-400 bg-clip-text text-transparent">
-                Lorenza Volponi
-              </h1>
-              <p className="text-xl md:text-2xl text-cyan-300 font-light leading-relaxed">
-                Brasileira, polímata e nexialista.<br />
-                <span className="text-aix-gold">Tradutora entre almas humanas e mentes artificiais.</span>
-              </p>
-            </motion.div>
-
-            {/* Professional Description */}
-            <motion.div variants={itemVariants}>
-              <div className="glass-card p-6 border border-purple-400/20 hover:border-purple-400/30 transition-all duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  <Brain className="w-5 h-5 text-purple-400" />
-                  <h3 className="text-purple-300 font-semibold text-lg">Expertise em IA</h3>
-                </div>
-                <p className="text-gray-300 leading-relaxed">
-                  Pioneira na engenharia de prompts no Brasil, certificada pelo 
-                  <span className="text-aix-gold font-medium"> MTF de Portugal</span>, 
-                  democratizando o conhecimento em IA com impactos transformadores 
-                  para empresas e profissionais.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Mission Statement */}
-            <motion.div variants={itemVariants}>
-              <div className="glass-card p-6 border border-aix-gold/20 hover:border-aix-gold/30 transition-all duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  <Star className="w-5 h-5 text-aix-gold" />
-                  <h3 className="text-aix-gold font-semibold text-lg">Missão</h3>
-                </div>
-                <p className="text-gray-300 leading-relaxed italic">
-                  "Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção 
-                  para criar experiências transformadoras que elevam o potencial humano 
-                  através da inteligência artificial."
-                </p>
-              </div>
-            </motion.div>
-
-            {/* CTA Button */}
-            <motion.div variants={itemVariants}>
-              <Button 
-                size="lg" 
-                className="group bg-gradient-to-r from-aix-gold to-yellow-500 hover:from-yellow-500 hover:to-aix-gold text-black font-bold px-8 py-4 text-lg rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-aix-gold/25"
-                onClick={() => window.open('https://calendly.com/lorenzavolponi', '_blank')}
-              >
-                <Calendar className="w-6 h-6 mr-3" />
-                Embarcar na Jornada IA
-                <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform" />
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Right Column - Professional Image */}
-          <motion.div 
-            variants={itemVariants}
-            className="relative"
-          >
-            <div className="relative group">
-              {/* Glowing background effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-aix-gold/20 via-cyan-400/15 to-purple-500/20 blur-3xl rounded-3xl"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.5, 0.8, 0.5]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              {/* Professional Image Container */}
-              <div className="relative glass-card p-8 rounded-3xl border border-aix-gold/30 overflow-hidden">
-                <div className="aspect-square bg-gradient-to-br from-aix-gold/10 to-cyan-400/10 rounded-2xl flex items-center justify-center">
-                  <img
-                    src="/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png"
-                    alt="Lorenza Volponi - AI Expert"
-                    className="w-full h-full object-cover rounded-2xl shadow-2xl"
-                    loading="eager"
-                  />
-                </div>
-                
-                {/* Floating badge */}
-                <motion.div
-                  className="absolute -top-3 -right-3 bg-gradient-to-r from-aix-gold to-yellow-500 text-black px-4 py-2 rounded-full font-bold text-sm shadow-lg"
-                  animate={{
-                    y: [0, -5, 0],
-                    rotate: [0, 5, 0]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  AI Pioneer 🚀
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom scroll indicator */}
+        {/* Main Name Display */}
         <motion.div
           variants={itemVariants}
-          className="flex justify-center mt-16"
+          className="mb-8 relative"
         >
-          <motion.div
-            className="flex flex-col items-center gap-2 text-gray-400"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+          {/* Glow Effect Behind Name */}
+          <motion.div 
+            className="absolute inset-0 rounded-full opacity-20 blur-3xl"
+            style={{
+              background: `
+                radial-gradient(circle, rgba(245, 158, 11, 0.6) 0%, transparent 70%),
+                radial-gradient(circle, rgba(139, 92, 246, 0.4) 30%, transparent 70%)
+              `
+            }}
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.2, 0.4, 0.2],
+            }}
+            transition={{ 
+              duration: 4, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          <motion.h1 
+            className="relative text-5xl md:text-8xl font-bold mb-6 font-serif tracking-tight"
+            animate={{
+              textShadow: [
+                "0 0 30px rgba(245, 158, 11, 0.6)",
+                "0 0 50px rgba(139, 92, 246, 0.4)",
+                "0 0 30px rgba(6, 182, 212, 0.5)",
+                "0 0 30px rgba(245, 158, 11, 0.6)"
+              ]
+            }}
+            transition={{ duration: 6, repeat: Infinity }}
           >
-            <span className="text-sm">Explore mais</span>
-            <div className="w-px h-8 bg-gradient-to-b from-aix-gold to-transparent"></div>
-          </motion.div>
+            <motion.span
+              className="holographic-text bg-gradient-to-r from-aix-gold via-white to-aix-purple bg-clip-text text-transparent"
+              initial={{ opacity: 0, letterSpacing: "0.2em" }}
+              animate={{ 
+                opacity: 1, 
+                letterSpacing: "0.1em",
+                transition: { duration: 2, delay: 0.5 }
+              }}
+            >
+              LORENZA VOLPONI
+            </motion.span>
+          </motion.h1>
+        </motion.div>
+
+        {/* Professional Title */}
+        <motion.div
+          variants={itemVariants}
+          className="mb-12"
+        >
+          <motion.h2 
+            className="text-2xl md:text-4xl text-white font-light mb-4 tracking-wider"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              transition: { duration: 1.5, delay: 1.2 }
+            }}
+          >
+            ESTRATEGISTA DE INTELIGÊNCIA ARTIFICIAL
+          </motion.h2>
+          
+          <motion.div
+            className="w-32 h-1 bg-gradient-to-r from-transparent via-aix-gold to-transparent mx-auto"
+            initial={{ scaleX: 0 }}
+            animate={{ 
+              scaleX: 1,
+              transition: { duration: 1.5, delay: 1.8 }
+            }}
+          />
+        </motion.div>
+
+        {/* Professional Description */}
+        <motion.div
+          variants={itemVariants}
+          className="mb-16"
+        >
+          <motion.p 
+            className="text-white/90 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed font-light"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              transition: { duration: 1.8, delay: 2.2 }
+            }}
+          >
+            Pioneira brasileira em{" "}
+            <motion.span 
+              className="text-aix-gold font-medium"
+              animate={{
+                textShadow: [
+                  "0 0 10px rgba(245, 158, 11, 0.5)",
+                  "0 0 20px rgba(245, 158, 11, 0.8)",
+                  "0 0 10px rgba(245, 158, 11, 0.5)"
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              prompt engineering
+            </motion.span>
+            {" "}e automação de chatbots, transformando a comunicação entre humanos e máquinas através de estratégias inovadoras de{" "}
+            <motion.span 
+              className="text-aix-purple font-medium"
+              animate={{
+                textShadow: [
+                  "0 0 10px rgba(139, 92, 246, 0.5)",
+                  "0 0 20px rgba(139, 92, 246, 0.8)",
+                  "0 0 10px rgba(139, 92, 246, 0.5)"
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+            >
+              inteligência artificial conversacional
+            </motion.span>
+            .
+          </motion.p>
+        </motion.div>
+
+        {/* Key Achievements */}
+        <motion.div
+          variants={itemVariants}
+          className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+        >
+          {[
+            { title: "Prompt Engineering", desc: "Líder em otimização de comunicação IA" },
+            { title: "Vibe Coding", desc: "Inovação em metodologias de desenvolvimento" },
+            { title: "Mentoria IA", desc: "Formação de especialistas em IA conversacional" }
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              className="text-center"
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0, 
+                scale: 1,
+                transition: { 
+                  duration: 1, 
+                  delay: 2.8 + (index * 0.2),
+                  type: "spring",
+                  damping: 20
+                }
+              }}
+            >
+              <div className="bg-white/5 backdrop-blur-sm border border-aix-gold/20 rounded-xl p-6 hover:border-aix-gold/40 transition-all duration-500">
+                <h3 className="text-aix-gold font-semibold text-lg mb-2">{item.title}</h3>
+                <p className="text-white/70 text-sm">{item.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Subtle Call to Action */}
+        <motion.div
+          className="mt-16"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: 1,
+            transition: { duration: 2, delay: 4 }
+          }}
+        >
+          <motion.p 
+            className="text-white/60 text-sm tracking-wide"
+            animate={{
+              opacity: [0.6, 1, 0.6]
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            Preparando experiência completa...
+          </motion.p>
         </motion.div>
       </motion.div>
     </div>
