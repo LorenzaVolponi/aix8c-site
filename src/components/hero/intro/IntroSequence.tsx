@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LogoIntro from './LogoIntro';
-import PersonalPresentation from './PersonalPresentation';
+import PersonalIntroduction from './PersonalIntroduction';
 
 const IntroSequence = () => {
   const [currentPhase, setCurrentPhase] = useState<'logo' | 'personal' | 'transition'>('logo');
@@ -10,7 +10,7 @@ const IntroSequence = () => {
   const [showTransition, setShowTransition] = useState(false);
 
   useEffect(() => {
-    // Enhanced timing for smoother transitions
+    // Enhanced timing for smoother transitions with personal introduction
     const logoTimer = setTimeout(() => {
       setCurrentPhase('personal');
       setShowPersonal(true);
@@ -19,7 +19,7 @@ const IntroSequence = () => {
     const personalTimer = setTimeout(() => {
       setCurrentPhase('transition');
       setShowTransition(true);
-    }, 7000); // 3 more seconds for personal presentation
+    }, 10000); // 6 more seconds for personal presentation (total 10 seconds)
 
     return () => {
       clearTimeout(logoTimer);
@@ -111,7 +111,7 @@ const IntroSequence = () => {
 
         {showPersonal && currentPhase === 'personal' && (
           <motion.div
-            key="personal-presentation"
+            key="personal-introduction"
             className="absolute inset-0"
             initial={{ 
               opacity: 0,
@@ -139,7 +139,7 @@ const IntroSequence = () => {
               }
             }}
           >
-            <PersonalPresentation />
+            <PersonalIntroduction />
           </motion.div>
         )}
 

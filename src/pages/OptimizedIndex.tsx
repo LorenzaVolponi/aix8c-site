@@ -37,9 +37,11 @@ const OptimizedIndex = () => {
 
   // Advanced SEO Configuration
   useAdvancedSEO({
-    title: "AIX8C - Lorenza Volponi | Líder Mundial em Prompt Engineering e IA Conversacional",
-    description: "🚀 Descubra o futuro da IA com Lorenza Volponi! Pioneira brasileira em prompt engineering, automação de chatbots, vibe coding e mentoria com IA. Transforme sua comunicação com máquinas e domine a revolução da inteligência artificial.",
+    title: "Lorenza Volponi - Capitã da Nave AIX8C | Pioneira em Engenharia de Prompts",
+    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e pioneira mundial em prompt engineering! Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
     keywords: [
+      "Lorenza Volponi",
+      "Capitã AIX8C",
       "prompt engineering",
       "engenharia de prompts", 
       "IA conversacional",
@@ -48,7 +50,6 @@ const OptimizedIndex = () => {
       "mentoria IA",
       "aprendizado com IA",
       "vibe coding",
-      "Lorenza Volponi",
       "AIX8C",
       "inteligência artificial Brasil",
       "conversational AI",
@@ -59,16 +60,18 @@ const OptimizedIndex = () => {
       "AI coaching",
       "prompt optimization",
       "AI consultant Brazil",
-      "artificial intelligence expert"
+      "artificial intelligence expert",
+      "tecnologia e emoção",
+      "inovação digital"
     ],
     canonical: "https://aix8c.com"
   });
 
   useEffect(() => {
-    // Enhanced timing for the improved introduction sequence
+    // Enhanced timing for the improved introduction sequence with personal presentation
     const mainContentTimer = setTimeout(() => {
       setShowMainContent(true);
-    }, 9000); // 9 seconds for complete enhanced intro sequence
+    }, 12000); // 12 seconds for complete enhanced intro sequence with personal info
 
     // Initialize optimizations
     preloadCriticalResources();
@@ -84,7 +87,7 @@ const OptimizedIndex = () => {
     return <LoadingScreen progress={loadingProgress} />;
   }
 
-  // Show enhanced intro sequence
+  // Show enhanced intro sequence with personal information
   if (!showMainContent) {
     return <IntroSequence />;
   }
@@ -94,9 +97,9 @@ const OptimizedIndex = () => {
       <div className="min-h-screen bg-aix-black text-white relative">
         {/* Advanced SEO Components */}
         <SEOManager 
-          title="AIX8C - Lorenza Volponi | Referência Mundial em Prompt Engineering 🚀"
-          description="🌟 Lorenza Volponi, pioneira brasileira em engenharia de prompts e IA conversacional. Domine chatbots, automação IA, vibe coding e transforme sua comunicação com máquinas. Certificada MTF Portugal. Mentoria premium em IA."
-          keywords="prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, Lorenza Volponi, AIX8C, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant"
+          title="Lorenza Volponi - Capitã da Nave AIX8C | Referência Mundial em Prompt Engineering 🚀"
+          description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e pioneira brasileira em engenharia de prompts. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
+          keywords="Lorenza Volponi, Capitã AIX8C, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
         />
         <SchemaMarkup />
         <PerformanceOptimizer />
