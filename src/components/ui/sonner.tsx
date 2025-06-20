@@ -1,10 +1,11 @@
+
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, toast } from "sonner"
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme = "system" } = useTheme() || { theme: "dark" }
 
   return (
     <Sonner
@@ -27,3 +28,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
 }
 
 export { Toaster, toast }
+
