@@ -1,6 +1,7 @@
 
-import React, { useEffect, Suspense, useState } from "react";
+import React, { useEffect, Suspense } from "react";
 import { HelmetProvider } from 'react-helmet-async';
+import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
 import MicroInteractions from "@/components/ui/MicroInteractions";
 import HeroSection from "@/components/HeroSection";
@@ -79,51 +80,53 @@ const OptimizedIndex = () => {
 
   return (
     <HelmetProvider>
-      <div className="min-h-screen bg-aix-black text-white relative">
-        {/* Advanced SEO Components */}
-        <SEOManager 
-          title="Lorenza Volponi - Capitã da Nave AIX8C | Referência Mundial em Prompt Engineering 🚀"
-          description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e pioneira brasileira em engenharia de prompts. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
-          keywords="Lorenza Volponi, Capitã AIX8C, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
-        />
-        <SchemaMarkup />
-        <PerformanceOptimizer />
-        
-        <Navbar />
-        <MicroInteractions />
-        
-        <main>
-          <HeroSection />
+      <TooltipProvider>
+        <div className="min-h-screen bg-aix-black text-white relative">
+          {/* Advanced SEO Components */}
+          <SEOManager 
+            title="Lorenza Volponi - Capitã da Nave AIX8C | Referência Mundial em Prompt Engineering 🚀"
+            description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e pioneira brasileira em engenharia de prompts. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
+            keywords="Lorenza Volponi, Capitã AIX8C, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
+          />
+          <SchemaMarkup />
+          <PerformanceOptimizer />
           
-          <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
-            <AboutSection />
-          </Suspense>
+          <Navbar />
+          <MicroInteractions />
           
-          <Suspense fallback={<PremiumLoader message="Carregando nossa história..." />}>
-            <SobreNosSection />
-          </Suspense>
+          <main>
+            <HeroSection />
+            
+            <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
+              <AboutSection />
+            </Suspense>
+            
+            <Suspense fallback={<PremiumLoader message="Carregando nossa história..." />}>
+              <SobreNosSection />
+            </Suspense>
+            
+            <Suspense fallback={<PremiumLoader message="Carregando jornada..." />}>
+              <JornadaSection />
+            </Suspense>
+            
+            <Suspense fallback={<PremiumLoader message="Carregando portfólio..." />}>
+              <PortfolioSection />
+            </Suspense>
+            
+            <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
+              <AussySection />
+            </Suspense>
+            
+            <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
+              <ContactSection />
+            </Suspense>
+          </main>
           
-          <Suspense fallback={<PremiumLoader message="Carregando jornada..." />}>
-            <JornadaSection />
+          <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
+            <Footer />
           </Suspense>
-          
-          <Suspense fallback={<PremiumLoader message="Carregando portfólio..." />}>
-            <PortfolioSection />
-          </Suspense>
-          
-          <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
-            <AussySection />
-          </Suspense>
-          
-          <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
-            <ContactSection />
-          </Suspense>
-        </main>
-        
-        <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
-          <Footer />
-        </Suspense>
-      </div>
+        </div>
+      </TooltipProvider>
     </HelmetProvider>
   );
 };
