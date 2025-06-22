@@ -78,10 +78,10 @@ const OptimizedIndex = () => {
     preloadCriticalResources();
     injectAdvancedMeta();
 
-    // Auto-hide intro after sequence completes
+    // Auto-hide intro after sequence completes (aumentado para 8 segundos)
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 5000); // 5 seconds total intro time
+    }, 8000); // 8 segundos total intro time
 
     return () => clearTimeout(introTimer);
   }, []);
