@@ -3,7 +3,7 @@ import React, { useEffect, Suspense, useState } from "react";
 import { HelmetProvider } from 'react-helmet-async';
 import Navbar from "@/components/Navbar";
 import MicroInteractions from "@/components/ui/MicroInteractions";
-import IntroSequence from "@/components/hero/intro/IntroSequence";
+import HeroSection from "@/components/HeroSection";
 import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
@@ -29,7 +29,6 @@ import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
 const OptimizedIndex = () => {
-  const [showMainContent, setShowMainContent] = useState(false);
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
   
   usePerformanceOptimization();
@@ -68,28 +67,14 @@ const OptimizedIndex = () => {
   });
 
   useEffect(() => {
-    // Enhanced timing for the improved introduction sequence with personal presentation
-    const mainContentTimer = setTimeout(() => {
-      setShowMainContent(true);
-    }, 12000); // 12 seconds for complete enhanced intro sequence with personal info
-
     // Initialize optimizations
     preloadCriticalResources();
     injectAdvancedMeta();
-
-    return () => {
-      clearTimeout(mainContentTimer);
-    };
   }, []);
 
-  // Show initial loading screen
+  // Show initial loading screen only briefly
   if (isInitialLoading) {
     return <LoadingScreen progress={loadingProgress} />;
-  }
-
-  // Show enhanced intro sequence with personal information
-  if (!showMainContent) {
-    return <IntroSequence />;
   }
 
   return (
@@ -107,7 +92,9 @@ const OptimizedIndex = () => {
         <Navbar />
         <MicroInteractions />
         
-        <main>        
+        <main>
+          <HeroSection />
+          
           <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
             <AboutSection />
           </Suspense>

@@ -18,26 +18,12 @@ const HeroSection = () => {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.5,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
   return (
-    <motion.section 
+    <section 
       ref={sectionRef}
       className="relative h-screen flex items-center justify-center overflow-hidden bg-aix-black"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
     >
-      {/* Optimized Neural Canvas Background */}
+      {/* Neural Canvas Background */}
       <motion.div 
         style={{ y: backgroundY }}
         className="absolute inset-0"
@@ -45,8 +31,8 @@ const HeroSection = () => {
         <NeuralCanvas />
       </motion.div>
       
-      {/* Enhanced Cinematic Gradient Overlays */}
-      <motion.div 
+      {/* Enhanced Gradient Overlays */}
+      <div 
         className="absolute inset-0 z-10"
         style={{
           background: `
@@ -56,13 +42,10 @@ const HeroSection = () => {
             linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(10, 10, 10, 0.7) 50%, rgba(0, 0, 0, 0.85) 100%)
           `
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 3 }}
       />
       
-      {/* Animated grid overlay */}
-      <motion.div
+      {/* Grid overlay */}
+      <div
         className="absolute inset-0 z-5 opacity-10"
         style={{
           backgroundImage: `
@@ -71,27 +54,18 @@ const HeroSection = () => {
           `,
           backgroundSize: "60px 60px"
         }}
-        animate={{
-          x: [0, 60],
-          y: [0, 60]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
       />
       
       {/* Profile Image */}
       <ProfileImage />
       
-      {/* Main Content */}
+      {/* Main Content - INFORMAÇÕES LEGÍVEIS */}
       <HeroContent />
 
-      {/* Enhanced Scroll Indicator */}
+      {/* Scroll Indicator */}
       <ScrollIndicator />
       
-      {/* Floating elements for ambiance */}
+      {/* Floating elements */}
       {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
@@ -113,7 +87,7 @@ const HeroSection = () => {
           }}
         />
       ))}
-    </motion.section>
+    </section>
   );
 };
 
