@@ -2,28 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LogoIntro from './LogoIntro';
-import PersonalIntroduction from './PersonalIntroduction';
 
 const IntroSequence = () => {
-  const [currentPhase, setCurrentPhase] = useState<'logo' | 'personal' | 'transition'>('logo');
-  const [showPersonal, setShowPersonal] = useState(false);
+  const [currentPhase, setCurrentPhase] = useState<'logo' | 'transition'>('logo');
   const [showTransition, setShowTransition] = useState(false);
 
   useEffect(() => {
-    // Timing otimizado para melhor legibilidade
+    // Apenas uma animação - logo por 4 segundos
     const logoTimer = setTimeout(() => {
-      setCurrentPhase('personal');
-      setShowPersonal(true);
-    }, 3500); // 3.5 segundos para logo
-
-    const personalTimer = setTimeout(() => {
       setCurrentPhase('transition');
       setShowTransition(true);
-    }, 9000); // 5.5 segundos para apresentação pessoal (total 9 segundos)
+    }, 4000); // 4 segundos para logo
 
     return () => {
       clearTimeout(logoTimer);
-      clearTimeout(personalTimer);
     };
   }, []);
 
@@ -67,32 +59,6 @@ const IntroSequence = () => {
             }}
           >
             <LogoIntro />
-          </motion.div>
-        )}
-
-        {showPersonal && currentPhase === 'personal' && (
-          <motion.div
-            key="personal-introduction"
-            className="absolute inset-0 p-4 sm:p-6 lg:p-8"
-            initial={{ 
-              opacity: 0
-            }}
-            animate={{ 
-              opacity: 1,
-              transition: { 
-                duration: 1, 
-                ease: "easeOut"
-              }
-            }}
-            exit={{
-              opacity: 0,
-              transition: { 
-                duration: 1, 
-                ease: "easeInOut" 
-              }
-            }}
-          >
-            <PersonalIntroduction />
           </motion.div>
         )}
 

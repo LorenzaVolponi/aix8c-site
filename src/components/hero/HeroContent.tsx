@@ -45,26 +45,8 @@ const HeroContent = () => {
         </h1>
         
         <p className="text-base sm:text-lg md:text-xl text-cyan-300 font-light mb-3 tracking-wider">
-          Pioneira em Engenharia de Prompts
+          Tradutora entre almas humanas e mentes artificiais
         </p>
-      </motion.div>
-
-      {/* ARQUITETA DE FUTUROS DIGITAIS - Responsivo */}
-      <motion.div className="mb-6 sm:mb-8" variants={itemVariants}>
-        <motion.h3 
-          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-transparent bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold bg-clip-text mb-4 leading-tight"
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-          }}
-          transition={{ duration: 3, repeat: Infinity }}
-          style={{
-            backgroundSize: "200% 200%"
-          }}
-        >
-          ARQUITETA DE FUTUROS DIGITAIS
-        </motion.h3>
-        
-        <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-transparent via-aix-gold to-transparent mx-auto mb-6" />
       </motion.div>
 
       {/* Frase Pessoal - Responsiva */}

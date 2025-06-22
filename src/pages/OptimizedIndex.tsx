@@ -41,11 +41,12 @@ const OptimizedIndex = () => {
 
   // Advanced SEO Configuration
   useAdvancedSEO({
-    title: "Lorenza Volponi - Capitã da Nave AIX8C | Pioneira em Engenharia de Prompts",
-    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e pioneira mundial em prompt engineering! Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
+    title: "Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais",
+    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
     keywords: [
       "Lorenza Volponi",
       "Capitã AIX8C",
+      "tradutora almas humanas mentes artificiais",
       "prompt engineering",
       "engenharia de prompts", 
       "IA conversacional",
@@ -79,7 +80,7 @@ const OptimizedIndex = () => {
     // Auto-hide intro after sequence completes
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 10000); // 10 seconds total intro time
+    }, 5000); // 5 seconds total intro time (reduced from 10)
 
     return () => clearTimeout(introTimer);
   }, []);
@@ -106,9 +107,9 @@ const OptimizedIndex = () => {
         <div className="min-h-screen bg-aix-black text-white relative">
           {/* Advanced SEO Components */}
           <SEOManager 
-            title="Lorenza Volponi - Capitã da Nave AIX8C | Referência Mundial em Prompt Engineering 🚀"
-            description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e pioneira brasileira em engenharia de prompts. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
-            keywords="Lorenza Volponi, Capitã AIX8C, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
+            title="Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais 🚀"
+            description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
+            keywords="Lorenza Volponi, Capitã AIX8C, tradutora almas humanas mentes artificiais, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
           />
           <SchemaMarkup />
           <PerformanceOptimizer />
