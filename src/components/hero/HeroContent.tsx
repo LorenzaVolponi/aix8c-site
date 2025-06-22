@@ -29,7 +29,7 @@ const HeroContent = () => {
 
   return (
     <motion.div 
-      className="container mx-auto px-4 sm:px-6 lg:px-8 z-30 text-center relative max-w-7xl pt-20 sm:pt-24 md:pt-32"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 z-30 text-center relative max-w-7xl pt-32 sm:pt-36 md:pt-40 lg:pt-44"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

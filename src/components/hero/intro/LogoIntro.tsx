@@ -7,9 +7,9 @@ const LogoIntro = () => {
 
   useEffect(() => {
     const steps = [
-      { delay: 800, step: 1 }, // AIX8C aparece mais devagar
-      { delay: 3000, step: 2 }, // Subtítulo aparece
-      { delay: 5000, step: 3 }, // Efeito final de brilho
+      { delay: 1500, step: 1 }, // AIX8C aparece devagar
+      { delay: 5000, step: 2 }, // Subtítulo aparece
+      { delay: 8000, step: 3 }, // Efeito final de brilho
     ];
 
     steps.forEach(({ delay, step }) => {
@@ -36,7 +36,7 @@ const LogoIntro = () => {
                 scale: [0.5, 1.5, 0.5]
               }}
               transition={{
-                duration: 6,
+                duration: 8,
                 repeat: Infinity,
                 delay: Math.random() * 3,
                 ease: "easeInOut"
@@ -55,10 +55,10 @@ const LogoIntro = () => {
           scale: 1, 
           rotateY: 0,
           transition: { 
-            duration: 2.5, 
+            duration: 3.5, 
             ease: "easeOut",
             type: "spring",
-            stiffness: 80
+            stiffness: 60
           }
         } : {}}
       >
@@ -70,7 +70,7 @@ const LogoIntro = () => {
             scale: [1, 1.2, 1]
           } : { opacity: 0 }}
           transition={{
-            duration: 4,
+            duration: 5,
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -84,9 +84,9 @@ const LogoIntro = () => {
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold bg-gradient-to-br from-aix-gold via-cyan-300 to-blue-400 bg-clip-text text-transparent font-mono"
               initial={{ 
                 opacity: 0, 
-                y: 80, 
+                y: 120, 
                 rotateX: -90,
-                filter: "blur(15px)"
+                filter: "blur(20px)"
               }}
               animate={currentStep >= 1 ? {
                 opacity: 1,
@@ -94,8 +94,8 @@ const LogoIntro = () => {
                 rotateX: 0,
                 filter: "blur(0px)",
                 transition: {
-                  delay: index * 0.3,
-                  duration: 1.5,
+                  delay: index * 0.4,
+                  duration: 2,
                   ease: "easeOut",
                   type: "spring"
                 }
@@ -110,11 +110,11 @@ const LogoIntro = () => {
       {/* Subtítulo - Responsivo */}
       <motion.div
         className="relative z-10 text-center max-w-5xl mx-auto px-4"
-        initial={{ opacity: 0, y: 60 }}
+        initial={{ opacity: 0, y: 80 }}
         animate={currentStep >= 2 ? { 
           opacity: 1, 
           y: 0,
-          transition: { duration: 2, ease: "easeOut" }
+          transition: { duration: 2.5, ease: "easeOut" }
         } : {}}
       >
         <motion.p
@@ -123,7 +123,7 @@ const LogoIntro = () => {
             opacity: [0.8, 1, 0.8],
           } : {}}
           transition={{
-            duration: 5,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -135,7 +135,7 @@ const LogoIntro = () => {
           className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
           initial={{ scale: 0 }}
           animate={currentStep >= 2 ? { scale: 1 } : {}}
-          transition={{ delay: 0.8, type: "spring", stiffness: 150 }}
+          transition={{ delay: 1.2, type: "spring", stiffness: 120 }}
         >
           <div className="w-12 sm:w-16 lg:w-20 h-px bg-gradient-to-r from-transparent via-aix-gold to-transparent"></div>
           <div className="w-3 sm:w-4 h-3 sm:h-4 bg-aix-gold rounded-full animate-pulse"></div>
@@ -146,7 +146,7 @@ const LogoIntro = () => {
           className="text-sm sm:text-base md:text-lg text-gray-400 font-light italic"
           initial={{ opacity: 0 }}
           animate={currentStep >= 2 ? { opacity: 1 } : {}}
-          transition={{ delay: 1.5, duration: 1.5 }}
+          transition={{ delay: 2, duration: 2 }}
         >
           Navegando pelos mares da inovação digital
         </motion.p>
@@ -169,10 +169,10 @@ const LogoIntro = () => {
                 rotate: [0, 180],
               }}
               transition={{
-                duration: 8 + index * 2,
+                duration: 10 + index * 2,
                 repeat: Infinity,
                 ease: "linear",
-                delay: index * 0.5
+                delay: index * 0.8
               }}
             >
               {symbol}
