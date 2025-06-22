@@ -21,7 +21,7 @@ const HeroSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative h-screen flex items-center justify-center overflow-hidden bg-aix-black"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-aix-black"
     >
       {/* Neural Canvas Background */}
       <motion.div 
@@ -31,7 +31,7 @@ const HeroSection = () => {
         <NeuralCanvas />
       </motion.div>
       
-      {/* Enhanced Gradient Overlays */}
+      {/* Enhanced Gradient Overlays - Responsivos */}
       <div 
         className="absolute inset-0 z-10"
         style={{
@@ -44,7 +44,7 @@ const HeroSection = () => {
         }}
       />
       
-      {/* Grid overlay */}
+      {/* Grid overlay - Responsivo */}
       <div
         className="absolute inset-0 z-5 opacity-10"
         style={{
@@ -52,41 +52,58 @@ const HeroSection = () => {
             linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px"
+          backgroundSize: "40px 40px sm:60px sm:60px"
         }}
       />
       
-      {/* Profile Image */}
-      <ProfileImage />
+      {/* Profile Image - Responsivo */}
+      <div className="block sm:block md:block lg:block">
+        <ProfileImage />
+      </div>
       
-      {/* Main Content - INFORMAÇÕES LEGÍVEIS */}
-      <HeroContent />
+      {/* Main Content - Totalmente Responsivo */}
+      <div className="w-full">
+        <HeroContent />
+      </div>
 
-      {/* Scroll Indicator */}
-      <ScrollIndicator />
+      {/* Scroll Indicator - Responsivo */}
+      <div className="hidden sm:block">
+        <ScrollIndicator />
+      </div>
       
-      {/* Floating elements */}
+      {/* Floating elements - Responsivos */}
       {[...Array(6)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-2 h-2 bg-aix-gold/30 rounded-full"
+          className="absolute w-1 h-1 sm:w-2 sm:h-2 bg-aix-gold/30 rounded-full"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`
           }}
           animate={{
-            y: [0, -100, 0],
+            y: [0, -50, 0],
             opacity: [0, 0.8, 0],
             scale: [0.5, 1, 0.5]
           }}
           transition={{
-            duration: 8 + Math.random() * 4,
+            duration: 6 + Math.random() * 4,
             repeat: Infinity,
             delay: Math.random() * 5,
             ease: "easeInOut"
           }}
         />
       ))}
+
+      {/* Mobile-specific adjustments */}
+      <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-aix-gold text-xs"
+        >
+          ↓ Role para explorar
+        </motion.div>
+      </div>
     </section>
   );
 };

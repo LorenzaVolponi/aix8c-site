@@ -18,20 +18,20 @@ const LogoIntro = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-4">
-      {/* Partículas flutuantes */}
+    <div className="flex flex-col items-center justify-center text-center w-full max-w-6xl mx-auto">
+      {/* Partículas flutuantes - Responsivas */}
       {currentStep >= 1 && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
+          {Array.from({ length: 15 }).map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+              className="absolute w-0.5 h-0.5 sm:w-1 sm:h-1 bg-cyan-400 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}
               animate={{
-                y: [0, -100, 0],
+                y: [0, -80, 0],
                 opacity: [0, 1, 0],
                 scale: [0.5, 1.5, 0.5]
               }}
@@ -46,9 +46,9 @@ const LogoIntro = () => {
         </div>
       )}
 
-      {/* Nome AIX8C */}
+      {/* Nome AIX8C - Responsivo */}
       <motion.div
-        className="relative z-10 mb-8"
+        className="relative z-10 mb-6 sm:mb-8"
         initial={{ opacity: 0, scale: 0.5, rotateY: 180 }}
         animate={currentStep >= 1 ? { 
           opacity: 1, 
@@ -64,7 +64,7 @@ const LogoIntro = () => {
       >
         {/* Glow effect background */}
         <motion.div
-          className="absolute inset-0 bg-gradient-radial from-aix-gold/20 via-cyan-400/15 to-transparent blur-3xl"
+          className="absolute inset-0 bg-gradient-radial from-aix-gold/20 via-cyan-400/15 to-transparent blur-2xl sm:blur-3xl"
           animate={currentStep >= 3 ? {
             opacity: [0.2, 0.8, 0.2],
             scale: [1, 1.2, 1]
@@ -77,11 +77,11 @@ const LogoIntro = () => {
           style={{ width: '200%', height: '200%', left: '-50%', top: '-50%' }}
         />
 
-        <div className="relative flex items-center justify-center">
+        <div className="relative flex items-center justify-center flex-wrap sm:flex-nowrap gap-1 sm:gap-2">
           {['A', 'I', 'X', '8', 'C'].map((letter, index) => (
             <motion.span
               key={letter}
-              className="text-6xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-br from-aix-gold via-cyan-300 to-blue-400 bg-clip-text text-transparent font-mono mx-1"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold bg-gradient-to-br from-aix-gold via-cyan-300 to-blue-400 bg-clip-text text-transparent font-mono"
               initial={{ 
                 opacity: 0, 
                 y: 50, 
@@ -107,9 +107,9 @@ const LogoIntro = () => {
         </div>
       </motion.div>
 
-      {/* Subtítulo */}
+      {/* Subtítulo - Responsivo */}
       <motion.div
-        className="relative z-10 text-center max-w-4xl"
+        className="relative z-10 text-center max-w-5xl mx-auto px-4"
         initial={{ opacity: 0, y: 40 }}
         animate={currentStep >= 2 ? { 
           opacity: 1, 
@@ -118,7 +118,7 @@ const LogoIntro = () => {
         } : {}}
       >
         <motion.p
-          className="text-xl md:text-2xl lg:text-3xl text-cyan-300 font-light tracking-[0.3em] uppercase mb-6"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-cyan-300 font-light tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-4 sm:mb-6 leading-tight"
           animate={currentStep >= 2 ? {
             opacity: [0.8, 1, 0.8],
           } : {}}
@@ -132,18 +132,18 @@ const LogoIntro = () => {
         </motion.p>
         
         <motion.div
-          className="flex items-center justify-center gap-4 mb-6"
+          className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6"
           initial={{ scale: 0 }}
           animate={currentStep >= 2 ? { scale: 1 } : {}}
           transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
         >
-          <div className="w-20 h-px bg-gradient-to-r from-transparent via-aix-gold to-transparent"></div>
-          <div className="w-4 h-4 bg-aix-gold rounded-full animate-pulse"></div>
-          <div className="w-20 h-px bg-gradient-to-r from-transparent via-aix-gold to-transparent"></div>
+          <div className="w-12 sm:w-16 lg:w-20 h-px bg-gradient-to-r from-transparent via-aix-gold to-transparent"></div>
+          <div className="w-3 sm:w-4 h-3 sm:h-4 bg-aix-gold rounded-full animate-pulse"></div>
+          <div className="w-12 sm:w-16 lg:w-20 h-px bg-gradient-to-r from-transparent via-aix-gold to-transparent"></div>
         </motion.div>
         
         <motion.p
-          className="text-base md:text-lg text-gray-400 font-light italic"
+          className="text-sm sm:text-base md:text-lg text-gray-400 font-light italic"
           initial={{ opacity: 0 }}
           animate={currentStep >= 2 ? { opacity: 1 } : {}}
           transition={{ delay: 1, duration: 1 }}
@@ -152,27 +152,27 @@ const LogoIntro = () => {
         </motion.p>
       </motion.div>
 
-      {/* Elementos flutuantes de código */}
+      {/* Elementos flutuantes de código - Responsivos */}
       {currentStep >= 2 && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {['AI', '{ }', '<>', '∞', 'λ', '∑'].map((symbol, index) => (
             <motion.div
               key={symbol}
-              className="absolute text-cyan-400/20 font-mono text-sm md:text-base"
+              className="absolute text-cyan-400/20 font-mono text-xs sm:text-sm md:text-base"
               style={{
-                left: `${15 + index * 12}%`,
-                top: `${30 + Math.sin(index) * 25}%`,
+                left: `${10 + index * 13}%`,
+                top: `${20 + Math.sin(index) * 30}%`,
               }}
               animate={{
-                y: [0, -40, 0],
+                y: [0, -30, 0],
                 opacity: [0.2, 0.6, 0.2],
-                rotate: [0, 360],
+                rotate: [0, 180],
               }}
               transition={{
-                duration: 8 + index * 2,
+                duration: 6 + index * 1.5,
                 repeat: Infinity,
                 ease: "linear",
-                delay: index * 0.5
+                delay: index * 0.3
               }}
             >
               {symbol}

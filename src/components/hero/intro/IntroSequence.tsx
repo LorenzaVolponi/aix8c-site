@@ -14,12 +14,12 @@ const IntroSequence = () => {
     const logoTimer = setTimeout(() => {
       setCurrentPhase('personal');
       setShowPersonal(true);
-    }, 3000); // 3 segundos para logo
+    }, 3500); // 3.5 segundos para logo
 
     const personalTimer = setTimeout(() => {
       setCurrentPhase('transition');
       setShowTransition(true);
-    }, 9000); // 6 segundos para apresentação pessoal (total 9 segundos)
+    }, 9000); // 5.5 segundos para apresentação pessoal (total 9 segundos)
 
     return () => {
       clearTimeout(logoTimer);
@@ -29,7 +29,7 @@ const IntroSequence = () => {
 
   return (
     <div className="relative min-h-screen bg-aix-black overflow-hidden">
-      {/* Background Grid */}
+      {/* Background Grid - Responsivo */}
       <div 
         className="absolute inset-0 opacity-5"
         style={{
@@ -37,7 +37,7 @@ const IntroSequence = () => {
             linear-gradient(rgba(245, 158, 11, 0.2) 1px, transparent 1px),
             linear-gradient(90deg, rgba(245, 158, 11, 0.2) 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px"
+          backgroundSize: "40px 40px sm:60px sm:60px"
         }}
       />
 
@@ -59,7 +59,7 @@ const IntroSequence = () => {
         {currentPhase === 'logo' && (
           <motion.div
             key="logo-intro"
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 lg:p-8"
             initial={{ opacity: 1 }}
             exit={{ 
               opacity: 0,
@@ -73,7 +73,7 @@ const IntroSequence = () => {
         {showPersonal && currentPhase === 'personal' && (
           <motion.div
             key="personal-introduction"
-            className="absolute inset-0"
+            className="absolute inset-0 p-4 sm:p-6 lg:p-8"
             initial={{ 
               opacity: 0
             }}

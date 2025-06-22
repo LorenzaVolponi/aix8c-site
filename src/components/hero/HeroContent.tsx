@@ -3,27 +3,56 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const HeroContent = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.15,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 z-30 text-center relative">
-      {/* Informações Pessoais - SEM ANIMAÇÃO, LEGÍVEL */}
-      <div className="mb-8">
-        <h2 className="text-xl md:text-2xl text-aix-gold font-semibold mb-2 tracking-wide">
+    <motion.div 
+      className="container mx-auto px-4 sm:px-6 lg:px-8 z-30 text-center relative max-w-7xl"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {/* Informações Pessoais - Responsivas */}
+      <motion.div className="mb-6 sm:mb-8" variants={itemVariants}>
+        <h2 className="text-lg sm:text-xl md:text-2xl text-aix-gold font-semibold mb-2 tracking-wide">
           Capitã da Nave AIX8C
         </h2>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 font-serif tracking-tight text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 font-serif tracking-tight text-white leading-tight">
           LORENZA VOLPONI
         </h1>
         
-        <p className="text-lg md:text-xl text-cyan-300 font-light mb-3 tracking-wider">
+        <p className="text-base sm:text-lg md:text-xl text-cyan-300 font-light mb-3 tracking-wider">
           Pioneira em Engenharia de Prompts
         </p>
-      </div>
+      </motion.div>
 
-      {/* ARQUITETA DE FUTUROS DIGITAIS - COM DESTAQUE */}
-      <motion.div className="mb-8">
+      {/* ARQUITETA DE FUTUROS DIGITAIS - Responsivo */}
+      <motion.div className="mb-6 sm:mb-8" variants={itemVariants}>
         <motion.h3 
-          className="text-2xl md:text-4xl lg:text-5xl font-bold text-transparent bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold bg-clip-text mb-4"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-transparent bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold bg-clip-text mb-4 leading-tight"
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
           }}
@@ -35,22 +64,25 @@ const HeroContent = () => {
           ARQUITETA DE FUTUROS DIGITAIS
         </motion.h3>
         
-        <div className="w-32 h-1 bg-gradient-to-r from-transparent via-aix-gold to-transparent mx-auto mb-6" />
+        <div className="w-24 sm:w-32 h-1 bg-gradient-to-r from-transparent via-aix-gold to-transparent mx-auto mb-6" />
       </motion.div>
 
-      {/* Frase Pessoal - LEGÍVEL */}
-      <div className="mb-8">
-        <p className="text-white/90 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-light">
+      {/* Frase Pessoal - Responsiva */}
+      <motion.div className="mb-6 sm:mb-8" variants={itemVariants}>
+        <p className="text-white/90 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed font-light px-4">
           "Sou a soma infinita de ideias fora da caixa, unindo{" "}
           <span className="text-aix-gold font-medium">tecnologia</span>
           {" "}e{" "}
           <span className="text-aix-purple font-medium">emoção</span>
           . ✦"
         </p>
-      </div>
+      </motion.div>
 
-      {/* Destaques Profissionais - LEGÍVEL */}
-      <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
+      {/* Destaques Profissionais - Grid Responsivo */}
+      <motion.div 
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-4xl mx-auto mb-6 sm:mb-8 px-4"
+        variants={itemVariants}
+      >
         {[
           { title: "Prompt Engineering", desc: "Líder mundial em otimização de IA" },
           { title: "Navegação Digital", desc: "Conduzindo expedições tecnológicas" },
@@ -58,33 +90,36 @@ const HeroContent = () => {
         ].map((item, index) => (
           <div
             key={index}
-            className="text-center bg-white/5 backdrop-blur-sm border border-aix-gold/20 rounded-lg p-4"
+            className="text-center bg-white/5 backdrop-blur-sm border border-aix-gold/20 rounded-lg p-3 sm:p-4"
           >
-            <h5 className="text-aix-gold font-semibold text-base mb-2">{item.title}</h5>
-            <p className="text-white/70 text-sm">{item.desc}</p>
+            <h5 className="text-aix-gold font-semibold text-sm sm:text-base mb-2">{item.title}</h5>
+            <p className="text-white/70 text-xs sm:text-sm">{item.desc}</p>
           </div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Descrição Profissional - LEGÍVEL */}
-      <div className="mb-12">
-        <p className="text-white/90 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed font-light">
+      {/* Descrição Profissional - Responsiva */}
+      <motion.div className="mb-8 sm:mb-12 px-4" variants={itemVariants}>
+        <p className="text-white/90 max-w-4xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed font-light">
           Transformando dados em estratégias, algoritmos em resultados e desafios complexos em{" "}
           <span className="text-aix-gold font-semibold">oportunidades exponenciais</span>
           {" "}para empresas visionárias que buscam transcender os limites do possível.
         </p>
-      </div>
+      </motion.div>
 
-      {/* Botões de Ação */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <button className="bg-gradient-to-r from-aix-gold to-yellow-400 text-black px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+      {/* Botões de Ação - Responsivos */}
+      <motion.div 
+        className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
+        variants={itemVariants}
+      >
+        <button className="w-full sm:w-auto bg-gradient-to-r from-aix-gold to-yellow-400 text-black px-6 sm:px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
           Explorar Projetos
         </button>
-        <button className="border-2 border-aix-cyan text-aix-cyan px-8 py-3 rounded-lg font-semibold hover:bg-aix-cyan hover:text-black transition-all duration-300">
+        <button className="w-full sm:w-auto border-2 border-aix-cyan text-aix-cyan px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-aix-cyan hover:text-black transition-all duration-300 text-sm sm:text-base">
           Falar Comigo
         </button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

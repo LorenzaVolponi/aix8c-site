@@ -1,5 +1,5 @@
 
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect, Suspense, useState } from "react";
 import { HelmetProvider } from 'react-helmet-async';
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Navbar from "@/components/Navbar";
@@ -8,6 +8,9 @@ import HeroSection from "@/components/HeroSection";
 import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
+
+// Import intro sequence
+import IntroSequence from "@/components/hero/intro/IntroSequence";
 
 // Import refactored components
 import LoadingScreen from "@/components/OptimizedIndex/LoadingScreen";
@@ -31,6 +34,7 @@ import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimiz
 
 const OptimizedIndex = () => {
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
+  const [showIntro, setShowIntro] = useState(true);
   
   usePerformanceOptimization();
   useAdvancedAnalytics();
@@ -71,11 +75,29 @@ const OptimizedIndex = () => {
     // Initialize optimizations
     preloadCriticalResources();
     injectAdvancedMeta();
+
+    // Auto-hide intro after sequence completes
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+    }, 10000); // 10 seconds total intro time
+
+    return () => clearTimeout(introTimer);
   }, []);
 
   // Show initial loading screen only briefly
   if (isInitialLoading) {
     return <LoadingScreen progress={loadingProgress} />;
+  }
+
+  // Show intro sequence first
+  if (showIntro) {
+    return (
+      <HelmetProvider>
+        <TooltipProvider>
+          <IntroSequence />
+        </TooltipProvider>
+      </HelmetProvider>
+    );
   }
 
   return (
@@ -94,7 +116,7 @@ const OptimizedIndex = () => {
           <Navbar />
           <MicroInteractions />
           
-          <main>
+          <main className="w-full">
             <HeroSection />
             
             <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
