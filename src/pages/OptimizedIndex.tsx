@@ -33,8 +33,9 @@ import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
 const OptimizedIndex = () => {
-  const { loadingProgress, isInitialLoading } = useLoadingProgress();
+  // Move hooks to the top level of the component
   const [showIntro, setShowIntro] = useState(true);
+  const { loadingProgress, isInitialLoading } = useLoadingProgress();
   
   usePerformanceOptimization();
   useAdvancedAnalytics();
@@ -80,14 +81,20 @@ const OptimizedIndex = () => {
     // Auto-hide intro after sequence completes
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 5000); // 5 seconds total intro time (reduced from 10)
+    }, 5000); // 5 seconds total intro time
 
     return () => clearTimeout(introTimer);
   }, []);
 
   // Show initial loading screen only briefly
   if (isInitialLoading) {
-    return <LoadingScreen progress={loadingProgress} />;
+    return (
+      <HelmetProvider>
+        <TooltipProvider>
+          <LoadingScreen progress={loadingProgress} />
+        </TooltipProvider>
+      </HelmetProvider>
+    );
   }
 
   // Show intro sequence first

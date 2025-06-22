@@ -5,7 +5,14 @@ import { Toaster as Sonner, toast } from "sonner"
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme() || { theme: "dark" }
+  // Safe theme handling with fallback
+  let theme = "dark";
+  try {
+    const themeHook = useTheme();
+    theme = themeHook?.theme || "dark";
+  } catch (error) {
+    console.warn("Theme context not available, using default dark theme");
+  }
 
   return (
     <Sonner
@@ -28,4 +35,3 @@ const Toaster = ({ ...props }: ToasterProps) => {
 }
 
 export { Toaster, toast }
-
