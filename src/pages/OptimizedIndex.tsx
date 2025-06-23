@@ -88,10 +88,10 @@ const OptimizedIndexContent = () => {
 
   useEffect(() => {
     if (isReady && !isInitialLoading) {
-      // Start intro timer only when loading is complete
+      // Reduzido para 8 segundos - muito mais rápido
       const introTimer = setTimeout(() => {
         setShowIntro(false);
-      }, 15000); // 15 seconds for intro
+      }, 8000);
 
       return () => clearTimeout(introTimer);
     }
