@@ -8,7 +8,6 @@ import JornadaSection from "@/components/JornadaSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import AussySection from "@/components/AussySection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -52,7 +51,6 @@ const Index = () => {
         <ExpertiseSection />
         <PortfolioSection />
         <AussySection />
-        <ContactSection />
       </main>
       <Footer />
     </div>

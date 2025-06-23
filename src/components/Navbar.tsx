@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X, Calendar, Zap, Navigation, Home, User, Briefcase, FolderOpen, Bot } from 'lucide-react';
+import { Menu, X, Zap, Navigation, Home, User, Briefcase, FolderOpen, Bot } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -156,33 +156,6 @@ const Navbar = () => {
               </motion.div>
             ))}
           </div>
-          
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2 }}
-            className="hidden md:block"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                className="relative bg-gradient-to-r from-aix-gold to-yellow-500 hover:from-yellow-500 hover:to-aix-gold text-black font-semibold px-6 py-3 rounded-xl transition-all duration-300 overflow-hidden group"
-                onClick={() => window.open('https://calendly.com/lorenzavolponi', '_blank')}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-                <Calendar className="w-4 h-4 mr-2" />
-                <span className="relative z-10">Agendar</span>
-              </Button>
-            </motion.div>
-          </motion.div>
 
           {/* Mobile Menu Button */}
           <motion.button
@@ -238,23 +211,6 @@ const Navbar = () => {
                   </button>
                 </motion.div>
               ))}
-              
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.1 }}
-              >
-                <Button 
-                  className="bg-gradient-to-r from-aix-gold to-yellow-500 text-black font-semibold px-8 py-4 text-lg rounded-xl"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    window.open('https://calendly.com/lorenzavolponi', '_blank');
-                  }}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Agendar Conversa
-                </Button>
-              </motion.div>
             </motion.div>
           </motion.div>
         )}

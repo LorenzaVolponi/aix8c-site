@@ -8,7 +8,6 @@ import HeroSection from "@/components/HeroSection";
 import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
-import ChatBot from "@/components/ChatBot";
 
 // Import intro sequence
 import IntroSequence from "@/components/hero/intro/IntroSequence";
@@ -22,7 +21,6 @@ import {
   JornadaSection,
   PortfolioSection,
   AussySection,
-  ContactSection,
   Footer
 } from "@/components/OptimizedIndex/LazyComponents";
 
@@ -141,17 +139,11 @@ const OptimizedIndexContent = () => {
         <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
           <AussySection />
         </Suspense>
-        
-        <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
-          <ContactSection />
-        </Suspense>
       </main>
       
       <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
         <Footer />
       </Suspense>
-
-      <ChatBot />
     </div>
   );
 };

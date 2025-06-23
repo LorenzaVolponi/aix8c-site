@@ -70,7 +70,6 @@ const ProfileImage = () => {
                 loading="eager"
                 style={{
                   objectPosition: 'center 20%',
-                  imageRendering: 'high-quality',
                   filter: 'contrast(1.05) brightness(1.02) saturate(1.1)'
                 }}
                 onError={(e) => {
