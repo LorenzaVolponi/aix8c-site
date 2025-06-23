@@ -10,14 +10,6 @@ export const AboutSection = lazy(() =>
   })
 );
 
-export const SobreNosSection = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/SobreNosSection"));
-    }, 200);
-  })
-);
-
 export const JornadaSection = lazy(() => 
   new Promise<{ default: React.ComponentType<any> }>(resolve => {
     setTimeout(() => {
