@@ -78,7 +78,7 @@ const OptimizedIndex = () => {
 
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 11000);
+    }, 8000);
 
     return () => clearTimeout(introTimer);
   }, []);
@@ -86,9 +86,7 @@ const OptimizedIndex = () => {
   if (isInitialLoading) {
     return (
       <HelmetProvider>
-        <TooltipProvider>
-          <LoadingScreen progress={loadingProgress} />
-        </TooltipProvider>
+        <LoadingScreen progress={loadingProgress} />
       </HelmetProvider>
     );
   }
@@ -96,9 +94,7 @@ const OptimizedIndex = () => {
   if (showIntro) {
     return (
       <HelmetProvider>
-        <TooltipProvider>
-          <IntroSequence />
-        </TooltipProvider>
+        <IntroSequence />
       </HelmetProvider>
     );
   }
