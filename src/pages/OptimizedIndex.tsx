@@ -35,6 +35,8 @@ import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimiz
 
 const OptimizedIndex = () => {
   const [showIntro, setShowIntro] = useState(true);
+  
+  // Use hooks in the correct order
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
   
   usePerformanceOptimization();
@@ -42,7 +44,7 @@ const OptimizedIndex = () => {
 
   useAdvancedSEO({
     title: "Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais",
-    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
+    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a suma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
     keywords: [
       "Lorenza Volponi",
       "Capitã AIX8C",
@@ -86,7 +88,9 @@ const OptimizedIndex = () => {
   if (isInitialLoading) {
     return (
       <HelmetProvider>
-        <LoadingScreen progress={loadingProgress} />
+        <TooltipProvider>
+          <LoadingScreen progress={loadingProgress} />
+        </TooltipProvider>
       </HelmetProvider>
     );
   }
@@ -94,7 +98,9 @@ const OptimizedIndex = () => {
   if (showIntro) {
     return (
       <HelmetProvider>
-        <IntroSequence />
+        <TooltipProvider>
+          <IntroSequence />
+        </TooltipProvider>
       </HelmetProvider>
     );
   }
@@ -105,7 +111,7 @@ const OptimizedIndex = () => {
         <div className="min-h-screen bg-aix-black text-white relative">
           <SEOManager 
             title="Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais 🚀"
-            description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
+            description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais. Sou a suma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
             keywords="Lorenza Volponi, Capitã AIX8C, tradutora almas humanas mentes artificiais, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
           />
           <SchemaMarkup />
