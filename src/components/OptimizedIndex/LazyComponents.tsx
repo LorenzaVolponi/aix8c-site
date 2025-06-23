@@ -34,14 +34,6 @@ export const AussySection = lazy(() =>
   })
 );
 
-export const ContactSection = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/ContactSection"));
-    }, 600);
-  })
-);
-
 export const Footer = lazy(() => 
   new Promise<{ default: React.ComponentType<any> }>(resolve => {
     setTimeout(() => {
