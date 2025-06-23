@@ -8,11 +8,11 @@ const IntroSequence = () => {
   const [showTransition, setShowTransition] = useState(false);
 
   useEffect(() => {
-    // Animação mais lenta - logo por 10 segundos para poder ler
+    // Aumentar tempo para 15 segundos para dar tempo de ler tudo
     const logoTimer = setTimeout(() => {
       setCurrentPhase('transition');
       setShowTransition(true);
-    }, 10000); // 10 segundos para logo (tempo suficiente para ler)
+    }, 15000); // 15 segundos para ler com calma
 
     return () => {
       clearTimeout(logoTimer);
@@ -55,7 +55,7 @@ const IntroSequence = () => {
             initial={{ opacity: 1 }}
             exit={{ 
               opacity: 0,
-              transition: { duration: 2, ease: "easeInOut" }
+              transition: { duration: 3, ease: "easeInOut" }
             }}
           >
             <LogoIntro />
@@ -70,7 +70,7 @@ const IntroSequence = () => {
             animate={{ 
               opacity: 1,
               transition: { 
-                duration: 2,
+                duration: 3,
                 ease: "easeInOut"
               }
             }}

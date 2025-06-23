@@ -78,9 +78,10 @@ const OptimizedIndex = () => {
     preloadCriticalResources();
     injectAdvancedMeta();
 
+    // Aumentar tempo total para 18 segundos (15s intro + 3s transição)
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 8000);
+    }, 18000);
 
     return () => clearTimeout(introTimer);
   }, []);
