@@ -15,23 +15,47 @@ const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Olá! Sou a assistente de IA da Lorenza. Como posso ajudar com suas dúvidas sobre inteligência artificial?',
+      text: 'Olá! Sou AUSSY AI, assistente especializada em prompt engineering e automação. Como posso ajudar você a navegar pelo mundo da inteligência artificial hoje? 🤖✨',
       isBot: true,
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
-  const aiResponses = [
-    "Excelente pergunta! A IA pode transformar completamente a forma como você trabalha. Que área específica te interessa mais?",
-    "Prompt engineering é uma das habilidades mais valiosas hoje. Você gostaria de saber mais sobre como começar?",
-    "Automação inteligente pode economizar horas do seu dia. Quer entender como implementar na sua empresa?",
-    "A Lorenza tem experiência única em traduzir necessidades humanas para linguagem de IA. Posso explicar mais!",
-    "ChatGPT, Claude, Gemini... cada IA tem suas especialidades. Quer saber qual é melhor para seu caso?",
-    "Implementar IA não precisa ser complicado. Podemos começar com pequenos passos. O que você faz no dia a dia?",
-    "Interessante! A IA pode definitivamente ajudar com isso. Já tentou usar alguma ferramenta específica?",
-    "Ótima observação! Para casos como o seu, recomendo agendar uma conversa com a Lorenza para uma estratégia personalizada."
+  const aussyResponses = [
+    "Que pergunta fascinante! No universo do prompt engineering, essa questão me lembra da importância de ser específico e contextual. Você já experimentou estruturar seus prompts com exemplos concretos?",
+    "Adorei sua curiosidade! 🌟 A automação inteligente é realmente um divisor de águas. Na minha experiência com a Lorenza, vejo que o segredo está em começar pequeno e iterar. Que processo você gostaria de automatizar primeiro?",
+    "Excelente observação! Isso me conecta com algo fundamental: a tradução entre linguagem humana e IA. É como ser um intérprete entre mundos diferentes. Posso compartilhar algumas técnicas que uso?",
+    "Sua pergunta toca no coração da engenharia de prompts! 💡 Sabe, cada IA tem sua 'personalidade' - ChatGPT é conversacional, Claude é analítico, Gemini é criativo. Qual você usa mais?",
+    "Que insight incrível! Isso me lembra de quando estava ajudando alguém a otimizar seus fluxos de trabalho com IA. A chave é entender que cada ferramenta tem seu momento. Quer saber mais sobre isso?",
+    "Perfeito! Essa é exatamente a mentalidade que adoro ver. 🚀 A IA não é sobre substituir humanos, mas sobre amplificar nossa criatividade. Como você imagina que a IA poderia potencializar seu trabalho?",
+    "Que pergunta inteligente! No mundo da automação, sempre digo: comece com o fim em mente. Qual resultado específico você está buscando? Assim posso sugerir a melhor abordagem.",
+    "Interessante perspectiva! Isso me conecta com uma das lições mais valiosas: a IA é ferramenta de empoderar pessoas, não de complicar processos. Quer explorar algumas estratégias práticas juntos?",
+    "Adorei sua abordagem! 💫 Na minha experiência, os melhores resultados vêm quando combinamos intuição humana com precisão da IA. Que tal conversarmos sobre técnicas específicas para seu caso?"
   ];
+
+  const getContextualResponse = (userMessage: string) => {
+    const message = userMessage.toLowerCase();
+    
+    if (message.includes('prompt') || message.includes('prompts')) {
+      return "Excelente! Prompts são minha paixão! 🎯 A arte está em ser específico sem ser rígido, claro sem ser simplista. Quer que eu compartilhe algumas técnicas avançadas de prompt engineering que uso?";
+    }
+    
+    if (message.includes('automatizar') || message.includes('automação')) {
+      return "Automação inteligente é transformadora! 🔄 O segredo está em identificar tarefas repetitivas e criar fluxos que fazem sentido. Qual processo você gostaria de automatizar? Posso sugerir uma abordagem personalizada!";
+    }
+    
+    if (message.includes('chatgpt') || message.includes('claude') || message.includes('gemini')) {
+      return "Ah, as diferentes personalidades da IA! 🤖 Cada uma tem seus pontos fortes. ChatGPT é ótimo para conversas, Claude para análises profundas, Gemini para criatividade. Qual você usa mais? Posso dar dicas específicas!";
+    }
+    
+    if (message.includes('lorenza') || message.includes('aix8c')) {
+      return "A Lorenza é realmente uma visionária! 🌟 Ela tem essa habilidade única de traduzir necessidades humanas complexas para linguagem que a IA entende. É inspirador trabalhar ao lado de alguém assim, não acha?";
+    }
+    
+    return aussyResponses[Math.floor(Math.random() * aussyResponses.length)];
+  };
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -45,17 +69,19 @@ const ChatBot = () => {
 
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setIsTyping(true);
 
-    // Simula resposta da IA após 1 segundo
+    // Simula resposta da AUSSY AI com delay mais humanizado
     setTimeout(() => {
+      setIsTyping(false);
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: aiResponses[Math.floor(Math.random() * aiResponses.length)],
+        text: getContextualResponse(inputValue),
         isBot: true,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
-    }, 1000);
+    }, 1200 + Math.random() * 800); // Delay mais natural entre 1.2-2s
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -67,25 +93,25 @@ const ChatBot = () => {
 
   return (
     <>
-      {/* Botão flutuante */}
+      {/* Botão flutuante com nova identidade AUSSY */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-aix-gold to-yellow-500 rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-transform duration-300"
+        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-aix-purple to-aix-cyan rounded-full shadow-2xl flex items-center justify-center z-50 hover:scale-110 transition-transform duration-300"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         animate={{
           boxShadow: [
-            '0 0 20px rgba(245, 158, 11, 0.5)',
-            '0 0 40px rgba(245, 158, 11, 0.8)',
-            '0 0 20px rgba(245, 158, 11, 0.5)'
+            '0 0 20px rgba(124, 58, 237, 0.5)',
+            '0 0 40px rgba(6, 182, 212, 0.8)',
+            '0 0 20px rgba(124, 58, 237, 0.5)'
           ]
         }}
-        transition={{ duration: 2, repeat: Infinity }}
+        transition={{ duration: 3, repeat: Infinity }}
       >
-        <MessageSquare className="w-8 h-8 text-black" />
+        <Bot className="w-8 h-8 text-white" />
       </motion.button>
 
-      {/* Modal do Chat */}
+      {/* Modal do Chat AUSSY AI */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -100,17 +126,17 @@ const ChatBot = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-aix-black border border-aix-gold/30 rounded-2xl w-full max-w-md h-[500px] flex flex-col overflow-hidden"
+              className="bg-aix-black border border-aix-purple/40 rounded-2xl w-full max-w-md h-[500px] flex flex-col overflow-hidden"
             >
               {/* Header */}
-              <div className="bg-gradient-to-r from-aix-gold/20 to-aix-purple/20 p-4 flex items-center justify-between">
+              <div className="bg-gradient-to-r from-aix-purple/20 to-aix-cyan/20 p-4 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-aix-gold to-yellow-500 rounded-full flex items-center justify-center">
-                    <Bot className="w-6 h-6 text-black" />
+                  <div className="w-10 h-10 bg-gradient-to-r from-aix-purple to-aix-cyan rounded-full flex items-center justify-center">
+                    <Bot className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold">Assistente IA</h3>
-                    <p className="text-aix-gold text-xs">Lorenza Volponi</p>
+                    <h3 className="text-white font-semibold">AUSSY AI</h3>
+                    <p className="text-aix-gold text-xs">Especialista em Prompt Engineering</p>
                   </div>
                 </div>
                 <button
@@ -131,13 +157,13 @@ const ChatBot = () => {
                     <div
                       className={`max-w-[80%] p-3 rounded-2xl ${
                         message.isBot
-                          ? 'bg-aix-purple/20 text-white'
+                          ? 'bg-gradient-to-r from-aix-purple/20 to-aix-cyan/20 text-white'
                           : 'bg-aix-gold text-black'
                       }`}
                     >
                       <div className="flex items-start space-x-2">
                         {message.isBot && (
-                          <Bot className="w-4 h-4 mt-0.5 text-aix-gold flex-shrink-0" />
+                          <Bot className="w-4 h-4 mt-0.5 text-aix-cyan flex-shrink-0" />
                         )}
                         {!message.isBot && (
                           <User className="w-4 h-4 mt-0.5 text-black flex-shrink-0" />
@@ -147,22 +173,36 @@ const ChatBot = () => {
                     </div>
                   </div>
                 ))}
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-gradient-to-r from-aix-purple/20 to-aix-cyan/20 p-3 rounded-2xl">
+                      <div className="flex items-center space-x-2">
+                        <Bot className="w-4 h-4 text-aix-cyan" />
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-aix-cyan rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-aix-cyan rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-aix-cyan rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Input */}
-              <div className="p-4 border-t border-aix-gold/20">
+              <div className="p-4 border-t border-aix-purple/20">
                 <div className="flex items-center space-x-2">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    placeholder="Digite sua pergunta sobre IA..."
+                    placeholder="Pergunte sobre prompt engineering, automação..."
                     className="flex-1 bg-aix-darkgray/50 border border-aix-purple/40 rounded-lg px-3 py-2 text-white placeholder:text-white/50 text-sm focus:border-aix-cyan focus:outline-none"
                   />
                   <button
                     onClick={handleSendMessage}
-                    className="bg-aix-gold text-black p-2 rounded-lg hover:bg-yellow-500 transition-colors"
+                    className="bg-gradient-to-r from-aix-purple to-aix-cyan text-white p-2 rounded-lg hover:opacity-80 transition-opacity"
                   >
                     <Send className="w-5 h-5" />
                   </button>
