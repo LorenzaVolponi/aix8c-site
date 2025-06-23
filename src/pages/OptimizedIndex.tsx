@@ -33,81 +33,71 @@ import { useAdvancedAnalytics } from "@/hooks/useAdvancedAnalytics";
 import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
-// Create a wrapper component that ensures React is fully initialized
 const OptimizedIndexContent = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [isReady, setIsReady] = useState(false);
   
-  // Ensure React is fully initialized before using hooks
+  // Always call hooks - never conditionally
+  const { loadingProgress, isInitialLoading } = useLoadingProgress();
+  
+  // Always call other hooks too
+  usePerformanceOptimization();
+  useAdvancedAnalytics();
+  useAdvancedSEO({
+    title: "Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais",
+    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a suma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
+    keywords: [
+      "Lorenza Volponi",
+      "Capitã AIX8C",
+      "tradutora almas humanas mentes artificiais",
+      "prompt engineering",
+      "engenharia de prompts", 
+      "IA conversacional",
+      "chatbot automation",
+      "automação chatbot",
+      "mentoria IA",
+      "aprendizado com IA",
+      "vibe coding",
+      "AIX8C",
+      "inteligência artificial Brasil",
+      "conversational AI",
+      "AI mentorship",
+      "machine learning prompts",
+      "GPT prompts",
+      "ChatGPT engineering",
+      "AI coaching",
+      "prompt optimization",
+      "AI consultant Brazil",
+      "artificial intelligence expert",
+      "tecnologia e emoção",
+      "inovação digital"
+    ],
+    canonical: "https://aix8c.com"
+  });
+
   useEffect(() => {
-    // Small delay to ensure React context is fully established
+    // Initialize React properly
     const timer = setTimeout(() => {
       setIsReady(true);
+      preloadCriticalResources();
+      injectAdvancedMeta();
     }, 100);
     
     return () => clearTimeout(timer);
   }, []);
 
-  // Only use hooks after React is ready
-  const { loadingProgress, isInitialLoading } = isReady ? useLoadingProgress() : { loadingProgress: 0, isInitialLoading: true };
-  
-  // Use other hooks only when ready
   useEffect(() => {
-    if (isReady) {
-      preloadCriticalResources();
-      injectAdvancedMeta();
-    }
-  }, [isReady]);
-
-  // Use conditional hooks
-  if (isReady) {
-    usePerformanceOptimization();
-    useAdvancedAnalytics();
-    useAdvancedSEO({
-      title: "Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais",
-      description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a suma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
-      keywords: [
-        "Lorenza Volponi",
-        "Capitã AIX8C",
-        "tradutora almas humanas mentes artificiais",
-        "prompt engineering",
-        "engenharia de prompts", 
-        "IA conversacional",
-        "chatbot automation",
-        "automação chatbot",
-        "mentoria IA",
-        "aprendizado com IA",
-        "vibe coding",
-        "AIX8C",
-        "inteligência artificial Brasil",
-        "conversational AI",
-        "AI mentorship",
-        "machine learning prompts",
-        "GPT prompts",
-        "ChatGPT engineering",
-        "AI coaching",
-        "prompt optimization",
-        "AI consultant Brazil",
-        "artificial intelligence expert",
-        "tecnologia e emoção",
-        "inovação digital"
-      ],
-      canonical: "https://aix8c.com"
-    });
-  }
-
-  useEffect(() => {
-    if (isReady) {
-      // Aumentar tempo total para 18 segundos (15s intro + 3s transição)
+    if (isReady && !isInitialLoading) {
+      // Start intro timer only when loading is complete
       const introTimer = setTimeout(() => {
         setShowIntro(false);
-      }, 18000);
+      }, 15000); // 15 seconds for intro
 
       return () => clearTimeout(introTimer);
     }
-  }, [isReady]);
+  }, [isReady, isInitialLoading]);
 
-  // Show loading screen while React is initializing or during initial loading
+  // Show loading screen while initializing or during initial loading
   if (!isReady || isInitialLoading) {
     return <LoadingScreen progress={loadingProgress} />;
   }
@@ -161,7 +151,6 @@ const OptimizedIndexContent = () => {
         <Footer />
       </Suspense>
 
-      {/* Chatbot */}
       <ChatBot />
     </div>
   );
