@@ -8,6 +8,7 @@ import HeroSection from "@/components/HeroSection";
 import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
+import ChatBot from "@/components/ChatBot";
 
 // Import intro sequence
 import IntroSequence from "@/components/hero/intro/IntroSequence";
@@ -33,14 +34,12 @@ import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
 const OptimizedIndex = () => {
-  // Move hooks to the top level of the component
   const [showIntro, setShowIntro] = useState(true);
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
   
   usePerformanceOptimization();
   useAdvancedAnalytics();
 
-  // Advanced SEO Configuration
   useAdvancedSEO({
     title: "Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais",
     description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
@@ -74,19 +73,16 @@ const OptimizedIndex = () => {
   });
 
   useEffect(() => {
-    // Initialize optimizations
     preloadCriticalResources();
     injectAdvancedMeta();
 
-    // Auto-hide intro after sequence completes (aumentado para 11 segundos)
     const introTimer = setTimeout(() => {
       setShowIntro(false);
-    }, 11000); // 11 segundos total intro time
+    }, 11000);
 
     return () => clearTimeout(introTimer);
   }, []);
 
-  // Show initial loading screen only briefly
   if (isInitialLoading) {
     return (
       <HelmetProvider>
@@ -97,7 +93,6 @@ const OptimizedIndex = () => {
     );
   }
 
-  // Show intro sequence first
   if (showIntro) {
     return (
       <HelmetProvider>
@@ -112,7 +107,6 @@ const OptimizedIndex = () => {
     <HelmetProvider>
       <TooltipProvider>
         <div className="min-h-screen bg-aix-black text-white relative">
-          {/* Advanced SEO Components */}
           <SEOManager 
             title="Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais 🚀"
             description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais. Sou a soma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
@@ -155,6 +149,9 @@ const OptimizedIndex = () => {
           <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
             <Footer />
           </Suspense>
+
+          {/* Chatbot */}
+          <ChatBot />
         </div>
       </TooltipProvider>
     </HelmetProvider>
