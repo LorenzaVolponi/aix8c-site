@@ -32,20 +32,4 @@ function fixSobreNosSection() {
     console.log('SobreNosSection não está definido em LazyComponents.tsx. Removendo referências...');
 
     // Remove a importação do SobreNosSection no OptimizedIndex.tsx
-    const sobreNosImportRegex = /import\s+{\s*SobreNosSection\s+}\s+from\s+['"]\.\.\/components\/OptimizedIndex\/LazyComponents['"];?/;
-    optimizedIndexContent = optimizedIndexContent.replace(sobreNosImportRegex, '');
-
-    // Remove qualquer uso do <SobreNosSection /> no OptimizedIndex.tsx
-    const sobreNosUsageRegex = /<SobreNosSection\s*\/?>/g;
-    optimizedIndexContent = optimizedIndexContent.replace(sobreNosUsageRegex, '');
-
-    // Salva o arquivo modificado
-    fs.writeFileSync(optimizedIndexPath, optimizedIndexContent, 'utf-8');
-    console.log('Referências ao SobreNosSection removidas com sucesso.');
-  } else {
-    console.log('SobreNosSection já está definido em LazyComponents.tsx. Nada a corrigir.');
-  }
-}
-
-// Executa a correção
-fixSobreNosSection();
+    const sobreNosImportRegex = /import\s+{\s*SobreNosSection\s+}\s+from\s+['"]\.\.\/components
