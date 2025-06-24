@@ -1,5 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Função para verificar se um arquivo existe
 function fileExists(filePath) {
@@ -8,8 +13,8 @@ function fileExists(filePath) {
 
 // Função para corrigir referências ao SobreNosSection
 function fixSobreNosSection() {
-  const lazyComponentsPath = path.join(__dirname, 'src', 'components', 'OptimizedIndex', 'LazyComponents.tsx');
-  const optimizedIndexPath = path.join(__dirname, 'src', 'pages', 'OptimizedIndex.tsx');
+  const lazyComponentsPath = path.join(__dirname, 'components', 'OptimizedIndex', 'LazyComponents.tsx');
+  const optimizedIndexPath = path.join(__dirname, 'pages', 'OptimizedIndex.tsx');
 
   // Verifica se os arquivos existem
   if (!fileExists(lazyComponentsPath)) {
