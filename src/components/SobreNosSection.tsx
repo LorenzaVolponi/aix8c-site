@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Brain, Zap, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -30,8 +29,6 @@ const SobreNosSection = () => {
   return (
     <section id="sobre-nos" className="py-24 relative overflow-hidden bg-gradient-to-br from-aix-purple-dark via-aix-black to-aix-darkgray">
       <div className="absolute inset-0 bg-constellation opacity-40"></div>
-      
-      {/* Partículas Flutuantes Interativas */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {Array.from({ length: 30 }).map((_, i) => (
           <motion.div 
@@ -55,7 +52,7 @@ const SobreNosSection = () => {
           />
         ))}
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -133,7 +130,6 @@ const PillarCard = ({
         }}
         transition={{ duration: 0.3 }}
       >
-        {/* Background glow effect */}
         <motion.div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{
@@ -144,8 +140,7 @@ const PillarCard = ({
             } 0%, transparent 70%)`
           }}
         />
-        
-        {/* Icon */}
+
         <motion.div
           className={`mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300 ${
             index === 0 ? 'text-aix-cyan' : 
@@ -161,7 +156,6 @@ const PillarCard = ({
           {icon}
         </motion.div>
 
-        {/* Title */}
         <motion.h3 
           className={`text-2xl font-bold text-white mb-4 group-hover:transition-all duration-300 ${
             index === 0 ? 'group-hover:text-aix-cyan' : 
@@ -175,7 +169,6 @@ const PillarCard = ({
           {title}
         </motion.h3>
 
-        {/* Content */}
         <AnimatePresence mode="wait">
           {!isActive ? (
             <motion.div
@@ -223,7 +216,6 @@ const PillarCard = ({
           )}
         </AnimatePresence>
 
-        {/* Interactive indicator */}
         <motion.div
           className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full ${
             index === 0 ? 'bg-aix-cyan' : 
