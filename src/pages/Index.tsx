@@ -1,14 +1,14 @@
 
 import React, { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
+import Navbar from "@/components/OptimizedIndex/Navbar";
+import HeroSection from "@/components/OptimizedIndex/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SobreNosSection from "@/components/SobreNosSection";
 import JornadaSection from "@/components/JornadaSection";
-import ExpertiseSection from "@/components/ExpertiseSection";
+import ExpertiseSection from "@/components/OptimizedIndex/ExpertiseSection";
 import PortfolioSection from "@/components/OptimizedIndex/PortfolioSection";
 import AussySection from "@/components/OptimizedIndex/AussySection";
-import Footer from "@/components/Footer";
+import Footer from "@/components/OptimizedIndex/Footer";
 
 const Index = () => {
   // Smooth scroll behavior for anchor links

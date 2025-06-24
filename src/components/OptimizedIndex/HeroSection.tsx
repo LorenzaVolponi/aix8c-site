@@ -1,10 +1,10 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import NeuralCanvas from './hero/NeuralCanvas';
-import ProfileImage from './hero/ProfileImage';
-import HeroContent from './hero/HeroContent';
-import ScrollIndicator from './hero/ScrollIndicator';
+import NeuralCanvas from '../hero/NeuralCanvas';
+import ProfileImage from '../hero/ProfileImage';
+import HeroContent from '../hero/HeroContent';
+import ScrollIndicator from '../hero/ScrollIndicator';
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);

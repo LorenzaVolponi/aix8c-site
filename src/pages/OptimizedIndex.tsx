@@ -2,9 +2,9 @@
 import React, { useEffect, Suspense, useState } from "react";
 import { HelmetProvider } from 'react-helmet-async';
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/OptimizedIndex/Navbar";
 import MicroInteractions from "@/components/ui/MicroInteractions";
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/OptimizedIndex/HeroSection";
 import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
