@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Brain, Zap, Target, Users, ExternalLink, Sparkles } from 'lucide-react';
-import ScrollReveal from './ScrollReveal';
+import ScrollReveal from '../ScrollReveal';
 
 const AussySection = () => {
   const aussyLinks = [
