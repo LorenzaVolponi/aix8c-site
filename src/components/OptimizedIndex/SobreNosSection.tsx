@@ -29,7 +29,7 @@ const SobreNosSection = () => {
   return (
     <section id="sobre-nos" className="py-24 relative overflow-hidden bg-gradient-to-br from-aix-purple-dark via-aix-black to-aix-darkgray">
       <div className="absolute inset-0 bg-constellation opacity-40"></div>
-      
+
       {/* Partículas Flutuantes Interativas */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {Array.from({ length: 30 }).map((_, i) => (
@@ -38,8 +38,8 @@ const SobreNosSection = () => {
             className="absolute w-1 h-1 rounded-full"
             style={{
               background: i % 3 === 0 ? '#06b6d4' : i % 3 === 1 ? '#8b5cf6' : '#f59e0b',
-              top: ${Math.random() * 100}%,
-              left: ${Math.random() * 100}%,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
             }}
             animate={{
               opacity: [0.2, 0.8, 0.2],
@@ -54,7 +54,7 @@ const SobreNosSection = () => {
           />
         ))}
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -74,8 +74,7 @@ const SobreNosSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Somos pioneiros em engenharia de prompt no Brasil, dedicados a democratizar o 
-              conhecimento em IA e capacitar pessoas a criarem soluções impactantes.
+              Somos pioneiros em engenharia de prompt no Brasil, dedicados a democratizar o conhecimento em IA e capacitar pessoas a criarem soluções impactantes.
             </motion.p>
           </div>
 
@@ -132,25 +131,23 @@ const PillarCard = ({
         }}
         transition={{ duration: 0.3 }}
       >
-        {/* Background glow effect */}
         <motion.div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
           style={{
-            background: radial-gradient(circle at center, ${
+            background: `radial-gradient(circle at center, ${
               index === 0 ? 'rgba(6, 182, 212, 0.1)' : 
               index === 1 ? 'rgba(139, 92, 246, 0.1)' : 
               'rgba(245, 158, 11, 0.1)'
-            } 0%, transparent 70%)
+            } 0%, transparent 70%)`
           }}
         />
-        
-        {/* Icon */}
+
         <motion.div
-          className={mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300 ${
+          className={`mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300 ${
             index === 0 ? 'text-aix-cyan' : 
             index === 1 ? 'text-aix-purple' : 
             'text-aix-gold'
-          }}
+          }`}
           animate={{
             rotateY: isActive ? 360 : 0,
             scale: isActive ? 1.2 : 1
@@ -160,13 +157,12 @@ const PillarCard = ({
           {icon}
         </motion.div>
 
-        {/* Title */}
         <motion.h3 
-          className={text-2xl font-bold text-white mb-4 group-hover:transition-all duration-300 ${
+          className={`text-2xl font-bold text-white mb-4 group-hover:transition-all duration-300 ${
             index === 0 ? 'group-hover:text-aix-cyan' : 
             index === 1 ? 'group-hover:text-aix-purple' : 
             'group-hover:text-aix-gold'
-          }}
+          }`}
           animate={{
             scale: isActive ? 1.1 : 1
           }}
@@ -174,7 +170,6 @@ const PillarCard = ({
           {title}
         </motion.h3>
 
-        {/* Content */}
         <AnimatePresence mode="wait">
           {!isActive ? (
             <motion.div
@@ -188,11 +183,11 @@ const PillarCard = ({
                 {shortDescription}
               </p>
               <motion.div
-                className={text-sm font-semibold ${
+                className={`text-sm font-semibold ${
                   index === 0 ? 'text-aix-cyan' : 
                   index === 1 ? 'text-aix-purple' : 
                   'text-aix-gold'
-                } opacity-60 group-hover:opacity-100 transition-opacity}
+                } opacity-60 group-hover:opacity-100 transition-opacity`}
               >
                 Clique para expandir
               </motion.div>
@@ -210,11 +205,11 @@ const PillarCard = ({
                 {fullDescription}
               </p>
               <motion.div
-                className={text-sm font-semibold ${
+                className={`text-sm font-semibold ${
                   index === 0 ? 'text-aix-cyan' : 
                   index === 1 ? 'text-aix-purple' : 
                   'text-aix-gold'
-                }}
+                }`}
               >
                 Clique para recolher
               </motion.div>
@@ -222,13 +217,12 @@ const PillarCard = ({
           )}
         </AnimatePresence>
 
-        {/* Interactive indicator */}
         <motion.div
-          className={absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full ${
+          className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full ${
             index === 0 ? 'bg-aix-cyan' : 
             index === 1 ? 'bg-aix-purple' : 
             'bg-aix-gold'
-          }}
+          }`}
           animate={{
             scaleX: isActive ? 1.5 : 1,
             opacity: isActive ? 1 : 0.5
