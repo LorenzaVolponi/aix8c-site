@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import ScrollReveal from '../ScrollReveal';
+import ScrollReveal from '@/components/OptimizedIndex/ScrollReveal';
+
 
 
 const AboutSection = () => {
