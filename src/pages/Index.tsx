@@ -6,8 +6,8 @@ import AboutSection from "@/components/AboutSection";
 import SobreNosSection from "@/components/SobreNosSection";
 import JornadaSection from "@/components/JornadaSection";
 import ExpertiseSection from "@/components/ExpertiseSection";
-import PortfolioSection from "@/components/PortfolioSection";
-import AussySection from "@/components/AussySection";
+import PortfolioSection from "@/components/OptimizedIndex/PortfolioSection";
+import AussySection from "@/components/OptimizedIndex/AussySection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
