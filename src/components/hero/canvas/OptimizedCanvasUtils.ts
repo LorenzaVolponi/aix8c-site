@@ -68,7 +68,7 @@ export const initializeParticlesAndConnections = (): {
   return { particles, neuralConnections };
 };
 
-let animationCache = new Map();
+const animationCache = new Map<string, number>();
 let lastClearTime = 0;
 
 export const animateCanvas = (

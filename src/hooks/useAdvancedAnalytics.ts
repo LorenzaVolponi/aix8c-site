@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 
 // Declare gtag as a global function
 declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
+    interface Window {
+      gtag?: (...args: unknown[]) => void;
+    }
 }
 
 export const useAdvancedAnalytics = () => {

@@ -10,9 +10,9 @@ interface SEOConfig {
 
 // Declare gtag as a global function
 declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
+    interface Window {
+      gtag?: (...args: unknown[]) => void;
+    }
 }
 
 export const useAdvancedSEO = (config: SEOConfig) => {
