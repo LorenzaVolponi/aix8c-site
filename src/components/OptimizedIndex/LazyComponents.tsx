@@ -1,43 +1,9 @@
+// src/components/OptimizedIndex/LazyComponents.tsx
+import { lazy } from "react";
 
-import { lazy } from 'react';
-
-// Lazy load components with intelligent loading
-export const AboutSection = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/AboutSection"));
-    }, 100);
-  })
-);
-
-export const JornadaSection = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/JornadaSection"));
-    }, 300);
-  })
-);
-
-export const PortfolioSection = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/PortfolioSection"));
-    }, 400);
-  })
-);
-
-export const AussySection = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/AussySection"));
-    }, 500);
-  })
-);
-
-export const Footer = lazy(() => 
-  new Promise<{ default: React.ComponentType<any> }>(resolve => {
-    setTimeout(() => {
-      resolve(import("@/components/Footer"));
-    }, 700);
-  })
-);
+export const AboutSection = lazy(() => import("./AboutSection"));
+export const SobreNosSection = lazy(() => import("./SobreNosSection"));
+export const JornadaSection = lazy(() => import("./JornadaSection"));
+export const PortfolioSection = lazy(() => import("./PortfolioSection"));
+export const DepoimentosSection = lazy(() => import("./DepoimentosSection"));
+export const ContatoSection = lazy(() => import("./ContatoSection"));
