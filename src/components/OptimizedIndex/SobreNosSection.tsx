@@ -36,7 +36,7 @@ const SobreNosSection = () => {
           <motion.div 
             key={i}
             className="absolute w-1 h-1 rounded-full"
-          style={{
+            style={{
   background: i % 3 === 0 ? '#06b6d4' : i % 3 === 1 ? '#8b5cf6' : '#f59e0b',
   top: `${Math.random() * 100}%`,
   left: `${Math.random() * 100}%`,
