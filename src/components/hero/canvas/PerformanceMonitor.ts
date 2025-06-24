@@ -22,7 +22,7 @@ export class PerformanceMonitor {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     // Check memory
-    const memory = (navigator as any).deviceMemory;
+    const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
     if (memory && memory < 4) {
       this.isLowPerformance = true;
     }

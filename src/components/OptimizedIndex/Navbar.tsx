@@ -230,7 +230,7 @@ const NavLink = ({
   children: React.ReactNode; 
   isActive?: boolean;
   onClick?: () => void;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }) => (
   <motion.button 
     onClick={onClick}
