@@ -37,10 +37,10 @@ const SobreNosSection = () => {
             key={i}
             className="absolute w-1 h-1 rounded-full"
             style={{
-  background: i % 3 === 0 ? '#06b6d4' : i % 3 === 1 ? '#8b5cf6' : '#f59e0b',
-  top: `${Math.random() * 100}%`,
-  left: `${Math.random() * 100}%`,
-}}
+              background: i % 3 === 0 ? '#06b6d4' : i % 3 === 1 ? '#8b5cf6' : '#f59e0b',
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+            }}
             animate={{
               opacity: [0.2, 0.8, 0.2],
               scale: [1, 1.5, 1],
@@ -74,7 +74,8 @@ const SobreNosSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              Somos pioneiros em engenharia de prompt no Brasil, dedicados a democratizar o conhecimento em IA e capacitar pessoas a criarem soluções impactantes.
+              Somos pioneiros em engenharia de prompt no Brasil, dedicados a democratizar o 
+              conhecimento em IA e capacitar pessoas a criarem soluções impactantes.
             </motion.p>
           </div>
 
@@ -131,8 +132,9 @@ const PillarCard = ({
         }}
         transition={{ duration: 0.3 }}
       >
+        {/* Background glow effect */}
         <motion.div
-          className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           style={{
             background: `radial-gradient(circle at center, ${
               index === 0 ? 'rgba(6, 182, 212, 0.1)' : 
@@ -141,7 +143,8 @@ const PillarCard = ({
             } 0%, transparent 70%)`
           }}
         />
-
+        
+        {/* Icon */}
         <motion.div
           className={`mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300 ${
             index === 0 ? 'text-aix-cyan' : 
@@ -157,6 +160,7 @@ const PillarCard = ({
           {icon}
         </motion.div>
 
+        {/* Title */}
         <motion.h3 
           className={`text-2xl font-bold text-white mb-4 group-hover:transition-all duration-300 ${
             index === 0 ? 'group-hover:text-aix-cyan' : 
@@ -170,6 +174,7 @@ const PillarCard = ({
           {title}
         </motion.h3>
 
+        {/* Content */}
         <AnimatePresence mode="wait">
           {!isActive ? (
             <motion.div
@@ -217,6 +222,7 @@ const PillarCard = ({
           )}
         </AnimatePresence>
 
+        {/* Indicator */}
         <motion.div
           className={`absolute bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full ${
             index === 0 ? 'bg-aix-cyan' : 
