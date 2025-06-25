@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import ScrollReveal from '../ScrollReveal';
+import ScrollReveal from '../OptimizedIndex/ScrollReveal';
 
 const HeroButtons = () => {
   const itemVariants = {

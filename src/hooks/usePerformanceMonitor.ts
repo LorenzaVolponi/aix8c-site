@@ -49,8 +49,8 @@ export const usePerformanceMonitor = () => {
 
     // Monitor memory usage
     const monitorMemory = () => {
-      if ('memory' in performance) {
-        const memory = (performance as any).memory;
+        if ('memory' in performance) {
+          const memory = (performance as Performance & { memory: MemoryInfo }).memory;
         const usage = memory.usedJSHeapSize / memory.jsHeapSizeLimit;
         
         setMetrics(prev => ({

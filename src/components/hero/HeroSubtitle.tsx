@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import ScrollReveal from '../ScrollReveal';
+import ScrollReveal from '../OptimizedIndex/ScrollReveal';
 
 const HeroSubtitle = () => {
   const itemVariants = {
