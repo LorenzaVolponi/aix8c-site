@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, useTransform, useSpring, useScroll } from 'framer-motion';
-import ScrollReveal from '../ScrollReveal';
+import ScrollReveal from '../OptimizedIndex/ScrollReveal';
 
 const HeroTitle = () => {
   const [isTyping, setIsTyping] = useState(true);

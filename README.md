@@ -71,3 +71,9 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Deploying to Vercel
+
+This project includes a `vercel.json` file that defines the build command and output directory. After pushing your code to GitHub you can import the repository in Vercel and it will automatically use these settings. The build step runs `npm run build` and the generated files in `dist/` will be served.
+
+If you prefer using the CLI, run `npx vercel` and follow the prompts.

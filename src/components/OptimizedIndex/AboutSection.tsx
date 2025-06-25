@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import ScrollReveal from '../ScrollReveal'; // ✅ Caminho corrigido
+import ScrollReveal from './ScrollReveal';
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
