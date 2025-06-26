@@ -20,7 +20,7 @@ const ProfileImage = () => {
   return (
     <motion.div
       ref={imageRef}
-      className="fixed top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 lg:top-8 lg:right-8 z-30 overflow-hidden"
+      className="absolute top-32 sm:top-36 md:top-40 right-4 sm:right-8 md:right-16 lg:right-24 z-30 overflow-hidden"
       style={{
         scale: imageScale,
         opacity: imageOpacity,
@@ -43,7 +43,7 @@ const ProfileImage = () => {
       }}
     >
       {/* Container com proporção perfeita e máxima qualidade */}
-      <div className="relative w-20 h-24 sm:w-24 sm:h-28 md:w-28 md:h-32 lg:w-32 lg:h-36 xl:w-36 xl:h-40">
+      <div className="relative w-28 aspect-[3/4] sm:w-32 md:w-36 lg:w-40 xl:w-44">
           className="absolute inset-0 rounded-2xl p-[2px]"
           style={{
             background: "linear-gradient(45deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed)"
