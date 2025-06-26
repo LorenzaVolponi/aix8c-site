@@ -41,7 +41,7 @@ const OptimizedIndexContent = () => {
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
 
   const { openPopup, isLoaded, failed } = useCalendlyPopup(
-    'https://calendly.com/lorenzavolponi'
+    'https://calendly.com/lorenzavolponi/1x1'
   );
   const [showInline, setShowInline] = useState(false);
   
@@ -194,7 +194,7 @@ const OptimizedIndexContent = () => {
       {showInline && (
         <div className="fixed bottom-0 left-0 w-full h-[630px] z-50 bg-white shadow-xl">
           <iframe
-            src="https://calendly.com/lorenzavolponi?embed_domain=aix8c.com"
+            src="https://calendly.com/lorenzavolponi/1x1?embed_domain=aix8c.com"
             className="w-full h-full border-0"
             title="Calendly Inline Scheduler"
           />

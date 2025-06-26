@@ -20,7 +20,7 @@ const ProfileImage = () => {
   return (
     <motion.div
       ref={imageRef}
-      className="absolute top-32 sm:top-36 md:top-40 left-1/2 -translate-x-1/2 z-30 overflow-hidden"
+      className="absolute top-32 sm:top-36 md:top-40 right-4 sm:right-8 md:right-16 lg:right-24 z-30 overflow-hidden"
       style={{
         scale: imageScale,
         opacity: imageOpacity,
@@ -44,7 +44,7 @@ const ProfileImage = () => {
     >
       {/* Container com proporção perfeita e máxima qualidade */}
       <div
-        className="relative w-24 aspect-[3/4] sm:w-28 sm:aspect-[3/4] md:w-32 md:aspect-[3/4] lg:w-36 lg:aspect-[3/4] xl:w-40 xl:aspect-[3/4]"
+        className="relative w-28 aspect-[3/4] sm:w-32 md:w-36 lg:w-40 xl:w-44"
       >
         {/* Enhanced animated border with AUSSY AI colors */}
         <motion.div
