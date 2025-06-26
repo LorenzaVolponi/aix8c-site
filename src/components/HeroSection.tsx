@@ -8,7 +8,12 @@ import ProfileImage from './hero/ProfileImage';
 import HeroContent from './hero/HeroContent';
 import ScrollIndicator from './hero/ScrollIndicator';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  onContactClick: () => void;
+  onProjectsClick: () => void;
+}
+
+const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -69,7 +74,10 @@ const HeroSection = () => {
       
       {/* Main Content - Totalmente Responsivo */}
       <div className="w-full">
-        <HeroContent />
+        <HeroContent
+          onContactClick={onContactClick}
+          onProjectsClick={onProjectsClick}
+        />
       </div>
 
       {/* Scroll Indicator - Responsivo */}

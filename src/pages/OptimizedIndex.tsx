@@ -137,7 +137,20 @@ const OptimizedIndexContent = () => {
       <MicroInteractions />
       
       <main className="w-full">
-        <HeroSection />
+        <HeroSection
+          onContactClick={() => {
+            if (isLoaded && !failed) {
+              openPopup();
+            } else {
+              setShowInline((s) => !s);
+            }
+          }}
+          onProjectsClick={() =>
+            document.getElementById('portfolio')?.scrollIntoView({
+              behavior: 'smooth'
+            })
+          }
+        />
         
         <Suspense fallback={<PremiumLoader message="Carregando sobre..." />}>
           <AboutSection />
