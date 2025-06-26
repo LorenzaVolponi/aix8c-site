@@ -40,9 +40,10 @@ const OptimizedIndexContent = () => {
   // Always call hooks - never conditionally
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
 
-  const { openPopup, isLoaded } = useCalendlyPopup(
+  const { openPopup, isLoaded, failed } = useCalendlyPopup(
     'https://calendly.com/lorenzavolponi'
   );
+  const [showInline, setShowInline] = useState(false);
   
   // Always call other hooks too
   usePerformanceOptimization();
@@ -165,12 +166,27 @@ const OptimizedIndexContent = () => {
 
       <button
         className="fixed bottom-8 right-8 z-50 bg-aix-gold text-black font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 flex items-center gap-2"
-        onClick={() => openPopup()}
-        disabled={!isLoaded}
+        onClick={() => {
+          if (isLoaded && !failed) {
+            openPopup();
+          } else {
+            setShowInline((s) => !s);
+          }
+        }}
       >
         <Calendar className="w-5 h-5" />
         Agendar Consultoria
       </button>
+
+      {showInline && (
+        <div className="fixed bottom-0 left-0 w-full h-[630px] z-50 bg-white shadow-xl">
+          <iframe
+            src="https://calendly.com/lorenzavolponi?embed_domain=aix8c.com"
+            className="w-full h-full border-0"
+            title="Calendly Inline Scheduler"
+          />
+        </div>
+      )}
     </div>
   );
 };
