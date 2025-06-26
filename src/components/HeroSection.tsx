@@ -103,7 +103,7 @@ const HeroSection = () => {
       ))}
 
       {/* Mobile-specific adjustments */}
-      <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">
+      <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40 pointer-events-none">
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}

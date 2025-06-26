@@ -184,33 +184,20 @@ const OptimizedIndexContent = () => {
         <Footer />
       </Suspense>
 
-      {/* Calendly Embed Popup Widget */}
-      <div
-        className="calendly-inline-widget fixed bottom-8 right-8 z-50 cursor-pointer"
-        data-url="https://calendly.com/lorenzavolponi"
-        style={{
-          minWidth: '320px',
-          height: '630px',
-          borderRadius: '16px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-          background: '#ffffff',
-          display: 'none'
-        }}
-        id="calendly-popup"
-      ></div>
       <button
         className="fixed bottom-8 right-8 z-50 bg-aix-gold text-black font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 flex items-center gap-2"
         onClick={() => {
-          const calendlyPopup = document.getElementById('calendly-popup');
-          if (calendlyPopup && calendlyPopup.style.display === 'none') {
-            calendlyPopup.style.display = 'block';
-            const head = document.getElementsByTagName('head')[0];
+          const url = 'https://calendly.com/lorenzavolponi';
+          const openPopup = () => (window as any).Calendly.initPopupWidget({ url });
+
+          if (!(window as any).Calendly) {
             const script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = 'https://assets.calendly.com/assets/external/widget.js';
-            head.appendChild(script);
-          } else if (calendlyPopup) {
-            calendlyPopup.style.display = 'none';
+            script.onload = openPopup;
+            document.head.appendChild(script);
+          } else {
+            openPopup();
           }
         }}
       >
