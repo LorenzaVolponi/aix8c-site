@@ -87,7 +87,9 @@ const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
       <HypnoticParticles />
       
       {/* Profile Image - Responsivo */}
-      <ProfileImage />
+      <div className="block sm:block md:block lg:block">
+        <ProfileImage />
+      </div>
       
       {/* Main Content - Totalmente Responsivo */}
       <div className="w-full">
