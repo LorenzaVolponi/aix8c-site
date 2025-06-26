@@ -90,32 +90,6 @@ const OptimizedIndexContent = () => {
     verificationMeta.content = 'verification_token';
     document.head.appendChild(verificationMeta);
 
-    const generateSitemap = async () => {
-      const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
-        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-          <url>
-            <loc>https://aix8c.com</loc>
-            <priority>1.0</priority>
-          </url>
-          <url>
-            <loc>https://aix8c.com/mentoria-de-ia</loc>
-            <priority>0.9</priority>
-          </url>
-          <url>
-            <loc>https://aix8c.com/engenharia-de-prompts</loc>
-            <priority>0.9</priority>
-          </url>
-        </urlset>`;
-      const blob = new Blob([sitemapContent], { type: 'application/xml' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'sitemap.xml';
-      link.click();
-    };
-
-    generateSitemap();
-
     return () => {
       document.head.removeChild(gaScript);
       document.head.removeChild(gaInit);
@@ -188,8 +162,10 @@ const OptimizedIndexContent = () => {
         className="fixed bottom-8 right-8 z-50 bg-aix-gold text-black font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 flex items-center gap-2"
         onClick={() => {
           const url = 'https://calendly.com/lorenzavolponi';
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const openPopup = () => (window as any).Calendly.initPopupWidget({ url });
 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           if (!(window as any).Calendly) {
             const script = document.createElement('script');
             script.type = 'text/javascript';

@@ -65,9 +65,7 @@ const HeroSection = () => {
       />
       
       {/* Profile Image - Responsivo */}
-      <div className="block sm:block md:block lg:block">
-        <ProfileImage />
-      </div>
+      <ProfileImage />
       
       {/* Main Content - Totalmente Responsivo */}
       <div className="w-full">
