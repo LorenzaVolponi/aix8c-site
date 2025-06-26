@@ -7,6 +7,7 @@ const AdvancedVisualEffects = lazy(() => import('./enhanced/AdvancedVisualEffect
 import ProfileImage from './hero/ProfileImage';
 import HeroContent from './hero/HeroContent';
 import ScrollIndicator from './hero/ScrollIndicator';
+import HypnoticParticles from './hero/HypnoticParticles';
 
 interface HeroSectionProps {
   onContactClick: () => void;
@@ -45,7 +46,7 @@ const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
       </Suspense>
       
       {/* Enhanced Gradient Overlays - Responsivos */}
-      <div 
+      <div
         className="absolute inset-0 z-10"
         style={{
           background: `
@@ -55,6 +56,19 @@ const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
             linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(10, 10, 10, 0.7) 50%, rgba(0, 0, 0, 0.85) 100%)
           `
         }}
+      />
+
+      {/* Hypnotic gradient animation */}
+      <motion.div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(124,58,237,0.07) 0%, transparent 70%)",
+          backgroundSize: "200% 200%",
+        }}
+        initial={{ backgroundPosition: "0% 0%" }}
+        animate={{ backgroundPosition: "100% 100%" }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       />
       
       {/* Grid overlay - Responsivo */}
@@ -68,6 +82,9 @@ const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
           backgroundSize: "40px 40px sm:60px sm:60px"
         }}
       />
+
+      {/* Futuristic particle field */}
+      <HypnoticParticles />
       
       {/* Profile Image - Responsivo */}
       <ProfileImage />
