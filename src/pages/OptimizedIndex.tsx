@@ -9,6 +9,7 @@ import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
 import { Calendar } from "lucide-react";
+import useCalendlyPopup from "@/hooks/useCalendlyPopup";
 
 // Import intro sequence
 import IntroSequence from "@/components/hero/intro/IntroSequence";
@@ -38,6 +39,10 @@ const OptimizedIndexContent = () => {
   
   // Always call hooks - never conditionally
   const { loadingProgress, isInitialLoading } = useLoadingProgress();
+
+  const { openPopup, isLoaded } = useCalendlyPopup(
+    'https://calendly.com/lorenzavolponi'
+  );
   
   // Always call other hooks too
   usePerformanceOptimization();
@@ -160,22 +165,8 @@ const OptimizedIndexContent = () => {
 
       <button
         className="fixed bottom-8 right-8 z-50 bg-aix-gold text-black font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 flex items-center gap-2"
-        onClick={() => {
-          const url = 'https://calendly.com/lorenzavolponi';
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const openPopup = () => (window as any).Calendly.initPopupWidget({ url });
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          if (!(window as any).Calendly) {
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://assets.calendly.com/assets/external/widget.js';
-            script.onload = openPopup;
-            document.head.appendChild(script);
-          } else {
-            openPopup();
-          }
-        }}
+        onClick={() => openPopup()}
+        disabled={!isLoaded}
       >
         <Calendar className="w-5 h-5" />
         Agendar Consultoria
