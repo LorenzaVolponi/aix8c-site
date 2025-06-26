@@ -1,7 +1,9 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import NeuralCanvas from './hero/NeuralCanvas';
+
+const OptimizedNeuralCanvas = lazy(() => import('./hero/OptimizedNeuralCanvas'));
+const AdvancedVisualEffects = lazy(() => import('./enhanced/AdvancedVisualEffects'));
 import ProfileImage from './hero/ProfileImage';
 import HeroContent from './hero/HeroContent';
 import ScrollIndicator from './hero/ScrollIndicator';
@@ -23,13 +25,19 @@ const HeroSection = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-aix-black"
     >
+      {/* Advanced Visual Effects Layer */}
+      <Suspense fallback={null}>
+        <AdvancedVisualEffects />
+      </Suspense>
+
       {/* Neural Canvas Background */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0"
+      <Suspense
+        fallback={<div className="absolute inset-0 bg-aix-black" />}
       >
-        <NeuralCanvas />
-      </motion.div>
+        <motion.div style={{ y: backgroundY }} className="absolute inset-0">
+          <OptimizedNeuralCanvas />
+        </motion.div>
+      </Suspense>
       
       {/* Enhanced Gradient Overlays - Responsivos */}
       <div 

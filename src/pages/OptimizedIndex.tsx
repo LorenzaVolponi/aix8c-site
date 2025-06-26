@@ -8,6 +8,7 @@ import HeroSection from "@/components/HeroSection";
 import SEOManager from "@/components/SEO/SEOManager";
 import SchemaMarkup from "@/components/SEO/SchemaMarkup";
 import PerformanceOptimizer from "@/components/SEO/PerformanceOptimizer";
+import { Calendar } from "lucide-react";
 
 // Import intro sequence
 import IntroSequence from "@/components/hero/intro/IntroSequence";
@@ -42,33 +43,18 @@ const OptimizedIndexContent = () => {
   usePerformanceOptimization();
   useAdvancedAnalytics();
   useAdvancedSEO({
-    title: "Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais",
-    description: "🚀 Conheça Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais! Sou a suma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital comigo.",
+    title: "Lorenza Volponi - Mentora de IA e Engenharia de Prompts",
+    description:
+      "Especialista em mentoria de IA, engenharia de prompts e soluções criativas com IA. Lorenza Volponi lidera a transformação digital com inovação e impacto global.",
     keywords: [
-      "Lorenza Volponi",
-      "Capitã AIX8C",
-      "tradutora almas humanas mentes artificiais",
-      "prompt engineering",
-      "engenharia de prompts", 
-      "IA conversacional",
-      "chatbot automation",
-      "automação chatbot",
-      "mentoria IA",
-      "aprendizado com IA",
-      "vibe coding",
-      "AIX8C",
-      "inteligência artificial Brasil",
-      "conversational AI",
-      "AI mentorship",
-      "machine learning prompts",
-      "GPT prompts",
-      "ChatGPT engineering",
-      "AI coaching",
-      "prompt optimization",
-      "AI consultant Brazil",
-      "artificial intelligence expert",
-      "tecnologia e emoção",
-      "inovação digital"
+      "IA",
+      "Mentoria de IA",
+      "Engenharia de Prompts",
+      "Agentes de IA",
+      "IA Criativa",
+      "Arquiteta de IA",
+      "Automação Inteligente",
+      "Lorenza Volponi"
     ],
     canonical: "https://aix8c.com"
   });
@@ -80,8 +66,61 @@ const OptimizedIndexContent = () => {
       preloadCriticalResources();
       injectAdvancedMeta();
     }, 100);
-    
+
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const gaScript = document.createElement('script');
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX';
+    gaScript.async = true;
+    document.head.appendChild(gaScript);
+
+    const gaInit = document.createElement('script');
+    gaInit.text = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXX');
+    `;
+    document.head.appendChild(gaInit);
+
+    const verificationMeta = document.createElement('meta');
+    verificationMeta.name = 'google-site-verification';
+    verificationMeta.content = 'verification_token';
+    document.head.appendChild(verificationMeta);
+
+    const generateSitemap = async () => {
+      const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+          <url>
+            <loc>https://aix8c.com</loc>
+            <priority>1.0</priority>
+          </url>
+          <url>
+            <loc>https://aix8c.com/mentoria-de-ia</loc>
+            <priority>0.9</priority>
+          </url>
+          <url>
+            <loc>https://aix8c.com/engenharia-de-prompts</loc>
+            <priority>0.9</priority>
+          </url>
+        </urlset>`;
+      const blob = new Blob([sitemapContent], { type: 'application/xml' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'sitemap.xml';
+      link.click();
+    };
+
+    generateSitemap();
+
+    return () => {
+      document.head.removeChild(gaScript);
+      document.head.removeChild(gaInit);
+      document.head.removeChild(verificationMeta);
+    };
   }, []);
 
   useEffect(() => {
@@ -106,10 +145,10 @@ const OptimizedIndexContent = () => {
 
   return (
     <div className="min-h-screen bg-aix-black text-white relative">
-      <SEOManager 
-        title="Lorenza Volponi - Capitã da Nave AIX8C | Tradutora entre almas humanas e mentes artificiais 🚀"
-        description="🌟 Lorenza Volponi, Capitã da Nave AIX8C e tradutora entre almas humanas e mentes artificiais. Sou a suma infinita de ideias fora da caixa, unindo tecnologia e emoção. Navegue pelos mares da inovação digital!"
-        keywords="Lorenza Volponi, Capitã AIX8C, tradutora almas humanas mentes artificiais, prompt engineering expert, engenharia prompts Brasil, IA conversacional, chatbot automation, vibe coding, AI mentorship, conversational AI Brazil, machine learning prompts, GPT engineering, AI consultant, tecnologia e emoção"
+      <SEOManager
+        title="Lorenza Volponi - Mentora de IA e Engenharia de Prompts"
+        description="Especialista em mentoria de IA, engenharia de prompts e soluções criativas com IA. Lorenza Volponi lidera a transformação digital com inovação e impacto global."
+        keywords="IA, Mentoria de IA, Engenharia de Prompts, Agentes de IA, IA Criativa, Arquiteta de IA, Automação Inteligente, Lorenza Volponi"
       />
       <SchemaMarkup />
       <PerformanceOptimizer />
@@ -144,6 +183,40 @@ const OptimizedIndexContent = () => {
       <Suspense fallback={<PremiumLoader message="Finalizando..." />}>
         <Footer />
       </Suspense>
+
+      {/* Calendly Embed Popup Widget */}
+      <div
+        className="calendly-inline-widget fixed bottom-8 right-8 z-50 cursor-pointer"
+        data-url="https://calendly.com/lorenzavolponi"
+        style={{
+          minWidth: '320px',
+          height: '630px',
+          borderRadius: '16px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+          background: '#ffffff',
+          display: 'none'
+        }}
+        id="calendly-popup"
+      ></div>
+      <button
+        className="fixed bottom-8 right-8 z-50 bg-aix-gold text-black font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 flex items-center gap-2"
+        onClick={() => {
+          const calendlyPopup = document.getElementById('calendly-popup');
+          if (calendlyPopup && calendlyPopup.style.display === 'none') {
+            calendlyPopup.style.display = 'block';
+            const head = document.getElementsByTagName('head')[0];
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://assets.calendly.com/assets/external/widget.js';
+            head.appendChild(script);
+          } else if (calendlyPopup) {
+            calendlyPopup.style.display = 'none';
+          }
+        }}
+      >
+        <Calendar className="w-5 h-5" />
+        Agendar Consultoria
+      </button>
     </div>
   );
 };
