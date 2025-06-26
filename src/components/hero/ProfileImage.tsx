@@ -44,8 +44,6 @@ const ProfileImage = () => {
     >
       {/* Container com proporção perfeita e máxima qualidade */}
       <div className="relative w-20 h-24 sm:w-24 sm:h-28 md:w-28 md:h-32 lg:w-32 lg:h-36 xl:w-36 xl:h-40">
-        {/* Enhanced animated border with AUSSY AI colors */}
-        <motion.div
           className="absolute inset-0 rounded-2xl p-[2px]"
           style={{
             background: "linear-gradient(45deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed)"

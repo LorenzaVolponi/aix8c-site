@@ -90,6 +90,8 @@ const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
       <div className="block sm:block md:block lg:block">
         <ProfileImage />
       </div>
+        <ProfileImage />
+      </div>
       
       {/* Main Content - Totalmente Responsivo */}
       <div className="w-full">
