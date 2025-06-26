@@ -25,7 +25,11 @@ export const useCalendlyPopup = (url: string) => {
   }, []);
 
   const openPopup = () => {
-    window.Calendly?.initPopupWidget({ url });
+    if (window.Calendly?.initPopupWidget) {
+      window.Calendly.initPopupWidget({ url });
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   return { openPopup, isLoaded, failed };
