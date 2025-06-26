@@ -44,6 +44,17 @@ const OptimizedIndexContent = () => {
     'https://calendly.com/lorenzavolponi/1x1'
   );
   const [showInline, setShowInline] = useState(false);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowInline(false);
+        window.Calendly?.closePopupWidget?.();
+      }
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [showInline]);
   
   // Always call other hooks too
   usePerformanceOptimization();

@@ -40,6 +40,15 @@ export const useCalendlyPopup = (url: string) => {
     if (window.Calendly?.initPopupWidget) {
       ensureCalendlyStyles();
       window.Calendly.initPopupWidget({ url });
+
+      const handleEsc = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          window.Calendly?.closePopupWidget?.();
+          document.removeEventListener('keydown', handleEsc);
+        }
+      };
+
+      document.addEventListener('keydown', handleEsc);
     } else {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
