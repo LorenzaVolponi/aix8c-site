@@ -20,7 +20,7 @@ const ProfileImage = () => {
   return (
     <motion.div
       ref={imageRef}
-      className="absolute top-32 sm:top-36 md:top-40 right-4 sm:right-8 md:right-16 lg:right-24 z-30 overflow-hidden"
+      className="absolute top-1/2 -translate-y-1/2 right-4 sm:right-8 md:right-16 lg:right-24 z-30 overflow-hidden"
       style={{
         scale: imageScale,
         opacity: imageOpacity,
