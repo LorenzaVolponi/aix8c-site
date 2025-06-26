@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react';
 
+// Load Calendly's CSS to ensure the popup displays correctly
+const ensureCalendlyStyles = () => {
+  if (!document.querySelector('link[data-calendly]')) {
+    const link = document.createElement('link');
+    link.setAttribute('data-calendly', 'true');
+    link.rel = 'stylesheet';
+    link.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(link);
+  }
+};
+
 declare global {
   interface Window {
     Calendly?: { initPopupWidget: (opts: { url: string }) => void };
@@ -13,6 +24,7 @@ export const useCalendlyPopup = (url: string) => {
   useEffect(() => {
     // Preload Calendly script so the popup opens instantly when triggered
     if (!window.Calendly) {
+      ensureCalendlyStyles();
       const script = document.createElement('script');
       script.src = 'https://assets.calendly.com/assets/external/widget.js';
       script.async = true;
@@ -26,9 +38,10 @@ export const useCalendlyPopup = (url: string) => {
 
   const openPopup = () => {
     if (window.Calendly?.initPopupWidget) {
+      ensureCalendlyStyles();
       window.Calendly.initPopupWidget({ url });
     } else {
-      window.open(url, '_blank');
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
 
