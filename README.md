@@ -36,6 +36,16 @@ npm i
 npm run dev
 ```
 
+## Running tests
+
+This project uses [Vitest](https://vitest.dev/) with React Testing Library. After installing dependencies, run:
+
+```sh
+npm test
+```
+
+This command executes all test files under `src/components/__tests__`.
+
 **Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).
