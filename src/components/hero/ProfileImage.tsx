@@ -44,6 +44,7 @@ const ProfileImage = () => {
     >
       {/* Container com proporção perfeita e máxima qualidade */}
       <div className="relative w-28 aspect-[3/4] sm:w-32 md:w-36 lg:w-40 xl:w-44">
+        <motion.div
           className="absolute inset-0 rounded-2xl p-[2px]"
           style={{
             background: "linear-gradient(45deg, #7c3aed, #06b6d4, #f59e0b, #7c3aed)"
