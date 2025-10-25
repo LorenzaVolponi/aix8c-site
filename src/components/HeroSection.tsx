@@ -1,12 +1,20 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import NeuralCanvas from './hero/NeuralCanvas';
+
+const OptimizedNeuralCanvas = lazy(() => import('./hero/OptimizedNeuralCanvas'));
+const AdvancedVisualEffects = lazy(() => import('./enhanced/AdvancedVisualEffects'));
 import ProfileImage from './hero/ProfileImage';
 import HeroContent from './hero/HeroContent';
 import ScrollIndicator from './hero/ScrollIndicator';
+import HypnoticParticles from './hero/HypnoticParticles';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  onContactClick: () => void;
+  onProjectsClick: () => void;
+}
+
+const HeroSection = ({ onContactClick, onProjectsClick }: HeroSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -23,16 +31,22 @@ const HeroSection = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-aix-black"
     >
+      {/* Advanced Visual Effects Layer */}
+      <Suspense fallback={null}>
+        <AdvancedVisualEffects />
+      </Suspense>
+
       {/* Neural Canvas Background */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0"
+      <Suspense
+        fallback={<div className="absolute inset-0 bg-aix-black" />}
       >
-        <NeuralCanvas />
-      </motion.div>
+        <motion.div style={{ y: backgroundY }} className="absolute inset-0">
+          <OptimizedNeuralCanvas />
+        </motion.div>
+      </Suspense>
       
       {/* Enhanced Gradient Overlays - Responsivos */}
-      <div 
+      <div
         className="absolute inset-0 z-10"
         style={{
           background: `
@@ -42,6 +56,19 @@ const HeroSection = () => {
             linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(10, 10, 10, 0.7) 50%, rgba(0, 0, 0, 0.85) 100%)
           `
         }}
+      />
+
+      {/* Hypnotic gradient animation */}
+      <motion.div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(124,58,237,0.07) 0%, transparent 70%)",
+          backgroundSize: "200% 200%",
+        }}
+        initial={{ backgroundPosition: "0% 0%" }}
+        animate={{ backgroundPosition: "100% 100%" }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       />
       
       {/* Grid overlay - Responsivo */}
@@ -55,15 +82,23 @@ const HeroSection = () => {
           backgroundSize: "40px 40px sm:60px sm:60px"
         }}
       />
+
+      {/* Futuristic particle field */}
+      <HypnoticParticles />
       
       {/* Profile Image - Responsivo */}
       <div className="block sm:block md:block lg:block">
         <ProfileImage />
       </div>
+        <ProfileImage />
+      </div>
       
       {/* Main Content - Totalmente Responsivo */}
       <div className="w-full">
-        <HeroContent />
+        <HeroContent
+          onContactClick={onContactClick}
+          onProjectsClick={onProjectsClick}
+        />
       </div>
 
       {/* Scroll Indicator - Responsivo */}
@@ -95,7 +130,7 @@ const HeroSection = () => {
       ))}
 
       {/* Mobile-specific adjustments */}
-      <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">
+      <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40 pointer-events-none">
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}

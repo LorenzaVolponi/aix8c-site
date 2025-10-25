@@ -110,6 +110,16 @@ const SchemaMarkup = () => {
     ]
   };
 
+  const personalSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Lorenza Volponi",
+    "jobTitle": "Arquiteta de IA e Mentora de Engenharia de Prompts",
+    "description":
+      "Especialista em mentoria de IA, engenharia de prompts e soluções criativas com IA.",
+    "url": "https://aix8c.com"
+  };
+
   return (
     <Helmet>
       <script type="application/ld+json">
@@ -123,6 +133,9 @@ const SchemaMarkup = () => {
       </script>
       <script type="application/ld+json">
         {JSON.stringify(courseSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(personalSchema)}
       </script>
     </Helmet>
   );

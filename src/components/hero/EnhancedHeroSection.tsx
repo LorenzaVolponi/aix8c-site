@@ -144,7 +144,7 @@ const EnhancedHeroSection = () => {
       <ProfileImage />
       
       {/* Main Content with Optimized Animations */}
-      <HeroContent />
+      <HeroContent onContactClick={() => {}} onProjectsClick={() => {}} />
 
       {/* Enhanced Scroll Indicator */}
       <ScrollIndicator />
