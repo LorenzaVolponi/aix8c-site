@@ -1,0 +1,39 @@
+name: PR Governance Bot
+
+on:
+  workflow_dispatch:
+    inputs:
+      close_open_prs:
+        description: 'Fechar todas as PRs abertas'
+        required: true
+        default: 'false'
+      merge_ready_prs:
+        description: 'Tentar merge automático em PRs prontas'
+        required: true
+        default: 'false'
+  schedule:
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  govern-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run governance script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          CLOSE_OPEN_PRS: ${{ github.event.inputs.close_open_prs || 'false' }}
+          MERGE_READY_PRS: ${{ github.event.inputs.merge_ready_prs || 'false' }}
+        run: node ./scripts/pr-governance.mjs
