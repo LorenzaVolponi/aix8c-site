@@ -8,6 +8,13 @@ interface PerformanceMetrics {
   isLowPerformance: boolean;
 }
 
+type PerformanceWithMemory = Performance & {
+  memory?: {
+    usedJSHeapSize: number;
+    jsHeapSizeLimit: number;
+  };
+};
+
 export const usePerformanceMonitor = () => {
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     fps: 60,
@@ -49,8 +56,9 @@ export const usePerformanceMonitor = () => {
 
     // Monitor memory usage
     const monitorMemory = () => {
-      if ('memory' in performance) {
-        const memory = (performance as any).memory;
+      const perfWithMemory = performance as PerformanceWithMemory;
+      if (perfWithMemory.memory) {
+        const memory = perfWithMemory.memory;
         const usage = memory.usedJSHeapSize / memory.jsHeapSizeLimit;
         
         setMetrics(prev => ({
