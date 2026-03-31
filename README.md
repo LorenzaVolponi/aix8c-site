@@ -76,7 +76,7 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-trick
 
 Este repositório agora inclui automações para manutenção contínua de PRs:
 
-- **PR Auto Fix** (`.github/workflows/pr-auto-fix.yml`): roda lint com `--fix`, build e `npm audit fix --package-lock-only`, e commita as correções na PR.
+- **PR Auto Fix** (`.github/workflows/pr-auto-fix.yml` + `scripts/auto-fix.sh`): executa fluxo definitivo (instalação, lint `--fix`, audit fix, build, gates finais), commita correções e comenta relatório automático na PR.
 - **PR Merge Conflict Assist** (`.github/workflows/pr-merge-conflict-assist.yml`): tenta sincronizar `main` na branch da PR; se houver conflito, comenta os arquivos conflitantes.
 - **PR Governance Bot** (`.github/workflows/pr-governance.yml` + `scripts/pr-governance.mjs`): por padrão só monitora. Via `workflow_dispatch` você pode habilitar:
   - fechar todas as PRs abertas (`close_open_prs=true`);
