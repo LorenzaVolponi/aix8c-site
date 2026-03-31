@@ -16,14 +16,11 @@ export const useOptimizedAnimations = (scrollYProgress: MotionValue<number>) => 
   
   const smoothProgress = useSpring(scrollYProgress, springConfig);
   
-  // Memoized transforms for better performance
-  const transforms = useMemo(() => ({
-    backgroundY: useTransform(smoothProgress, [0, 1], ["0%", "40%"]),
-    contentY: useTransform(smoothProgress, [0, 1], ["0%", "-15%"]),
-    contentOpacity: useTransform(smoothProgress, [0, 0.6, 1], [1, 1, 0]),
-    titleScale: useTransform(smoothProgress, [0, 0.7], [1, 0.85]),
-    overlayOpacity: useTransform(smoothProgress, [0, 0.5, 1], [0.85, 0.9, 1])
-  }), [smoothProgress]);
+  const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "40%"]);
+  const contentY = useTransform(smoothProgress, [0, 1], ["0%", "-15%"]);
+  const contentOpacity = useTransform(smoothProgress, [0, 0.6, 1], [1, 1, 0]);
+  const titleScale = useTransform(smoothProgress, [0, 0.7], [1, 0.85]);
+  const overlayOpacity = useTransform(smoothProgress, [0, 0.5, 1], [0.85, 0.9, 1]);
   
   // Throttled scroll handler for performance
   const handleScroll = useCallback((callback: () => void) => {
@@ -42,7 +39,11 @@ export const useOptimizedAnimations = (scrollYProgress: MotionValue<number>) => 
   }, [smoothProgress]);
   
   return {
-    ...transforms,
+    backgroundY,
+    contentY,
+    contentOpacity,
+    titleScale,
+    overlayOpacity,
     handleScroll,
     springConfig
   };

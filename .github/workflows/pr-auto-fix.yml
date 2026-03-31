@@ -1,0 +1,59 @@
+name: PR Auto Fix
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Run definitive auto-fix flow
+        id: auto_fix
+        continue-on-error: true
+        run: ./scripts/auto-fix.sh
+
+      - name: Commit fixes
+        if: always()
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(ci): auto-fix lint/build/audit'
+          branch: ${{ github.event.pull_request.head.ref }}
+
+      - name: Comment auto-fix report
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = '.ci/autofix-report.md';
+            const fallback = '# Relatório de Auto-Correção\n\n⚠️ Relatório não encontrado no runner.';
+            const body = fs.existsSync(reportPath) ? fs.readFileSync(reportPath, 'utf8') : fallback;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
+
+      - name: Fail when auto-fix is not enough
+        if: steps.auto_fix.outcome == 'failure'
+        run: |
+          echo "Auto-correção não resolveu tudo. Mantendo status vermelho para ação manual."
+          exit 1

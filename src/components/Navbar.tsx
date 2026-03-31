@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu, X, Zap, Navigation, Home, User, Briefcase, FolderOpen, Bot } from 'lucide-react';
+import { Menu, X, Zap, Navigation, Home, User, Briefcase, FolderOpen, Bot, type LucideIcon } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -230,7 +230,7 @@ const NavLink = ({
   children: React.ReactNode; 
   isActive?: boolean;
   onClick?: () => void;
-  icon: React.ComponentType<any>;
+  icon: LucideIcon;
 }) => (
   <motion.button 
     onClick={onClick}
