@@ -20,6 +20,16 @@ export const injectAdvancedMeta = () => {
   ];
 
   metaTags.forEach(tag => {
+    const selector = tag.name
+      ? `meta[name="${tag.name}"]`
+      : `meta[property="${tag.property}"]`;
+
+    const existingTag = document.head.querySelector(selector);
+    if (existingTag) {
+      existingTag.setAttribute('content', tag.content);
+      return;
+    }
+
     const meta = document.createElement('meta');
     if (tag.name) meta.name = tag.name;
     if (tag.property) meta.setAttribute('property', tag.property);
@@ -35,23 +45,17 @@ export const preloadCriticalResources = () => {
   img.loading = 'eager';
   
   // Preload critical fonts
-  const fontLink = document.createElement('link');
-  fontLink.rel = 'preload';
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
-  fontLink.as = 'style';
-  fontLink.onload = () => {
-    fontLink.rel = 'stylesheet';
-  };
-  document.head.appendChild(fontLink);
+  const fontHref = 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap';
+  const existingFontLink = document.head.querySelector(`link[href="${fontHref}"]`);
 
-  // Preload critical CSS
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      // Use idle time for non-critical preloading
-      const cssLink = document.createElement('link');
-      cssLink.rel = 'prefetch';
-      cssLink.href = '/src/index.css';
-      document.head.appendChild(cssLink);
-    });
+  if (!existingFontLink) {
+    const fontLink = document.createElement('link');
+    fontLink.rel = 'preload';
+    fontLink.href = fontHref;
+    fontLink.as = 'style';
+    fontLink.onload = () => {
+      fontLink.rel = 'stylesheet';
+    };
+    document.head.appendChild(fontLink);
   }
 };
