@@ -19,8 +19,8 @@ const portfolioItems: PortfolioItem[] = [
     category: 'Telecom',
     year: '2026',
     description:
-      'Jornadas orquestradas em WhatsApp, web e voz com roteamento inteligente e resposta contextual em escala.',
-    impact: '−47% no TMA · +68% na satisfação.',
+      'Redesenho da camada conversacional com jornadas orquestradas em WhatsApp, web e voz para atendimento de alta escala.',
+    impact: '−47% no tempo médio de resolução · +68% na satisfação.',
     tags: ['AI Agents', 'Omnichannel', 'NLP', 'CX'],
     link: '#',
     accent: '#06b6d4'
@@ -30,8 +30,8 @@ const portfolioItems: PortfolioItem[] = [
     category: 'Fintech',
     year: '2025',
     description:
-      'Camada de previsão em tempo real para priorizar decisão e risco com sinais contínuos de mercado.',
-    impact: '83% de precisão · ROI 340%.',
+      'Modelo preditivo em tempo real com ingestão contínua de sinais de mercado e priorização de decisões críticas.',
+    impact: '83% de precisão preditiva · ROI de 340%.',
     tags: ['Forecast', 'ML Ops', 'Realtime', 'Risk'],
     link: '#',
     accent: '#8b5cf6'
@@ -41,9 +41,9 @@ const portfolioItems: PortfolioItem[] = [
     category: 'EdTech',
     year: '2024',
     description:
-      'Trilhas personalizadas por IA com feedback em tempo real e evolução por perfil cognitivo.',
-    impact: '+65% retenção · −40% tempo de aprendizado.',
-    tags: ['LLM', 'Learning', 'Analytics', 'Personalização'],
+      'Experiência educacional personalizada por IA com trilhas dinâmicas e feedback imediato por perfil cognitivo.',
+    impact: '+65% de retenção · −40% no tempo de aprendizado.',
+    tags: ['LLM', 'Personalização', 'Analytics', 'Learning'],
     link: '#',
     accent: '#f59e0b'
   },
@@ -52,107 +52,110 @@ const portfolioItems: PortfolioItem[] = [
     category: 'Retail',
     year: '2023',
     description:
-      'UX conversacional para descoberta de produtos, recomendação e suporte pós-venda com contexto.',
-    impact: '+23% conversão · −18% devoluções.',
+      'Camada conversacional com contexto de catálogo e comportamento de compra para aumentar conversão com menos atrito.',
+    impact: '+23% em conversão · −18% em devoluções.',
     tags: ['Retail AI', 'Conversational UX', 'Recsys', 'CRO'],
     link: '#',
     accent: '#22c55e'
   }
 ];
 
-const WorkCard = ({ item, index }: { item: PortfolioItem; index: number }) => (
+const PortfolioRow = ({ item, index }: { item: PortfolioItem; index: number }) => (
   <motion.a
     href={item.link}
     target="_blank"
     rel="noopener noreferrer"
-    className="group snap-start shrink-0 w-[88vw] sm:w-[72vw] lg:w-[54vw] xl:w-[46vw]"
-    whileHover={{ y: -4 }}
+    className="group block"
+    whileHover={{ scale: 1.005 }}
     transition={{ duration: 0.25 }}
   >
-    <article className="relative overflow-hidden rounded-2xl border border-white/15 bg-[#0c0d14]/90 p-5 md:p-7 min-h-[380px] md:min-h-[460px]">
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8 backdrop-blur-sm">
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 opacity-80"
         style={{
-          background: `radial-gradient(circle at 20% 10%, ${item.accent}45 0%, transparent 42%), linear-gradient(145deg, #0a0a0a 15%, #141727 60%, #0a0a0a 100%)`
+          background: `linear-gradient(120deg, ${item.accent}20, transparent 45%, #00000040 100%)`
         }}
       />
 
-      <div className="relative z-10 flex h-full flex-col justify-between">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.26em] text-white/70 mb-3">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
+        <div className="lg:col-span-7">
+          <p className="text-xs uppercase tracking-[0.25em] text-aix-cyan/80 mb-3">
             {String(index + 1).padStart(2, '0')} · {item.category} · {item.year}
           </p>
-          <h3 className="text-3xl md:text-5xl font-bold font-serif leading-tight text-white group-hover:text-aix-gold transition-colors">
+          <h3 className="text-3xl md:text-5xl font-serif font-bold leading-tight text-white group-hover:text-aix-gold transition-colors duration-300">
             {item.title}
           </h3>
         </div>
 
-        <div>
-          <div className="mb-5 rounded-xl border border-white/15 bg-black/30 p-4">
+        <div className="lg:col-span-5">
+          <div className="mb-4 rounded-xl border border-white/15 bg-black/40 p-4">
             <div
-              className="h-24 md:h-28 rounded-md border border-white/10"
+              className="h-28 md:h-32 rounded-lg border border-white/10"
               style={{
-                background: `linear-gradient(110deg, ${item.accent}44 0%, transparent 55%), linear-gradient(160deg, #15182a 0%, #0b0b0b 100%)`
+                background: `radial-gradient(circle at 20% 20%, ${item.accent}55 0%, transparent 45%), linear-gradient(135deg, #0a0a0a 0%, #15152a 100%)`
               }}
             />
           </div>
-          <p className="text-white/80 leading-relaxed mb-3 text-sm md:text-base">{item.description}</p>
-          <p className="text-aix-gold font-semibold mb-4 text-sm">{item.impact}</p>
+          <p className="text-white/75 text-sm md:text-base leading-relaxed mb-4">{item.description}</p>
+          <p className="text-aix-gold text-sm font-semibold mb-4">{item.impact}</p>
           <div className="flex flex-wrap gap-2">
             {item.tags.map((tag) => (
-              <span key={tag} className="rounded-full border border-white/25 bg-white/5 px-3 py-1.5 text-[11px] md:text-xs text-white/85">
+              <span
+                key={tag}
+                className="text-[11px] md:text-xs px-3 py-1.5 rounded-full border border-white/20 bg-white/5 text-white/85"
+              >
                 {tag}
               </span>
             ))}
           </div>
         </div>
       </div>
-    </article>
+    </div>
   </motion.a>
 );
 
 const PortfolioSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start']
+  });
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const { scrollXProgress } = useScroll({ container: scrollerRef });
-
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '45%']);
-  const progressScale = useTransform(scrollXProgress, [0, 1], [0.08, 1]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
 
   return (
-    <motion.section ref={sectionRef} id="portfolio" className="py-24 md:py-32 relative overflow-hidden bg-aix-black">
+    <motion.section ref={sectionRef} id="portfolio" className="py-24 md:py-32 relative bg-aix-black overflow-hidden">
       <motion.div className="absolute inset-0 bg-constellation opacity-20" style={{ y: backgroundY }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-aix-black via-[#0a0b14] to-aix-black" />
+      <div className="absolute inset-0 bg-gradient-to-b from-aix-black via-[#0b0b16] to-aix-black" />
 
-      <div className="relative z-10">
-        <div className="container mx-auto px-4 md:px-6">
-          <ScrollReveal direction="scale" delay={0.15}>
-            <div className="mb-10 md:mb-12">
-              <p className="uppercase tracking-[0.28em] text-xs text-aix-cyan/80 mb-3">Selected Work</p>
-              <h2 className="text-4xl md:text-6xl font-bold font-serif leading-tight max-w-5xl">
-                <span className="gold-text-gradient">Layout editorial + movimento</span>
-                <br />
-                <span className="text-white">no padrão premium de showcase</span>
-              </h2>
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <ScrollReveal direction="scale" delay={0.2}>
+          <div className="mb-12 md:mb-16 text-center">
+            <p className="uppercase tracking-[0.3em] text-xs text-aix-cyan/80 mb-4">Work Showcase</p>
+            <h2 className="text-4xl md:text-6xl font-bold font-serif leading-tight">
+              <span className="gold-text-gradient">Projetos com linguagem</span>
+              <br />
+              <span className="text-white">cinemática e foco em resultado</span>
+            </h2>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+          <div className="hidden lg:block lg:col-span-3">
+            <div className="sticky top-28 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <p className="text-xs uppercase tracking-[0.25em] text-white/50 mb-4">Direção visual</p>
+              <p className="text-white/80 leading-relaxed text-sm">
+                Estrutura inspirada em páginas de work premium: tipografia dominante, blocos largos e transição limpa para manter fluidez no mobile.
+              </p>
             </div>
-          </ScrollReveal>
-        </div>
-
-        <div ref={scrollerRef} className="overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory px-4 md:px-6 pb-4">
-          <div className="flex gap-4 md:gap-6 w-max">
+          </div>
+          <div className="lg:col-span-9 space-y-6 md:space-y-8">
             {portfolioItems.map((item, index) => (
-              <WorkCard key={item.title} item={item} index={index} />
+              <ScrollReveal key={item.title} direction="up" delay={index * 0.07}>
+                <PortfolioRow item={item} index={index} />
+              </ScrollReveal>
             ))}
           </div>
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 mt-4">
-          <div className="h-[2px] w-full bg-white/10 overflow-hidden rounded-full">
-            <motion.div className="h-full bg-gradient-to-r from-aix-cyan via-aix-gold to-aix-purple origin-left" style={{ scaleX: progressScale }} />
-          </div>
-          <p className="text-xs text-white/50 mt-2">Deslize horizontalmente para navegar pelos cases.</p>
         </div>
       </div>
     </motion.section>
