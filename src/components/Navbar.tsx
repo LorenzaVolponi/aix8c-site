@@ -23,13 +23,18 @@ const Navbar = () => {
       setVisible(current < 80 || current < lastScroll.current);
       lastScroll.current = current;
 
-      const sections = navLinks.map(l => l.id);
-      let active = 'home';
-      sections.forEach((id) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        if (r.top <= 130 && r.bottom >= 130) active = id;
+      // Update active section based on scroll position
+      const sections = ['home', 'sobre', 'sobre-nos', 'expertise', 'portfolio', 'aussy'];
+      let current = 'home';
+
+      sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            current = section;
+          }
+        }
       });
       setActiveSection(active);
     };
@@ -55,20 +60,79 @@ const Navbar = () => {
         animate={{ y: visible ? 0 : '-100%' }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className='container mx-auto flex justify-between items-center px-6 py-4'>
-          <a href='#' className='logo-stagger text-2xl md:text-3xl font-bold font-serif gold-text-gradient' onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            {'AIX8C'.split('').map((letter, i) => <span key={`${letter}-${i}`}>{letter}</span>)}
-          </a>
-
-          <div className='hidden md:flex space-x-8 items-center'>
-            {navLinks.map((link) => (
-              <NavLink key={link.id} href={link.href} isActive={activeSection === link.id} onClick={() => handleNavClick(link.href)} icon={link.icon}>
-                {link.label}
-              </NavLink>
+        <div className="container mx-auto flex justify-between items-center px-6">
+          {/* Enhanced Logo */}
+          <motion.a 
+            href="#" 
+            className="relative text-2xl md:text-3xl font-bold font-serif group z-10"
+            style={{ scale: logoScale }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <motion.span
+              className="relative z-10 bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ['0%', '100%', '0%'],
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+              style={{ backgroundSize: '200% auto' }}
+            >
+              AIX8C
+            </motion.span>
+            
+            {/* Logo glow effect */}
+            <motion.div
+              className="absolute inset-0 blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+              animate={{
+                textShadow: [
+                  "0 0 20px rgba(245, 158, 11, 0.5)",
+                  "0 0 30px rgba(245, 158, 11, 0.7)",
+                  "0 0 20px rgba(245, 158, 11, 0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              AIX8C
+            </motion.div>
+          </motion.a>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-8 items-center">
+            {navLinks.map((link, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + index * 0.1 }}
+              >
+                <NavLink 
+                  href={link.href} 
+                  label={link.label}
+                  isActive={activeSection === link.id}
+                  onClick={() => handleNavClick(link.href)}
+                  icon={link.icon}
+                >
+                  {link.label}
+                </NavLink>
+              </motion.div>
             ))}
           </div>
 
-          <button className='md:hidden z-10 p-2 text-white' onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {/* Mobile Menu Button */}
+          <motion.button
+            className="md:hidden z-10 p-2 text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+            aria-expanded={mobileMenuOpen}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -89,11 +153,53 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ children, isActive, onClick, icon: Icon }: { href: string; children: React.ReactNode; isActive?: boolean; onClick?: () => void; icon: LucideIcon; }) => (
-  <button onClick={onClick} data-cursor='nav-link' className={cn('nav-underline relative text-white/90 hover:text-white font-medium text-lg flex items-center space-x-2', isActive && 'text-aix-gold')}>
-    <Icon size={18} className={cn(isActive ? 'text-aix-gold' : 'text-white/70')} />
-    <span>{children}</span>
-  </button>
+const NavLink = ({ 
+  href, 
+  label,
+  children, 
+  isActive, 
+  onClick, 
+  icon: Icon 
+}: { 
+  href: string; 
+  label: string;
+  children: React.ReactNode; 
+  isActive?: boolean;
+  onClick?: () => void;
+  icon: LucideIcon;
+}) => (
+  <motion.button 
+    onClick={onClick}
+    aria-label={`Ir para seção ${label}`}
+    className={cn(
+      "relative text-white/90 hover:text-white transition-all duration-300 font-medium text-lg group flex items-center space-x-2",
+      isActive && "text-aix-gold"
+    )}
+    whileHover={{ y: -2 }}
+  >
+    <Icon size={18} className={cn("transition-colors", isActive ? "text-aix-gold" : "text-white/70")} />
+    <span className="relative z-10">{children}</span>
+    
+    {/* Active indicator */}
+    <motion.div
+      className="absolute -bottom-3 left-0 h-0.5 bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold"
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: isActive ? 1 : 0 }}
+      whileHover={{ scaleX: 1 }}
+      transition={{ duration: 0.3 }}
+      style={{ width: '100%', originX: 0 }}
+    />
+    
+    {/* Glow effect */}
+    <motion.div
+      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
+      style={{
+        textShadow: "0 0 15px rgba(245, 158, 11, 0.5)"
+      }}
+    >
+      {children}
+    </motion.div>
+  </motion.button>
 );
 
 export default Navbar;

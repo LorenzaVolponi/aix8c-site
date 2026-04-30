@@ -5,7 +5,6 @@ import ScrollReveal from './ScrollReveal';
 interface PortfolioItem {
   title: string;
   category: string;
-  year: string;
   description: string;
   impact: string;
   tags: string[];
@@ -17,7 +16,6 @@ const portfolioItems: PortfolioItem[] = [
   {
     title: 'Comando Multicanal de Atendimento IA',
     category: 'Telecom',
-    year: '2026',
     description:
       'Redesenho da camada conversacional com jornadas orquestradas em WhatsApp, web e voz para atendimento de alta escala.',
     impact: '−47% no tempo médio de resolução · +68% na satisfação.',
@@ -28,7 +26,6 @@ const portfolioItems: PortfolioItem[] = [
   {
     title: 'Motor Preditivo para Decisão Financeira',
     category: 'Fintech',
-    year: '2025',
     description:
       'Modelo preditivo em tempo real com ingestão contínua de sinais de mercado e priorização de decisões críticas.',
     impact: '83% de precisão preditiva · ROI de 340%.',
@@ -39,7 +36,6 @@ const portfolioItems: PortfolioItem[] = [
   {
     title: 'Plataforma Adaptativa de Aprendizado',
     category: 'EdTech',
-    year: '2024',
     description:
       'Experiência educacional personalizada por IA com trilhas dinâmicas e feedback imediato por perfil cognitivo.',
     impact: '+65% de retenção · −40% no tempo de aprendizado.',
@@ -50,7 +46,6 @@ const portfolioItems: PortfolioItem[] = [
   {
     title: 'Assistente de Conversão para E-commerce',
     category: 'Retail',
-    year: '2023',
     description:
       'Camada conversacional com contexto de catálogo e comportamento de compra para aumentar conversão com menos atrito.',
     impact: '+23% em conversão · −18% em devoluções.',
@@ -80,7 +75,7 @@ const PortfolioRow = ({ item, index }: { item: PortfolioItem; index: number }) =
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
         <div className="lg:col-span-7">
           <p className="text-xs uppercase tracking-[0.25em] text-aix-cyan/80 mb-3">
-            {String(index + 1).padStart(2, '0')} · {item.category} · {item.year}
+            {String(index + 1).padStart(2, '0')} · {item.category}
           </p>
           <h3 className="text-3xl md:text-5xl font-serif font-bold leading-tight text-white group-hover:text-aix-gold transition-colors duration-300">
             {item.title}
@@ -88,14 +83,6 @@ const PortfolioRow = ({ item, index }: { item: PortfolioItem; index: number }) =
         </div>
 
         <div className="lg:col-span-5">
-          <div className="mb-4 rounded-xl border border-white/15 bg-black/40 p-4">
-            <div
-              className="h-28 md:h-32 rounded-lg border border-white/10"
-              style={{
-                background: `radial-gradient(circle at 20% 20%, ${item.accent}55 0%, transparent 45%), linear-gradient(135deg, #0a0a0a 0%, #15152a 100%)`
-              }}
-            />
-          </div>
           <p className="text-white/75 text-sm md:text-base leading-relaxed mb-4">{item.description}</p>
           <p className="text-aix-gold text-sm font-semibold mb-4">{item.impact}</p>
           <div className="flex flex-wrap gap-2">
@@ -140,22 +127,12 @@ const PortfolioSection = () => {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-          <div className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-28 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-              <p className="text-xs uppercase tracking-[0.25em] text-white/50 mb-4">Direção visual</p>
-              <p className="text-white/80 leading-relaxed text-sm">
-                Estrutura inspirada em páginas de work premium: tipografia dominante, blocos largos e transição limpa para manter fluidez no mobile.
-              </p>
-            </div>
-          </div>
-          <div className="lg:col-span-9 space-y-6 md:space-y-8">
-            {portfolioItems.map((item, index) => (
-              <ScrollReveal key={item.title} direction="up" delay={index * 0.07}>
-                <PortfolioRow item={item} index={index} />
-              </ScrollReveal>
-            ))}
-          </div>
+        <div className="space-y-6 md:space-y-8">
+          {portfolioItems.map((item, index) => (
+            <ScrollReveal key={item.title} direction="up" delay={index * 0.07}>
+              <PortfolioRow item={item} index={index} />
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </motion.section>
