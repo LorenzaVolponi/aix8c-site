@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -11,7 +10,6 @@ import AussySection from "@/components/AussySection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  // Smooth scroll behavior for anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -33,11 +31,15 @@ const Index = () => {
         }
       }
     };
-    
-    document.addEventListener('click', handleAnchorClick);
-    
+    const reset = (e: Event) => ((e.currentTarget as HTMLElement).style.transform = 'translate(0,0)');
+    magnets.forEach(m => { m.addEventListener('mousemove', onMag); m.addEventListener('mouseleave', reset); });
+
+    window.addEventListener('mousemove', onMove);
     return () => {
-      document.removeEventListener('click', handleAnchorClick);
+      cursor.remove();
+      window.removeEventListener('mousemove', onMove);
+      hoverables().forEach(el => { el.removeEventListener('mouseenter', activate); el.removeEventListener('mouseleave', deactivate); });
+      magnets.forEach(m => { m.removeEventListener('mousemove', onMag); m.removeEventListener('mouseleave', reset); });
     };
   }, []);
 
