@@ -7,10 +7,12 @@ on:
 
 permissions:
   contents: read
+  security-events: write
 
 jobs:
   security:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -19,7 +21,7 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Run repository security checks
+      - name: Security checks
         run: bash scripts/security-check.sh
 
       - name: Upload security report

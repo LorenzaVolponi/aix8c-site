@@ -1,23 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ -f package-lock.json ]; then
-  npm ci
-else
-  npm install
-fi
+source scripts/ci-utils.sh
+install_dependencies
 
-if npm run | grep -qE '^\s*format\b'; then
+if has_npm_script format; then
   npm run format || true
 fi
 
-if npm run | grep -qE '^\s*lint\b'; then
+if has_npm_script lint; then
   npm run lint -- --fix || true
 fi
 
 npm audit fix --audit-level=high || true
 
-if npm run | grep -qE '^\s*test\b'; then
+if has_npm_script test; then
   npm test -- --ci || true
 fi
 

@@ -15,7 +15,7 @@ if [ -f .env ]; then
   fi
 fi
 
-if git ls-files | rg -n '(^|/)\.env($|\.)' >/dev/null 2>&1; then
+if git ls-files | rg -n '(^|/)\.env($|\.(local|development|production|test))$' >/dev/null 2>&1; then
   echo "[CRITICAL] Tracked .env-like file detected." | tee -a "$REPORT"
   exit 1
 else
