@@ -501,3 +501,17 @@
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes charReveal{to{transform:translateY(0)}}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* Minimal scrollbar */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:transparent;border:none}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,rgba(255,255,255,.65),rgba(139,92,246,.8));border-radius:999px;border:none}
+
+.about-tilt::after{content:'';position:absolute;inset:-150% -20%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.08) 45%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.08) 55%,transparent 60%);transform:translateX(-55%);transition:transform .8s ease;pointer-events:none}
+.about-tilt:hover::after{transform:translateX(55%)}
+
+.portfolio-work-row{background:#050505}
+.portfolio-image{transition:transform 1.2s cubic-bezier(.25,.46,.45,.94)}
+.portfolio-overlay{background:rgba(0,0,0,0);transition:background .7s ease}
+.portfolio-work-row:hover .portfolio-image{transform:scale(1.05)}
+.portfolio-work-row:hover .portfolio-overlay{background:rgba(0,0,0,.6)}

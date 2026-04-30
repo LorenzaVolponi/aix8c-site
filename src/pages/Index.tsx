@@ -11,25 +11,28 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   useEffect(() => {
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
-      if (anchor) {
-        const id = anchor.getAttribute('href')?.substring(1);
-        if (!id) return;
-        
-        const element = document.getElementById(id);
-        if (element) {
-          e.preventDefault();
-          const yOffset = -80; // Navbar height offset
-          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          
-          window.scrollTo({
-            top: y,
-            behavior: 'smooth'
-          });
-        }
-      }
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+
+    const onMove = (e: MouseEvent) => {
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+
+    const hoverables = () => Array.from(document.querySelectorAll('[data-cursor="nav-link"]')) as HTMLElement[];
+    const activate = () => cursor.classList.add('cursor-expanded');
+    const deactivate = () => cursor.classList.remove('cursor-expanded');
+    hoverables().forEach(el => { el.addEventListener('mouseenter', activate); el.addEventListener('mouseleave', deactivate); });
+
+    const magnets = Array.from(document.querySelectorAll('[data-magnetic]')) as HTMLElement[];
+    const onMag = (e: MouseEvent) => {
+      const t = e.currentTarget as HTMLElement;
+      const r = t.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width / 2) * 0.12;
+      const y = (e.clientY - r.top - r.height / 2) * 0.12;
+      t.style.transform = `translate(${x}px, ${y}px)`;
     };
     const reset = (e: Event) => ((e.currentTarget as HTMLElement).style.transform = 'translate(0,0)');
     magnets.forEach(m => { m.addEventListener('mousemove', onMag); m.addEventListener('mouseleave', reset); });
