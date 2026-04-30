@@ -25,7 +25,7 @@ const Navbar = () => {
       let current = 'home';
 
       sections.forEach(section => {
-        const element = document.getElementById(section === 'home' ? '' : section);
+        const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
@@ -147,6 +147,7 @@ const Navbar = () => {
               >
                 <NavLink 
                   href={link.href} 
+                  label={link.label}
                   isActive={activeSection === link.id}
                   onClick={() => handleNavClick(link.href)}
                   icon={link.icon}
@@ -161,6 +162,8 @@ const Navbar = () => {
           <motion.button
             className="md:hidden z-10 p-2 text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+            aria-expanded={mobileMenuOpen}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -221,12 +224,14 @@ const Navbar = () => {
 
 const NavLink = ({ 
   href, 
+  label,
   children, 
   isActive, 
   onClick, 
   icon: Icon 
 }: { 
   href: string; 
+  label: string;
   children: React.ReactNode; 
   isActive?: boolean;
   onClick?: () => void;
@@ -234,6 +239,7 @@ const NavLink = ({
 }) => (
   <motion.button 
     onClick={onClick}
+    aria-label={`Ir para seção ${label}`}
     className={cn(
       "relative text-white/90 hover:text-white transition-all duration-300 font-medium text-lg group flex items-center space-x-2",
       isActive && "text-aix-gold"
