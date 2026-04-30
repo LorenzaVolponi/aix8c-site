@@ -35,6 +35,7 @@ Este repositório possui automação completa com GitHub Actions:
 - `dependabot-automerge.yml`: habilita automerge para PRs do Dependabot de patch/minor.
 - `labeler.yml`: aplica labels automáticas por tipo de alteração.
 - `stale.yml`: gerencia issues/PRs inativas.
+- `auto-merge-maintenance.yml`: habilita auto-merge para PRs automatizadas (com bloqueio por label `no-automerge`/`major-update`).
 
 ## Dependências automáticas
 
