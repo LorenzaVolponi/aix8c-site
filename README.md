@@ -1,85 +1,58 @@
-# Welcome to your Lovable project
+# Projeto Vite + React + TypeScript
 
-## Project info
+## Setup local
 
-**URL**: https://lovable.dev/projects/d5e3729f-9ebc-44dd-80cd-24d951775ce8
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/d5e3729f-9ebc-44dd-80cd-24d951775ce8) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+## Scripts de automação
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+bash scripts/check-env.sh
+bash scripts/security-check.sh
+bash scripts/build-check.sh
+bash scripts/auto-fix.sh
+bash scripts/deploy-all.sh
+```
 
-## What technologies are used for this project?
+## CI/CD e automações
 
-This project is built with:
+Este repositório possui automação completa com GitHub Actions:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `ci.yml`: valida push e pull request com instalação, lint/test (quando existirem) e build.
+- `security.yml`: checagens de segurança, detecção de secrets, validação de `.env` e relatório.
+- `auto-fix.yml`: manutenção automática (manual e agendada), cria branch e abre PR com labels.
+- `deploy.yml`: valida build em `main` e permite deploy via integração GitHub/Vercel ou Vercel CLI (quando secrets estiverem configurados).
+- `dependabot-automerge.yml`: habilita automerge para PRs do Dependabot de patch/minor.
 
-## How can I deploy this project?
+## Dependências automáticas
 
-Simply open [Lovable](https://lovable.dev/projects/d5e3729f-9ebc-44dd-80cd-24d951775ce8) and click on Share -> Publish.
+Dependabot configurado para updates semanais:
+- patch/minor agrupados em PRs de manutenção.
+- major updates em PRs separados.
 
-## Can I connect a custom domain to my Lovable project?
+## Secrets opcionais (GitHub)
 
-Yes, you can!
+Para deploy via Vercel CLI:
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Segurança
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- `.env` ignorado por padrão.
+- `.env.example` disponível como referência.
+- Workflows usam permissões mínimas.
+- Sem push direto automático em `main` nas rotinas de auto-fix.
 
-## Automação de manutenção (CI/CD)
+## Observação sobre backend/API
 
-Este repositório agora inclui automações para manutenção contínua de PRs:
-
-- **PR Auto Fix** (`.github/workflows/pr-auto-fix.yml` + `scripts/auto-fix.sh`): executa fluxo definitivo (instalação, lint `--fix`, audit fix, build, gates finais), commita correções e comenta relatório automático na PR.
-- **PR Merge Conflict Assist** (`.github/workflows/pr-merge-conflict-assist.yml`): tenta sincronizar `main` na branch da PR; se houver conflito, comenta os arquivos conflitantes.
-- **PR Governance Bot** (`.github/workflows/pr-governance.yml` + `scripts/pr-governance.mjs`): por padrão só monitora. Via `workflow_dispatch` você pode habilitar:
-  - fechar todas as PRs abertas (`close_open_prs=true`);
-  - tentar merge automático de PRs limpas (`merge_ready_prs=true`).
-
-> ⚠️ Recomendado: usar branch protection + required checks antes de habilitar automações destrutivas.
+Este projeto atual é frontend (Vite/React) e não expõe backend/API próprio no repositório. Por isso, não foi criado healthcheck de API. Se uma API for adicionada, recomenda-se incluir endpoint `/health` e testes de integração no CI.

@@ -7,18 +7,12 @@ else
   npm install
 fi
 
-if npm run | grep -qE '^\s*format\b'; then
-  npm run format || true
-fi
-
 if npm run | grep -qE '^\s*lint\b'; then
-  npm run lint -- --fix || true
+  npm run lint
 fi
-
-npm audit fix --audit-level=high || true
 
 if npm run | grep -qE '^\s*test\b'; then
-  npm test -- --ci || true
+  npm test -- --ci
 fi
 
 npm run build
