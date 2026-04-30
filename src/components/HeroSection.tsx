@@ -20,7 +20,9 @@ const HeroSection = () => {
 
   return (
     <section 
+      id="home"
       ref={sectionRef}
+      aria-label="Início"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-aix-black"
     >
       {/* Neural Canvas Background */}
