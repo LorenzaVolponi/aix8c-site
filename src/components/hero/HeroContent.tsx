@@ -40,11 +40,13 @@ const HeroContent = () => {
           Capitã da Nave AIX8C
         </h2>
         
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 font-serif tracking-tight text-white leading-tight">
-          LORENZA VOLPONI
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 font-serif tracking-tight text-white leading-tight hero-title-reveal">
+          {"LORENZA VOLPONI".split('').map((char, i) => (
+            <span key={`${char}-${i}`} className="hero-reveal-char" style={{ animationDelay: `${0.04 * i}s` }}>{char === " " ? "\u00A0" : char}</span>
+          ))}
         </h1>
         
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cyan-300 font-light mb-4 tracking-wider leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cyan-300 font-light mb-4 tracking-wider leading-relaxed hero-subtitle-reveal">
           Tradutora entre almas humanas e mentes artificiais
         </p>
       </motion.div>
@@ -94,10 +96,10 @@ const HeroContent = () => {
         className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4"
         variants={itemVariants}
       >
-        <button className="w-full sm:w-auto bg-gradient-to-r from-aix-gold to-yellow-400 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+        <button data-magnetic className="w-full sm:w-auto bg-gradient-to-r from-aix-gold to-yellow-400 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
           Explorar Projetos
         </button>
-        <button className="w-full sm:w-auto border-2 border-aix-cyan text-aix-cyan px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-aix-cyan hover:text-black transition-all duration-300 text-sm sm:text-base">
+        <button data-magnetic className="w-full sm:w-auto border-2 border-aix-cyan text-aix-cyan px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-aix-cyan hover:text-black transition-all duration-300 text-sm sm:text-base">
           Falar Comigo
         </button>
       </motion.div>

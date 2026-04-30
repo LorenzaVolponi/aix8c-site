@@ -484,3 +484,20 @@
     place-items: center;
   }
 }
+
+.custom-cursor{position:fixed;left:0;top:0;width:16px;height:16px;border:1px solid rgba(255,255,255,.7);border-radius:999px;pointer-events:none;z-index:9999;transform:translate(-100px,-100px);transition:width .25s,height .25s,background .25s,backdrop-filter .25s,border-color .25s}
+.cursor-expanded{width:70px;height:70px;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border-color:rgba(245,158,11,.7)}
+.nav-underline::after{content:'';position:absolute;left:0;bottom:-8px;width:100%;height:2px;background:linear-gradient(90deg,#f59e0b,#8b5cf6);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.nav-underline:hover::after{transform:scaleX(1)}
+.logo-stagger span{display:inline-block;transition:transform .25s ease}
+.logo-stagger:hover span{transform:translateY(-3px)}
+.logo-stagger:hover span:nth-child(2){transition-delay:.03s}.logo-stagger:hover span:nth-child(3){transition-delay:.06s}.logo-stagger:hover span:nth-child(4){transition-delay:.09s}.logo-stagger:hover span:nth-child(5){transition-delay:.12s}
+.hero-title-reveal{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:.02em}
+.hero-reveal-char{display:inline-block;transform:translateY(110%);animation:charReveal .65s cubic-bezier(.22,1,.36,1) forwards}
+.hero-subtitle-reveal{opacity:0;transform:translateY(20px);animation:fadeUp .7s ease forwards;animation-delay:.6s}
+.hero-gradient-orb{position:absolute;inset:0;background:radial-gradient(600px circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(139,92,246,.23), transparent 45%);z-index:6;pointer-events:none}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.72) 100%);z-index:9;pointer-events:none}
+.footer-marquee-track{display:flex;gap:2rem;min-width:max-content;animation:marquee 20s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes charReveal{to{transform:translateY(0)}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
