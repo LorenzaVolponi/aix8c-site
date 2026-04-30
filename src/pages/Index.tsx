@@ -15,8 +15,9 @@ const Index = () => {
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
-        const id = target.getAttribute('href')?.substring(1);
+      const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
+      if (anchor) {
+        const id = anchor.getAttribute('href')?.substring(1);
         if (!id) return;
         
         const element = document.getElementById(id);
