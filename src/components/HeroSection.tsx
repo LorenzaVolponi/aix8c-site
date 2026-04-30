@@ -20,7 +20,9 @@ const HeroSection = () => {
 
   return (
     <section 
+      id="home"
       ref={sectionRef}
+      aria-label="Início"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-aix-black"
     >
       {/* Neural Canvas Background */}
@@ -31,6 +33,8 @@ const HeroSection = () => {
         <NeuralCanvas />
       </motion.div>
       
+      <div className="hero-gradient-orb" />
+      <div className="hero-vignette" />
       {/* Enhanced Gradient Overlays - Responsivos */}
       <div 
         className="absolute inset-0 z-10"
