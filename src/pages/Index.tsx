@@ -76,6 +76,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-aix-black text-white relative">
       <div className="stage-transition-layer" />
+      <div className="relative z-10">
       <Navbar />
       <main>
         <HeroSection />
@@ -88,6 +89,7 @@ const Index = () => {
         <ContatoSection />
       </main>
       <Footer />
+      </div>
     </div>
   );
 };
