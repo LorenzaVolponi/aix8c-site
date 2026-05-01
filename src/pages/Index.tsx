@@ -8,6 +8,7 @@ import ExpertiseSection from "@/components/ExpertiseSection";
 import PortfolioSection from "@/components/PortfolioSection";
 import AussySection from "@/components/AussySection";
 import Footer from "@/components/Footer";
+import ContatoSection from "@/components/ContatoSection";
 
 const Index = () => {
   useEffect(() => {
@@ -57,6 +58,7 @@ const Index = () => {
         <ExpertiseSection />
         <PortfolioSection />
         <AussySection />
+        <ContatoSection />
       </main>
       <Footer />
     </div>
