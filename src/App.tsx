@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OptimizedIndex from "./pages/OptimizedIndex";
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 // Optimized QueryClient configuration for production
@@ -31,7 +32,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<OptimizedIndex />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/optimized" element={<OptimizedIndex />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
