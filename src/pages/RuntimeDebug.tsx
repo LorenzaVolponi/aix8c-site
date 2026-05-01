@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { RuntimeEvent } from '@/utils/runtimeTelemetry';
 
 const KEY = 'aix8c_runtime_events';
@@ -6,13 +6,13 @@ const KEY = 'aix8c_runtime_events';
 const RuntimeDebug = () => {
   const [tick, setTick] = useState(0);
 
-  const events = useMemo(() => {
+  const events = (() => {
     try {
       return (JSON.parse(localStorage.getItem(KEY) || '[]') as RuntimeEvent[]) || [];
     } catch {
       return [];
     }
-  }, [tick]);
+  })();
 
   return (
     <div className="min-h-screen bg-aix-black text-white p-6 md:p-10">
