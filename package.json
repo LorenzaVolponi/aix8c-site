@@ -15,7 +15,8 @@
     "ci:verify": "npm run lint && npm run typecheck && npm run build",
     "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build",
     "healthcheck:runtime": "./scripts/runtime-healthcheck.sh",
-    "healthcheck:runtime:full": "npm run healthcheck:runtime && npm run ci:verify"
+    "healthcheck:runtime:full": "npm run healthcheck:runtime && npm run ci:verify",
+    "vercel:build": "./scripts/vercel-guard.sh"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
