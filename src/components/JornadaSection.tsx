@@ -158,7 +158,7 @@ const JornadaSection = () => {
                   >
                     <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
                       <motion.div 
-                        className="glass-card p-6 group hover:bg-white/10 transition-all duration-300"
+                        className="glass-card skill-card-at p-6 group transition-all duration-300"
                         whileHover={{ scale: 1.02, y: -5 }}
                       >
                         <div className="flex items-center gap-3 mb-3">
@@ -237,7 +237,7 @@ const JornadaSection = () => {
                 return (
                   <motion.div
                     key={`${skill.name}-${activeFilter}`}
-                    className="glass-card p-6 group hover:bg-white/10 transition-all duration-300"
+                    className="glass-card skill-card-at p-6 group transition-all duration-300"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -255,7 +255,7 @@ const JornadaSection = () => {
                     <div className="relative mb-2">
                       <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                         <motion.div
-                          className="h-full bg-gradient-to-r from-aix-gold to-aix-cyan rounded-full"
+                          className="h-full skill-progress-at bg-gradient-to-r from-aix-gold to-aix-cyan rounded-full"
                           initial={{ width: 0 }}
                           animate={{ width: `${skill.level}%` }}
                           transition={{ duration: 1, delay: index * 0.1 }}
