@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OptimizedIndex from "./pages/OptimizedIndex";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import RuntimeDebug from "./pages/RuntimeDebug";
 import { saveRuntimeEvent } from "./utils/runtimeTelemetry";
 
 const queryClient = new QueryClient({
@@ -33,6 +34,13 @@ class AppErrorBoundary extends React.Component<React.PropsWithChildren, { hasErr
 
   componentDidCatch(error: Error) {
     console.error("App runtime error:", error);
+    saveRuntimeEvent({
+      type: "boundary",
+      message: error.message,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+      path: window.location.pathname,
+    });
   }
 
   render() {
@@ -64,6 +72,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/optimized" element={<OptimizedIndex />} />
+            <Route path="/debug-runtime" element={<RuntimeDebug />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster />

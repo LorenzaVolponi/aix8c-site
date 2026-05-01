@@ -14,6 +14,9 @@
     "typecheck": "tsc --noEmit",
     "ci:verify": "npm run lint && npm run typecheck && npm run build",
     "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build",
+    "healthcheck:runtime": "./scripts/runtime-healthcheck.sh",
+    "healthcheck:runtime:full": "npm run healthcheck:runtime && npm run ci:verify",
+    "vercel:build": "./scripts/vercel-guard.sh"
     "healthcheck:runtime": "./scripts/runtime-healthcheck.sh"
     "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build"
   },
