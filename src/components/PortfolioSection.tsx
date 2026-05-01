@@ -4,6 +4,13 @@ import { motion } from 'framer-motion';
 const PortfolioSection = () => {
   return (
     <section id="portfolio" className="py-24 relative bg-aix-black overflow-hidden">
+      <motion.div
+        className="section-cinematic-mask absolute top-0 left-0 right-0 h-28 z-20 pointer-events-none"
+        initial={{ clipPath: "inset(0 100% 0 0)" }}
+        whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.1 }}
+      />
       <div className="absolute inset-0 bg-constellation opacity-20" />
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl md:text-6xl font-bold mb-4 text-center font-serif">

@@ -541,3 +541,6 @@
 .skill-progress-at::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-100%);animation:skillShine 2.4s linear infinite}
 @keyframes skillShine{to{transform:translateX(100%)}}
 .skill-mask{clip-path:inset(0 0 0 0);will-change:clip-path,transform}
+.skill-tilt{transform-style:preserve-3d}
+.skill-card-at:hover .skill-progress-at{filter:drop-shadow(0 0 10px rgba(6,182,212,.45))}
+.section-cinematic-mask{background:linear-gradient(90deg,rgba(245,158,11,.6),rgba(139,92,246,.45),rgba(6,182,212,.55));filter:blur(10px);opacity:.65}

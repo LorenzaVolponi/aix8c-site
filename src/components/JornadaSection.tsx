@@ -161,6 +161,7 @@ const JornadaSection = () => {
                   >
                     <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
                       <motion.div 
+                        className="glass-card skill-card-at skill-mask p-6 group transition-all duration-300"
                         className="glass-card skill-card-at p-6 group transition-all duration-300"
                         whileHover={{ scale: 1.02, y: -5 }}
                       >
@@ -240,6 +241,10 @@ const JornadaSection = () => {
                 return (
                   <motion.div
                     key={`${skill.name}-${activeFilter}`}
+                    className="glass-card skill-card-at skill-mask skill-tilt p-6 group transition-all duration-300"
+                    initial={{ opacity: 0, scale: 0.8, clipPath: "inset(100% 0 0 0)" }}
+                    whileInView={{ opacity: 1, scale: 1, clipPath: "inset(0% 0 0 0)" }}
+                    viewport={{ once: true, amount: 0.3 }}
                     className="glass-card skill-card-at skill-mask p-6 group transition-all duration-300"
                     initial={{ opacity: 0, scale: 0.8, clipPath: "inset(100% 0 0 0)" }}
                     whileInView={{ opacity: 1, scale: 1, clipPath: "inset(0% 0 0 0)" }}
@@ -249,6 +254,14 @@ const JornadaSection = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     whileHover={{ y: -5 }}
+                    onMouseMove={(e) => {
+                      const card = e.currentTarget as HTMLDivElement;
+                      const r = card.getBoundingClientRect();
+                      const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+                      const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+                      card.style.transform = `perspective(900px) rotateX(${y * -5}deg) rotateY(${x * 6}deg)`;
+                    }}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.transform = '')}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 bg-gradient-to-r from-aix-purple to-aix-cyan rounded-lg flex items-center justify-center">
