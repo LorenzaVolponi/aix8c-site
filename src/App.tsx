@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OptimizedIndex from "./pages/OptimizedIndex";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import { saveRuntimeEvent } from "./utils/runtimeTelemetry";
 
 const queryClient = new QueryClient({
   defaultOptions: {
