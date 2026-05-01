@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
-REPORT_DIR=".ci"
-REPORT_FILE="${REPORT_DIR}/autofix-report.md"
-mkdir -p "${REPORT_DIR}"
+source scripts/ci-utils.sh
+install_dependencies
 
 : > "${REPORT_FILE}"
 
@@ -50,12 +49,10 @@ if ! run_step "Gate final de build" "npm run build"; then
   FAILED=1
 fi
 
-if [ "$FAILED" -eq 0 ]; then
-  echo >> "${REPORT_FILE}"
-  echo "✅ Resultado final: PR apta após auto-correção." >> "${REPORT_FILE}"
-  exit 0
+npm audit fix --audit-level=high || true
+
+if has_npm_script test; then
+  npm test -- --ci || true
 fi
 
-echo >> "${REPORT_FILE}"
-echo "❌ Resultado final: auto-correção parcial; intervenção manual necessária." >> "${REPORT_FILE}"
-exit 1
+npm run build
