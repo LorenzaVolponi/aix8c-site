@@ -1,0 +1,30 @@
+name: PR Auto Merge (Safe)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [labeled, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: '*/20 * * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.state == 'open'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Merge only safe PRs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          REQUIRED_LABEL: automerge
+          REQUIRED_APPROVALS: '1'
+        run: node ./scripts/pr-automerge.mjs
