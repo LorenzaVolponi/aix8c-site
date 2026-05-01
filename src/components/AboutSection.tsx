@@ -124,7 +124,7 @@ const ContentBlock = ({
 
   return (
     <motion.div 
-      className={`glass-card p-8 transition-all duration-700 ${accentClasses[accent]} relative overflow-hidden`}
+      className={`glass-card about-tilt p-8 transition-all duration-700 ${accentClasses[accent]} relative overflow-hidden`}
       whileHover={{ 
         scale: 1.02,
         y: -5
@@ -132,6 +132,14 @@ const ContentBlock = ({
       initial={{ opacity: 0, x: 50 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.15 }}
+      onMouseMove={(e) => {
+        const card = e.currentTarget as HTMLDivElement;
+        const r = card.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+        card.style.transform = `perspective(800px) rotateX(${y * -5}deg) rotateY(${x * 5}deg)`;
+      }}
+      onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.transform = '')}
       viewport={{ once: true }}
     >
       {/* Animated background glow */}
