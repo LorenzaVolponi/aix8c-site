@@ -153,3 +153,11 @@ Use o workflow **One Click Release** para:
 Inputs do workflow:
 - `allow_force`
 - `auto_close_others`
+
+
+### Resolução automática de conflitos (modo avançado)
+
+No workflow **PR Merge Conflict Assist** existe o input:
+- `auto_resolve_code=true`
+
+Quando ativo, a automação tenta resolver também conflitos em arquivos de código (`.ts/.tsx/.js/.jsx/.css`) priorizando a versão da branch da PR (`ours`). Use com cuidado.

@@ -2,6 +2,7 @@
 set -euo pipefail
 
 TARGET_BRANCH="${1:-main}"
+AUTO_RESOLVE_CODE="${AUTO_RESOLVE_CODE:-false}"
 
 git fetch origin "${TARGET_BRANCH}"
 
@@ -26,6 +27,14 @@ for file in $CONFLICTS; do
       # Mantém versão da branch alvo para reduzir ruptura de automação
       git checkout --theirs "$file" || AUTO_RESOLVED=0
       git add "$file" || AUTO_RESOLVED=0
+      ;;
+    *.ts|*.tsx|*.js|*.jsx|*.css)
+      if [ "$AUTO_RESOLVE_CODE" = "true" ]; then
+        git checkout --ours "$file" || AUTO_RESOLVED=0
+        git add "$file" || AUTO_RESOLVED=0
+      else
+        AUTO_RESOLVED=0
+      fi
       ;;
     *)
       AUTO_RESOLVED=0

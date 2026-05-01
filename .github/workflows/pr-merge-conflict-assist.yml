@@ -3,6 +3,12 @@ name: PR Merge Conflict Assist
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      auto_resolve_code:
+        description: "Tentar resolução automática também para arquivos de código"
+        required: true
+        default: "false"
 
 permissions:
   contents: write
@@ -27,6 +33,7 @@ jobs:
         id: resolve
         run: |
           set +e
+          AUTO_RESOLVE_CODE=${{ github.event.inputs.auto_resolve_code || "false" }} ./scripts/auto-resolve-conflicts.sh main
           ./scripts/auto-resolve-conflicts.sh main
           STATUS=$?
           set -e
