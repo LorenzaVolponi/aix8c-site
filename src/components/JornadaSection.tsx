@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, animate, useMotionValue, useTransform } from 'framer-motion';
 import { Brain, Code, Mic, BookOpen, Award, ExternalLink, Filter, Calendar, MapPin, Trophy, Lightbulb, Heart, User, Target, Palette, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import ScrollReveal from './ScrollReveal';
@@ -88,6 +88,9 @@ const JornadaSection = () => {
     <section id="jornada" className="py-24 bg-gradient-to-br from-aix-black via-gray-900 to-aix-black relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
+        <motion.div className="absolute top-16 left-[12%] w-72 h-72 rounded-full bg-aix-purple/10 blur-3xl" animate={{ y: [0, -30, 0] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
+        <motion.div className="absolute bottom-20 right-[10%] w-80 h-80 rounded-full bg-aix-cyan/10 blur-3xl" animate={{ y: [0, 24, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} />
+        <motion.div className="absolute top-[45%] left-[48%] w-56 h-56 rounded-full bg-aix-gold/8 blur-3xl" animate={{ y: [0, -18, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} />
         <div className="matrix-rain absolute top-0 left-1/4 w-1 h-full opacity-20" style={{ animationDelay: '0s' }} />
         <div className="matrix-rain absolute top-0 left-2/4 w-1 h-full opacity-15" style={{ animationDelay: '1s' }} />
         <div className="matrix-rain absolute top-0 left-3/4 w-1 h-full opacity-25" style={{ animationDelay: '2s' }} />
@@ -158,7 +161,7 @@ const JornadaSection = () => {
                   >
                     <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
                       <motion.div 
-                        className="glass-card p-6 group hover:bg-white/10 transition-all duration-300"
+                        className="glass-card skill-card-at skill-mask p-6 group transition-all duration-300"
                         whileHover={{ scale: 1.02, y: -5 }}
                       >
                         <div className="flex items-center gap-3 mb-3">
@@ -237,9 +240,10 @@ const JornadaSection = () => {
                 return (
                   <motion.div
                     key={`${skill.name}-${activeFilter}`}
-                    className="glass-card p-6 group hover:bg-white/10 transition-all duration-300"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    className="glass-card skill-card-at skill-mask p-6 group transition-all duration-300"
+                    initial={{ opacity: 0, scale: 0.8, clipPath: "inset(100% 0 0 0)" }}
+                    whileInView={{ opacity: 1, scale: 1, clipPath: "inset(0% 0 0 0)" }}
+                    viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     whileHover={{ y: -5 }}
                   >
@@ -255,7 +259,7 @@ const JornadaSection = () => {
                     <div className="relative mb-2">
                       <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                         <motion.div
-                          className="h-full bg-gradient-to-r from-aix-gold to-aix-cyan rounded-full"
+                          className="h-full skill-progress-at bg-gradient-to-r from-aix-gold to-aix-cyan rounded-full"
                           initial={{ width: 0 }}
                           animate={{ width: `${skill.level}%` }}
                           transition={{ duration: 1, delay: index * 0.1 }}
@@ -264,7 +268,7 @@ const JornadaSection = () => {
                     </div>
                     
                     <div className="text-right">
-                      <span className="text-aix-gold font-bold">{skill.level}%</span>
+                      <AnimatedPercent value={skill.level} />
                     </div>
                   </motion.div>
                 );
@@ -287,10 +291,11 @@ const JornadaSection = () => {
                   <motion.div
                     key={index}
                     className="glass-card p-8 text-center group hover:bg-white/10 transition-all duration-300"
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    initial={{ opacity: 0, y: 50, rotateY: 180 }}
+                    whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                    transition={{ duration: 0.7, delay: index * 0.1 }}
                     whileHover={{ y: -10, scale: 1.02 }}
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
                     <motion.div
                       className="w-20 h-20 bg-gradient-to-r from-aix-gold to-aix-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"
@@ -375,6 +380,19 @@ const JornadaSection = () => {
       </div>
     </section>
   );
+};
+
+
+const AnimatedPercent = ({ value }: { value: number }) => {
+  const motionValue = useMotionValue(0);
+  const rounded = useTransform(motionValue, (latest) => Math.round(latest));
+
+  React.useEffect(() => {
+    const controls = animate(motionValue, value, { duration: 1.2, ease: 'easeOut' });
+    return () => controls.stop();
+  }, [motionValue, value]);
+
+  return <motion.span className="text-aix-gold font-bold">{rounded}%</motion.span>;
 };
 
 export default JornadaSection;
