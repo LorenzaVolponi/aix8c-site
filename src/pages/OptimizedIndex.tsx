@@ -32,7 +32,7 @@ import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
 const OptimizedIndexContent = () => {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [isReady, setIsReady] = useState(false);
   
   // Always call hooks - never conditionally
@@ -84,16 +84,6 @@ const OptimizedIndexContent = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (isReady && !isInitialLoading) {
-      // Reduzido para 8 segundos - muito mais rápido
-      const introTimer = setTimeout(() => {
-        setShowIntro(false);
-      }, 8000);
-
-      return () => clearTimeout(introTimer);
-    }
-  }, [isReady, isInitialLoading]);
 
   // Show loading screen while initializing or during initial loading
   if (!isReady || isInitialLoading) {

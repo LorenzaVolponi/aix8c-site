@@ -1,0 +1,42 @@
+name: PR Auto Merge (Safe + Force)
+
+on:
+  workflow_dispatch:
+    inputs:
+      allow_force:
+        description: "Permitir merge com label force-merge mesmo com checks falhando"
+        required: true
+        default: "false"
+      auto_close_others:
+        description: "Fechar outras PRs abertas após merge"
+        required: true
+        default: "false"
+  pull_request:
+    types: [labeled, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: '*/20 * * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.state == 'open'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Merge engine
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          REQUIRED_LABEL: automerge
+          FORCE_LABEL: force-merge
+          REQUIRED_APPROVALS: '1'
+          ALLOW_FORCE: ${{ github.event.inputs.allow_force || 'false' }}
+          AUTO_CLOSE_OTHERS: ${{ github.event.inputs.auto_close_others || 'false' }}
+        run: node ./scripts/pr-automerge.mjs
