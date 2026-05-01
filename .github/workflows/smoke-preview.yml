@@ -17,6 +17,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - run: npm run healthcheck:runtime
       - run: npm run build
       - name: Run preview server
         run: |

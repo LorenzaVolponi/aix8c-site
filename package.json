@@ -13,6 +13,8 @@
     "pr:governance": "node ./scripts/pr-governance.mjs",
     "typecheck": "tsc --noEmit",
     "ci:verify": "npm run lint && npm run typecheck && npm run build",
+    "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build",
+    "healthcheck:runtime": "./scripts/runtime-healthcheck.sh"
     "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build"
   },
   "dependencies": {

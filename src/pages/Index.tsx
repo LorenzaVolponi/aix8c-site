@@ -39,16 +39,44 @@ const Index = () => {
     magnets.forEach(m => { m.addEventListener('mousemove', onMag); m.addEventListener('mouseleave', reset); });
 
     window.addEventListener('mousemove', onMove);
+
+    const stageSections = [
+      { id: 'sobre', color: 'rgba(139,92,246,0.16)' },
+      { id: 'sobre-nos', color: 'rgba(6,182,212,0.14)' },
+      { id: 'jornada', color: 'rgba(245,158,11,0.14)' },
+      { id: 'portfolio', color: 'rgba(124,58,237,0.18)' },
+      { id: 'aussy', color: 'rgba(251,191,36,0.15)' },
+      { id: 'contato', color: 'rgba(6,182,212,0.12)' },
+    ];
+
+    const updateStage = () => {
+      const center = window.innerHeight * 0.45;
+      let active = 'rgba(0,0,0,0)';
+      stageSections.forEach((section) => {
+        const el = document.getElementById(section.id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= center && rect.bottom >= center) active = section.color;
+      });
+      document.documentElement.style.setProperty('--stage-color', active);
+    };
+
+    window.addEventListener('scroll', updateStage, { passive: true });
+    updateStage();
+
     return () => {
       cursor.remove();
       window.removeEventListener('mousemove', onMove);
       hoverables().forEach(el => { el.removeEventListener('mouseenter', activate); el.removeEventListener('mouseleave', deactivate); });
       magnets.forEach(m => { m.removeEventListener('mousemove', onMag); m.removeEventListener('mouseleave', reset); });
+      window.removeEventListener('scroll', updateStage);
     };
   }, []);
 
   return (
-    <div className="min-h-screen bg-aix-black text-white">
+    <div className="min-h-screen bg-aix-black text-white relative">
+      <div className="stage-transition-layer" />
+      <div className="relative z-10">
       <Navbar />
       <main>
         <HeroSection />
@@ -61,6 +89,7 @@ const Index = () => {
         <ContatoSection />
       </main>
       <Footer />
+      </div>
     </div>
   );
 };
