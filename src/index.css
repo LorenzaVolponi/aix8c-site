@@ -515,3 +515,13 @@
 .portfolio-overlay{background:rgba(0,0,0,0);transition:background .7s ease}
 .portfolio-work-row:hover .portfolio-image{transform:scale(1.05)}
 .portfolio-work-row:hover .portfolio-overlay{background:rgba(0,0,0,.6)}
+
+.portfolio-case{isolation:isolate}
+.portfolio-media-wrap{overflow:hidden}
+.portfolio-case::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.05),rgba(0,0,0,.25));z-index:1}
+.portfolio-image{transition:transform 1.2s cubic-bezier(.25,.46,.45,.94),filter 1.2s cubic-bezier(.25,.46,.45,.94);filter:saturate(.95) contrast(1.05)}
+.portfolio-case:hover .portfolio-image{transform:scale(1.06);filter:saturate(1.05) contrast(1.1)}
+.portfolio-overlay{background:linear-gradient(to top,rgba(0,0,0,.82) 5%,rgba(0,0,0,.25) 52%,rgba(0,0,0,.5) 100%);opacity:.82;transition:opacity .7s ease}
+.portfolio-case:hover .portfolio-overlay{opacity:.95}
+.portfolio-cta{transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.portfolio-cta:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(245,158,11,.25)}
