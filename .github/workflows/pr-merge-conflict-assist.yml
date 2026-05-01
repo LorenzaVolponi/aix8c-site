@@ -34,6 +34,7 @@ jobs:
         run: |
           set +e
           AUTO_RESOLVE_CODE=${{ github.event.inputs.auto_resolve_code || "false" }} ./scripts/auto-resolve-conflicts.sh main
+          ./scripts/auto-resolve-conflicts.sh main
           STATUS=$?
           set -e
           if [ "$STATUS" -eq 0 ]; then
