@@ -15,6 +15,7 @@
     "ci:verify": "npm run lint && npm run typecheck && npm run build",
     "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build",
     "healthcheck:runtime": "./scripts/runtime-healthcheck.sh"
+    "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
