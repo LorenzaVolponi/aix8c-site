@@ -31,6 +31,8 @@ const HeroSection = () => {
         <NeuralCanvas />
       </motion.div>
       
+      <div className="hero-gradient-orb" />
+      <div className="hero-vignette" />
       {/* Enhanced Gradient Overlays - Responsivos */}
       <div 
         className="absolute inset-0 z-10"
