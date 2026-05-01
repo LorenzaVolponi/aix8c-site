@@ -1,0 +1,46 @@
+name: Auto Fix and Maintenance PR
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 6 * * 1'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Prepare maintenance branch
+        run: |
+          BRANCH="automation/auto-fix-${GITHUB_RUN_ID}"
+          echo "BRANCH=$BRANCH" >> "$GITHUB_ENV"
+          git checkout -b "$BRANCH"
+
+      - name: Run safe auto-fixes
+        run: bash scripts/auto-fix.sh
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ env.BRANCH }}
+          title: 'chore(automation): safe maintenance and security updates'
+          commit-message: 'chore(automation): apply safe maintenance fixes'
+          body: |
+            ## Automated maintenance PR
+            - Applied safe dependency/security updates
+            - Ran lint/test/build validations
+            - Opened automatically by GitHub Actions
+          labels: automated,maintenance,security
+          delete-branch: true
