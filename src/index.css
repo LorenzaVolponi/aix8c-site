@@ -540,3 +540,4 @@
 .skill-progress-at{position:relative;overflow:hidden}
 .skill-progress-at::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-100%);animation:skillShine 2.4s linear infinite}
 @keyframes skillShine{to{transform:translateX(100%)}}
+.skill-mask{clip-path:inset(0 0 0 0);will-change:clip-path,transform}
