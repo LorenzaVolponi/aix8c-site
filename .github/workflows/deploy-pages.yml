@@ -35,6 +35,8 @@ jobs:
           npm run ci:verify
 
       - name: Build production
+        env:
+          VITE_BASE_PATH: /aix8c-site/
         run: |
           npm run build
           cp dist/index.html dist/404.html
