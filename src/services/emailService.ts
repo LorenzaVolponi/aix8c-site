@@ -15,9 +15,12 @@ export const sendEmailUltraReliable = async (data: EmailData) => {
   
   try {
     // Configuração do EmailJS para Lorenza Volponi
-    const serviceId = 'service_lorenza';
-    const templateId = 'template_contato';
-    const publicKey = 'YOUR_PUBLIC_KEY'; // Você precisa configurar no EmailJS
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_lorenza';
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_contato';
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
+    if (!publicKey) {
+      throw new Error('VITE_EMAILJS_PUBLIC_KEY não configurada');
+    }
     
     const templateParams = {
       to_email: 'contato.lorenzavolponi@gmail.com',
@@ -59,6 +62,6 @@ export const sendEmailUltraReliable = async (data: EmailData) => {
     localStorage.setItem('pending_contacts', JSON.stringify(existingContacts));
     
     console.log('💾 Dados salvos como backup para contato.lorenzavolponi@gmail.com');
-    return { success: true, backup: true };
+    return { success: false, backup: true };
   }
 };
