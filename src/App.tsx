@@ -33,13 +33,6 @@ class AppErrorBoundary extends React.Component<React.PropsWithChildren, { hasErr
 
   componentDidCatch(error: Error) {
     console.error("App runtime error:", error);
-    saveRuntimeEvent({
-      type: "boundary",
-      message: error.message,
-      stack: error.stack,
-      timestamp: new Date().toISOString(),
-      path: window.location.pathname,
-    });
   }
 
   render() {
@@ -77,6 +70,15 @@ function App() {
           <Sonner position="top-right" />
         </BrowserRouter>
       </AppErrorBoundary>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/optimized" element={<OptimizedIndex />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Toaster />
+        <Sonner position="top-right" />
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,12 @@
+automation:
+  - changed-files:
+      - any-glob-to-any-file: '.github/workflows/**'
+security:
+  - changed-files:
+      - any-glob-to-any-file: ['SECURITY.md', 'scripts/security-check.sh', '.github/workflows/security.yml']
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file: ['package.json', 'package-lock.json', '.github/dependabot.yml']
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: ['README.md', '.github/pull_request_template.md']
