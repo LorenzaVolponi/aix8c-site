@@ -22,6 +22,7 @@ const NeuralCanvas = () => {
     let particles: Particle[] = [];
     let neuralConnections: NeuralConnection[] = [];
     let animationId: number;
+    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     
     const init = () => {
       const { particles: newParticles, neuralConnections: newConnections } = 
@@ -30,10 +31,13 @@ const NeuralCanvas = () => {
       neuralConnections = newConnections;
     };
     
+    const onMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    window.addEventListener('mousemove', onMove, { passive: true });
+
     const animate = () => {
       if (!ctx) return;
       
-      animateCanvas(ctx, particles, neuralConnections);
+      animateCanvas(ctx, particles, neuralConnections, mouse);
       animationId = requestAnimationFrame(animate);
     };
     
@@ -42,9 +46,8 @@ const NeuralCanvas = () => {
     
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
+      window.removeEventListener('mousemove', onMove);
+      if (animationId) cancelAnimationFrame(animationId);
     };
   }, []);
 
