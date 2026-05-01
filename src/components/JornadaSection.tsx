@@ -287,10 +287,11 @@ const JornadaSection = () => {
                   <motion.div
                     key={index}
                     className="glass-card p-8 text-center group hover:bg-white/10 transition-all duration-300"
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    initial={{ opacity: 0, y: 50, rotateY: 180 }}
+                    whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                    transition={{ duration: 0.7, delay: index * 0.1 }}
                     whileHover={{ y: -10, scale: 1.02 }}
+                    style={{ transformStyle: 'preserve-3d' }}
                   >
                     <motion.div
                       className="w-20 h-20 bg-gradient-to-r from-aix-gold to-aix-purple rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300"
