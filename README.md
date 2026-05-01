@@ -116,3 +116,15 @@ No workflow **PR Auto Merge (Safe + Force)** você pode rodar manualmente (`work
 - `auto_close_others=true` → fecha automaticamente as outras PRs abertas após um merge.
 
 > Use `force-merge` apenas em cenário emergencial, pois ignora proteções de qualidade.
+
+
+### One-click Release (merge + deploy)
+
+Use o workflow **One Click Release** para:
+1. processar fila de PRs com as regras do auto-merge (ou force-merge se habilitado);
+2. executar `ci:verify`;
+3. publicar no GitHub Pages automaticamente.
+
+Inputs do workflow:
+- `allow_force`
+- `auto_close_others`

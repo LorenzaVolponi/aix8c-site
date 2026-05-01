@@ -1,0 +1,64 @@
+name: One Click Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      allow_force:
+        description: "Permitir merge com label force-merge"
+        required: true
+        default: "false"
+      auto_close_others:
+        description: "Fechar outras PRs após merge"
+        required: true
+        default: "false"
+
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+  id-token: write
+  checks: read
+
+jobs:
+  merge-queue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Merge queue engine
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          REQUIRED_LABEL: automerge
+          FORCE_LABEL: force-merge
+          REQUIRED_APPROVALS: '1'
+          ALLOW_FORCE: ${{ github.event.inputs.allow_force }}
+          AUTO_CLOSE_OTHERS: ${{ github.event.inputs.auto_close_others }}
+        run: node ./scripts/pr-automerge.mjs
+
+  deploy:
+    needs: merge-queue
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run ci:verify
+      - name: Build pages artifact
+        env:
+          VITE_BASE_PATH: /aix8c-site/
+        run: |
+          npm run build
+          cp dist/index.html dist/404.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy pages
+        id: deployment
+        uses: actions/deploy-pages@v4
