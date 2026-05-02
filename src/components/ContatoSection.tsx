@@ -30,6 +30,10 @@ const ContatoSection = () => {
     const result = await sendEmailUltraReliable(payload);
 
     if (result.success) {
+      const message = result.backup
+        ? 'Recebemos sua mensagem e salvamos com segurança. Se necessário, envie também para contato.lorenzavolponi@gmail.com.'
+        : 'Mensagem enviada com sucesso! Em breve entraremos em contato.';
+      setStatus({ ok: true, message });
       setStatus({ ok: true, message: 'Mensagem enviada com sucesso! Em breve entraremos em contato.' });
       setFormData({ name: '', email: '', phone: '', company: '', message: '' });
     } else {
