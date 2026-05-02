@@ -18,3 +18,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run healthcheck:runtime
+      - run: npm run build
+      - name: Run preview server
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/preview.log 2>&1 &
+          echo $! > /tmp/preview.pid
+          sleep 3
+      - name: Smoke checks
+        run: |
+          curl -fsS http://127.0.0.1:4173/ | grep -E "<div id=\"root\">"
+          curl -fsS http://127.0.0.1:4173/404.html | grep -E "<div id=\"root\">"
+      - name: Stop preview server
+        if: always()
+        run: kill $(cat /tmp/preview.pid) || true
