@@ -17,6 +17,7 @@ const HeroSection = () => {
 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
+  const exitMaskOpacity = useTransform(smoothProgress, [0.45, 0.9], [0, 1]);
 
   return (
     <section 
@@ -31,6 +32,8 @@ const HeroSection = () => {
         <NeuralCanvas />
       </motion.div>
       
+      <div className="hero-gradient-orb" />
+      <div className="hero-vignette" />
       {/* Enhanced Gradient Overlays - Responsivos */}
       <div 
         className="absolute inset-0 z-10"
@@ -57,14 +60,22 @@ const HeroSection = () => {
       />
       
       {/* Profile Image - Responsivo */}
-      <div className="block sm:block md:block lg:block">
+      <div className="relative z-20 block sm:block md:block lg:block">
         <ProfileImage />
       </div>
       
       {/* Main Content - Totalmente Responsivo */}
-      <div className="w-full">
+      <div className="relative z-20 w-full">
         <HeroContent />
       </div>
+
+      <div className="relative z-30 w-full pointer-events-none">
+        <div className="max-w-4xl mx-auto px-6 pt-28 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-[0_2px_20px_rgba(0,0,0,.6)]">AIX8C</h1>
+          <p className="mt-3 text-white/85">Tecnologia, estratégia e execução com IA aplicada.</p>
+        </div>
+      </div>
+
 
       {/* Scroll Indicator - Responsivo */}
       <div className="hidden sm:block">
@@ -93,6 +104,12 @@ const HeroSection = () => {
           }}
         />
       ))}
+
+
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
+        style={{ opacity: exitMaskOpacity, background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(2,6,23,.88), rgba(2,6,23,1))' }}
+      />
 
       {/* Mobile-specific adjustments */}
       <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">

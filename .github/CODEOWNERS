@@ -1,0 +1,9 @@
+# Core owners
+* @LorenzaVolponi
+
+# CI/CD and security workflows
+.github/workflows/* @LorenzaVolponi
+scripts/* @LorenzaVolponi
+
+# Frontend app
+src/* @LorenzaVolponi
