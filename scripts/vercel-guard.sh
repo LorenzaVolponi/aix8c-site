@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export VITE_BASE_PATH="${VITE_BASE_PATH:-/}"
+export VITE_BASE_PATH="/"
 echo "[vercel-guard] VITE_BASE_PATH=${VITE_BASE_PATH}"
 
 echo "[vercel-guard] Running production build..."
