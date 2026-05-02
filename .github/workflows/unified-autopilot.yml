@@ -1,7 +1,7 @@
 name: Unified Autopilot (Resolve + Fix + Merge + Deploy)
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
   push:
@@ -16,13 +16,15 @@ permissions:
 
 jobs:
   pr-autopilot:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout PR branch
+      - name: Checkout PR branch (head)
         uses: actions/checkout@v4
         with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node
@@ -36,18 +38,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Try auto-resolve conflicts with main
+      - name: Try auto-resolve conflicts with base branch
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
           set +e
-          AUTO_RESOLVE_CODE=true ./scripts/auto-resolve-conflicts.sh main
+          git fetch origin "${BASE_REF}" --depth=1
+          AUTO_RESOLVE_CODE=true ./scripts/auto-resolve-conflicts.sh "${BASE_REF}"
           RESOLVE_STATUS=$?
           set -e
           if [ "$RESOLVE_STATUS" -ne 0 ]; then
-            echo "Conflitos não puderam ser resolvidos automaticamente."
-            exit 1
+            echo "auto_resolve_failed=true" >> "$GITHUB_ENV"
           fi
 
       - name: Install and auto-fix
+        if: env.auto_resolve_failed != 'true'
         run: |
           npm ci
           npm run lint -- --fix
@@ -55,6 +60,7 @@ jobs:
           npm run build
 
       - name: Commit auto-fixes
+        if: env.auto_resolve_failed != 'true'
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
@@ -63,6 +69,7 @@ jobs:
           fi
 
       - name: Merge PR automatically
+        if: env.auto_resolve_failed != 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -76,34 +83,44 @@ jobs:
               merge_method: 'squash'
             });
 
+      - name: Comment when auto-resolve fails
+        if: env.auto_resolve_failed == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) return;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: '⚠️ A automação tentou resolver conflitos automaticamente e não conseguiu concluir. Reexecute o workflow após atualizar a base ou ajuste manual mínimo nos arquivos indicados em conflito.'
+            });
+
   deploy-main:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-
       - name: Install and verify
         run: |
           npm ci
           npm run ci:verify
-
       - name: Build Pages artifact
         env:
           VITE_BASE_PATH: /aix8c-site/
         run: |
           npm run build
           cp dist/index.html dist/404.html
-
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-
       - name: Deploy pages
         id: deployment
         uses: actions/deploy-pages@v4
