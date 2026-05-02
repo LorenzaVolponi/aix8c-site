@@ -36,10 +36,14 @@ FAILED=0
 run_step "Instalação de dependências" "npm ci" || FAILED=1
 run_step "Lint com correção automática" "npm run lint -- --fix" || true
 run_step "Correções de segurança (lockfile)" "npm audit fix --package-lock-only" || true
+run_step "Typecheck de validação" "npm run typecheck" || true
 run_step "Build de validação" "npm run build" || true
 
 # Gate final: decide status da PR
 if ! run_step "Gate final de lint" "npm run lint"; then
+  FAILED=1
+fi
+if ! run_step "Gate final de typecheck" "npm run typecheck"; then
   FAILED=1
 fi
 if ! run_step "Gate final de build" "npm run build"; then
