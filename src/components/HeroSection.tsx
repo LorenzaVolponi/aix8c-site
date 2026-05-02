@@ -69,6 +69,14 @@ const HeroSection = () => {
         <HeroContent />
       </div>
 
+      <div className="relative z-30 w-full pointer-events-none">
+        <div className="max-w-4xl mx-auto px-6 pt-28 text-center">
+          <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-[0_2px_20px_rgba(0,0,0,.6)]">AIX8C</h1>
+          <p className="mt-3 text-white/85">Tecnologia, estratégia e execução com IA aplicada.</p>
+        </div>
+      </div>
+
+
       {/* Scroll Indicator - Responsivo */}
       <div className="hidden sm:block">
         <ScrollIndicator />
