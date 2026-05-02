@@ -23,12 +23,20 @@ echo "$CONFLICTS"
 AUTO_RESOLVED=1
 for file in $CONFLICTS; do
   case "$file" in
-    package-lock.json|bun.lockb|pnpm-lock.yaml|yarn.lock|*.md|*.json)
-      # Mantém versão da branch alvo para reduzir ruptura de automação
+    .github/workflows/*.yml|.github/workflows/*.yaml)
+      # Mantém automação da PR para evitar reintroduzir workflows antigos em conflito
+      git checkout --ours "$file" || AUTO_RESOLVED=0
+      git add "$file" || AUTO_RESOLVED=0
+      ;;
+    package-lock.json|bun.lockb|pnpm-lock.yaml|yarn.lock)
       git checkout --theirs "$file" || AUTO_RESOLVED=0
       git add "$file" || AUTO_RESOLVED=0
       ;;
-    *.ts|*.tsx|*.js|*.jsx|*.css)
+    *.md|*.json)
+      git checkout --ours "$file" || AUTO_RESOLVED=0
+      git add "$file" || AUTO_RESOLVED=0
+      ;;
+    *.ts|*.tsx|*.js|*.jsx|*.css|*.html|*.sh)
       if [ "$AUTO_RESOLVE_CODE" = "true" ]; then
         git checkout --ours "$file" || AUTO_RESOLVED=0
         git add "$file" || AUTO_RESOLVED=0
@@ -37,7 +45,12 @@ for file in $CONFLICTS; do
       fi
       ;;
     *)
-      AUTO_RESOLVED=0
+      if [ "$AUTO_RESOLVE_CODE" = "true" ]; then
+        git checkout --ours "$file" || AUTO_RESOLVED=0
+        git add "$file" || AUTO_RESOLVED=0
+      else
+        AUTO_RESOLVED=0
+      fi
       ;;
   esac
 done
