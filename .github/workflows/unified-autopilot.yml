@@ -16,27 +16,41 @@ permissions:
 
 jobs:
   pr-autopilot:
-    if: github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout PR commit (same-repo only)
+      - name: Checkout base repository (safe context)
+        uses: actions/checkout@v4
+
+      - name: Guard pull_request_target execution
+        id: pr_guard
+        env:
+          PR_HEAD_REPO_FULL_NAME: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_AUTHOR_ASSOCIATION: ${{ github.event.pull_request.author_association }}
+        run: ./scripts/guard-pull-request-target.sh
+
+      - name: Checkout PR commit (trusted only)
+        if: steps.pr_guard.outputs.allow == 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
       - name: Setup Node
+        if: steps.pr_guard.outputs.allow == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Configure git
+        if: steps.pr_guard.outputs.allow == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Try auto-resolve conflicts with base branch
+        if: steps.pr_guard.outputs.allow == 'true'
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
@@ -50,7 +64,7 @@ jobs:
           fi
 
       - name: Install and auto-fix
-        if: env.auto_resolve_failed != 'true'
+        if: steps.pr_guard.outputs.allow == 'true' && env.auto_resolve_failed != 'true'
         run: |
           npm ci
           npm run lint -- --fix
@@ -58,7 +72,7 @@ jobs:
           npm run build
 
       - name: Commit auto-fixes
-        if: env.auto_resolve_failed != 'true'
+        if: steps.pr_guard.outputs.allow == 'true' && env.auto_resolve_failed != 'true'
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
@@ -67,7 +81,7 @@ jobs:
           fi
 
       - name: Merge PR automatically
-        if: env.auto_resolve_failed != 'true'
+        if: steps.pr_guard.outputs.allow == 'true' && env.auto_resolve_failed != 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -81,8 +95,26 @@ jobs:
               merge_method: 'squash'
             });
 
+
+      - name: Comment when guarded execution is blocked
+        if: steps.pr_guard.outputs.allow != 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) return;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: `🛡️ Unified Autopilot bloqueado por política de segurança: ${process.env.GUARD_REASON}.`
+            });
+        env:
+          GUARD_REASON: ${{ steps.pr_guard.outputs.reason }}
+
       - name: Comment when auto-resolve fails
-        if: env.auto_resolve_failed == 'true'
+        if: steps.pr_guard.outputs.allow == 'true' && env.auto_resolve_failed == 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
