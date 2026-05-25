@@ -7,6 +7,8 @@ import OptimizedIndex from "./pages/OptimizedIndex";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import RuntimeDebug from "./pages/RuntimeDebug";
+import ExperienceProvider from "./components/ExperienceProvider";
+import AmbienceAudioToggle from "./components/AmbienceAudioToggle";
 import { saveRuntimeEvent } from "./utils/runtimeTelemetry";
 
 const queryClient = new QueryClient({
@@ -68,26 +70,20 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppErrorBoundary>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/optimized" element={<OptimizedIndex />} />
-            <Route path="/debug-runtime" element={<RuntimeDebug />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-          <Sonner position="top-right" />
-        </BrowserRouter>
+        <ExperienceProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/optimized" element={<OptimizedIndex />} />
+              <Route path="/debug-runtime" element={<RuntimeDebug />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <AmbienceAudioToggle />
+            <Toaster />
+            <Sonner position="top-right" />
+          </BrowserRouter>
+        </ExperienceProvider>
       </AppErrorBoundary>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/optimized" element={<OptimizedIndex />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Toaster />
-        <Sonner position="top-right" />
-      </BrowserRouter>
     </QueryClientProvider>
   );
 }
