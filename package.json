@@ -17,8 +17,6 @@
     "healthcheck:runtime": "./scripts/runtime-healthcheck.sh",
     "healthcheck:runtime:full": "npm run healthcheck:runtime && npm run ci:verify",
     "vercel:build": "./scripts/vercel-guard.sh"
-    "healthcheck:runtime": "./scripts/runtime-healthcheck.sh"
-    "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
