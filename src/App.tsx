@@ -79,15 +79,7 @@ function App() {
           <Sonner position="top-right" />
         </BrowserRouter>
       </AppErrorBoundary>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/optimized" element={<OptimizedIndex />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Toaster />
-        <Sonner position="top-right" />
-      </BrowserRouter>
+
     </QueryClientProvider>
   );
 }
