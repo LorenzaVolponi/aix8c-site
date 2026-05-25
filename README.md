@@ -3,8 +3,15 @@
 ## Setup local
 
 ```bash
+./scripts/bootstrap-dev.sh
 npm install
 npm run dev
+```
+
+Se quiser subir direto já acessível na rede local:
+
+```bash
+npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
 ## Build
@@ -12,6 +19,18 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## Troubleshooting rápido (quando o site não abre)
+
+1. Teste acesso ao registry:
+   ```bash
+   curl -I https://registry.npmjs.org/react
+   ```
+2. Se retornar `403`/`CONNECT tunnel failed`, o bloqueio é de proxy/firewall (infra), não do código.
+3. Rode:
+   ```bash
+   ./scripts/bootstrap-dev.sh
+   ```
 
 ## Scripts de automação
 
