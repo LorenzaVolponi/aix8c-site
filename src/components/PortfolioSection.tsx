@@ -2,58 +2,77 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 type PortfolioItem = {
+  id: string;
   title: string;
-  description: string;
-  whisper: string;
-  tags: string[];
+  line: string;
+  echo: string;
   image: string;
   gradient: string;
-  size: 'tall' | 'wide' | 'square';
+  size: 'tall' | 'wide' | 'square' | 'panorama';
 };
 
 const portfolioItems: PortfolioItem[] = [
   {
+    id: 'oceano-interno',
     title: 'Oceano Interno',
-    description: 'Maré silenciosa de memórias, pulsa em azul profundo.',
-    whisper: 'respira sob a pele do tempo',
-    tags: ['Abismo', 'Maré', 'Memória'],
+    line: 'Maré silenciosa de memórias em azul profundo.',
+    echo: 'respira sob a pele do tempo',
     image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
     gradient: 'radial-gradient(circle at 20% 20%, rgba(6,182,212,.55), rgba(2,6,23,.86) 58%)',
     size: 'tall',
   },
   {
+    id: 'diamante-em-ruptura',
     title: 'Diamante em Ruptura',
-    description: 'Luz em fratura: beleza nasce no corte.',
-    whisper: 'faíscas no silêncio mineral',
-    tags: ['Cristal', 'Fenda', 'Brilho'],
+    line: 'Luz em fratura, beleza nascida no corte.',
+    echo: 'faíscas no silêncio mineral',
     image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
     gradient: 'radial-gradient(circle at 70% 35%, rgba(139,92,246,.58), rgba(2,6,23,.88) 56%)',
     size: 'wide',
   },
   {
+    id: 'horizonte-de-vidro',
     title: 'Horizonte de Vidro',
-    description: 'A cidade se dissolve num reflexo de aurora.',
-    whisper: 'céu quebrado em geometrias lentas',
-    tags: ['Reflexo', 'Névoa', 'Limiar'],
+    line: 'A cidade dissolve-se no reflexo da aurora.',
+    echo: 'céu quebrado em geometrias lentas',
     image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
     gradient: 'radial-gradient(circle at 50% 0%, rgba(245,158,11,.42), rgba(2,6,23,.9) 62%)',
     size: 'square',
   },
   {
+    id: 'atlas-de-cinzas',
     title: 'Atlas de Cinzas',
-    description: 'Territórios antigos desenhados com fogo e vento.',
-    whisper: 'onde o fim ainda ilumina',
-    tags: ['Ruína', 'Brasa', 'Cartografia'],
+    line: 'Territórios antigos desenhados por fogo e vento.',
+    echo: 'onde o fim ainda ilumina',
     image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
     gradient: 'radial-gradient(circle at 20% 70%, rgba(34,197,94,.35), rgba(2,6,23,.88) 60%)',
     size: 'tall',
+  },
+  {
+    id: 'jardim-do-vazio',
+    title: 'Jardim do Vazio',
+    line: 'Pétalas de sombra pairam no ar imóvel.',
+    echo: 'o silêncio também floresce',
+    image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
+    gradient: 'radial-gradient(circle at 80% 20%, rgba(236,72,153,.45), rgba(2,6,23,.9) 62%)',
+    size: 'square',
+  },
+  {
+    id: 'constelacao-submersa',
+    title: 'Constelação Submersa',
+    line: 'Estrelas afogadas desenham novas rotas.',
+    echo: 'toda profundidade guarda um céu',
+    image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
+    gradient: 'radial-gradient(circle at 40% 10%, rgba(59,130,246,.45), rgba(2,6,23,.92) 64%)',
+    size: 'panorama',
   },
 ];
 
 const cardSizeClass: Record<PortfolioItem['size'], string> = {
   tall: 'md:row-span-2 min-h-[540px]',
-  wide: 'md:col-span-2 min-h-[500px]',
+  wide: 'md:col-span-2 min-h-[500px] md:min-h-[460px]',
   square: 'min-h-[460px]',
+  panorama: 'md:col-span-2 min-h-[420px]',
 };
 
 const PortfolioSection = () => {
@@ -73,14 +92,14 @@ const PortfolioSection = () => {
         <h2 className="text-4xl md:text-6xl font-bold mb-4 text-center font-serif">
           <span className="gold-text-gradient">Fragmentos de Eternidade</span>
         </h2>
-        <p className="text-center text-white/75 mb-14 max-w-2xl mx-auto">
+        <p className="text-center text-white/75 mb-14 max-w-2xl mx-auto lowercase">
           galeria viva em camadas de luz, matéria e intervalo.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 auto-rows-[220px] gap-6 md:gap-8">
           {portfolioItems.map((item, index) => (
             <motion.article
-              key={item.title}
+              key={item.id}
               data-magnetic
               className={`portfolio-case group relative overflow-hidden rounded-[30px] border border-white/15 ${cardSizeClass[item.size]}`}
               initial={{ opacity: 0, y: 50, clipPath: 'inset(20% 0 0 0)' }}
@@ -95,7 +114,7 @@ const PortfolioSection = () => {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
-                whileInView={{ y: index % 2 === 0 ? -14 : 14 }}
+                whileInView={{ y: index % 2 === 0 ? -16 : 16, scale: 1.06 }}
                 transition={{ duration: 1.6, ease: 'easeOut' }}
                 viewport={{ once: true, amount: 0.15 }}
               />
@@ -111,19 +130,8 @@ const PortfolioSection = () => {
                 >
                   <p className="text-aix-gold font-mono text-xs mb-3 tracking-[0.2em] uppercase">{String(index + 1).padStart(2, '0')}</p>
                   <h3 className="text-3xl md:text-5xl font-bold text-white mb-3 font-serif leading-tight">{item.title}</h3>
-                  <p className="text-white/85 text-base md:text-lg mb-3">{item.description}</p>
-                  <p className="text-white/65 italic text-sm md:text-base">{item.whisper}</p>
-
-                  <div className="flex flex-wrap gap-2 mt-5">
-                    {item.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-3 py-2 rounded-full bg-black/45 border border-white/20 backdrop-blur-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="text-white/85 text-base md:text-lg mb-3">{item.line}</p>
+                  <p className="text-white/65 italic text-sm md:text-base">{item.echo}</p>
                 </motion.div>
               </div>
 
