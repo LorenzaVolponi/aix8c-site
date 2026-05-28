@@ -50,6 +50,22 @@ const offerings = [
   ['Experiências Web Cinematográficas', 'Interfaces imersivas com estética editorial, movimento, performance e precisão técnica.'],
 ];
 
+const fieldOrder = [
+  ['01', 'Entrada no Campo', 'A primeira impressão não explica: cria gravidade e estabelece presença.'],
+  ['02', 'Manifesto', 'A tese autoral separa ruído de arquitetura e transforma identidade em linguagem.'],
+  ['03', 'Prova Técnica', 'GitHub, protótipos e sistemas mostram execução sem virar currículo comum.'],
+  ['04', 'Territórios', 'As frentes de atuação organizam estratégia, IA, narrativa, capital e mundos visuais.'],
+  ['05', 'Oráculo', 'Perguntas provocativas revelam pensamento estratégico, não respostas genéricas.'],
+  ['06', 'Acesso Privado', 'A conversão acontece como convite seletivo, não como venda agressiva.'],
+];
+
+const proofStack = [
+  ['Código Público', 'Repositórios como arquivo vivo de experimentos, protótipos e sistemas inteligentes.'],
+  ['IA Aplicada', 'Agentes, automações, raciocínio diagnóstico, RSS em tempo real e orquestração de ideias.'],
+  ['Estética Técnica', 'Interfaces cinematográficas com intenção editorial, performance e acessibilidade.'],
+  ['Estratégia Simbólica', 'Narrativa, capital, presença digital e arquitetura de decisão trabalhando juntas.'],
+];
+
 const Index = () => {
   const reduce = useReducedMotion();
   const [soundOn, setSoundOn] = useState(false);
@@ -84,9 +100,12 @@ const Index = () => {
             <h1 className="font-serif text-6xl leading-none md:text-8xl">Inteligência como Objeto Raro.</h1>
             <p className="mx-auto mt-7 max-w-3xl text-lg text-white/75">VOLPONI é um campo cinematográfico de inteligência onde IA, código, estratégia simbólica e identidade digital convergem.</p>
             <p className="mt-5 text-sm tracking-[0.12em] text-white/50">Não é um perfil. Não é um portfólio. É um campo de inteligência.</p>
+            <div className="mx-auto mt-8 grid max-w-2xl overflow-hidden rounded-3xl border border-[#B08D57]/25 md:grid-cols-3">{[['IA', 'inteligência aplicada'], ['Código', 'prova de execução'], ['Símbolo', 'presença autoral']].map(([title, label]) => <div key={title} className="border-[#B08D57]/20 bg-black/40 p-4 md:border-r"><strong className="block font-serif text-3xl text-[#B08D57]">{title}</strong><span className="text-xs uppercase tracking-[0.16em] text-white/50">{label}</span></div>)}</div>
             <div className="mt-9 flex flex-wrap justify-center gap-4"><a className="rounded-full border border-[#B08D57]/60 bg-[#B08D57]/10 px-7 py-3" href="#manifesto">Entrar no Campo</a><a className="rounded-full border border-white/20 px-7 py-3" href="#laboratorio">Explorar o Laboratório</a></div>
           </motion.div>
         </section>
+
+        <section id="ordem" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Ordem da Travessia</p><h2 className="font-serif text-6xl">O site agora tem rito, direção e consequência.</h2></div><p className="text-lg text-white/70">Uma sequência premium para conduzir o visitante da presença à prova, da prova ao método, do método ao acesso.</p></div><div className="grid overflow-hidden rounded-[2rem] border border-[#B08D57]/25 md:grid-cols-6">{fieldOrder.map(([number, title, description]) => <article key={number} className="min-h-64 border-[#B08D57]/20 bg-[#0B0B0D]/80 p-5 md:border-r"><small className="text-[#B08D57]">{number}</small><h3 className="mt-16 font-serif text-3xl">{title}</h3><p className="mt-4 text-sm text-white/65">{description}</p></article>)}</div></section>
 
         <section id="aix8c" className="mx-auto grid max-w-6xl gap-6 px-6 py-24 md:grid-cols-2">
           <article className="rounded-[2rem] border border-white/15 bg-white/[.04] p-7 backdrop-blur-xl"><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Prólogo AIX8C</p><h2 className="mt-4 font-serif text-5xl">Welcome aboard, marujos.</h2><p className="mt-5 text-white/70">(O nome se diz ei ai eksi eiti ci)</p><p className="mt-4 text-white/70">AIX8C combina inteligência artificial e experiência para criar soluções criativas e contínuas.</p></article>
@@ -98,6 +117,8 @@ const Index = () => {
         <section id="gravidade" className="mx-auto grid max-w-7xl gap-6 px-6 py-24 md:grid-cols-[1.1fr_.9fr]"><article className="grid min-h-[30rem] place-items-end rounded-[2rem] border border-[#B08D57]/25 bg-[radial-gradient(circle_at_30%_20%,rgba(122,15,27,.34),transparent_20rem),linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Tese de Gravidade</p><h2 className="font-serif text-6xl md:text-8xl">A raridade não grita.</h2><p className="mt-4 text-white/70">Ela organiza o campo ao redor.</p></div></article><div className="grid gap-4">{gravity.map(([name, text]) => <div key={name} className="grid grid-cols-[7rem_1fr] items-center gap-4 border-b border-white/10 py-5"><strong className="font-serif text-3xl text-[#B08D57]">{name}</strong><span className="text-white/75">{text}</span></div>)}</div></section>
 
         <section id="laboratorio" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 max-w-4xl"><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Laboratório VOLPONI</p><h2 className="font-serif text-6xl">Evidência técnica de uma mente simbólica.</h2><p className="mt-5 text-white/70">O GitHub é arquivo vivo de protótipos: IA, automação, interfaces, sistemas simbólicos e inteligência digital.</p></div><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{repos.map(([name, category, description, language]) => <article key={name} className="rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><p className="text-xs uppercase tracking-[0.18em] text-[#B08D57]">{category}</p><h3 className="mt-4 font-serif text-3xl">{name}</h3><p className="mt-3 text-white/70">{description}</p><p className="mt-4 text-sm text-white/60">{language}</p><a className="mt-5 inline-flex rounded-full border border-[#B08D57]/40 px-5 py-2" href={`${githubUrl}/${name}`} target="_blank" rel="noreferrer">Ver no GitHub</a></article>)}</div></section>
+
+        <section id="prova" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Sistema de Prova</p><h2 className="font-serif text-6xl">Autoridade sem gritar.</h2></div><p className="text-lg text-white/70">O campo sustenta reputação por evidência: código, protótipo, estética, estratégia e execução.</p></div><div className="grid gap-5 md:grid-cols-4">{proofStack.map(([title, description]) => <article key={title} className="flex min-h-80 flex-col justify-end rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</div></section>
 
         <section id="territorios" className="mx-auto max-w-7xl px-6 py-24"><h2 className="font-serif text-6xl">Territórios de Inteligência</h2><div className="mt-10 grid gap-5 md:grid-cols-3">{territories.map(([title, description]) => <article key={title} className="rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</div></section>
 
