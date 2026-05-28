@@ -32,7 +32,10 @@ import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
 const OptimizedIndexContent = () => {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return sessionStorage.getItem("aix8c_intro_seen") !== "true";
+  });
   const [isReady, setIsReady] = useState(false);
   
   // Always call hooks - never conditionally
@@ -86,10 +89,11 @@ const OptimizedIndexContent = () => {
 
   useEffect(() => {
     if (isReady && !isInitialLoading) {
-      // Reduzido para 8 segundos - muito mais rápido
+      // Intro curta e só 1x por sessão para reduzir fricção
       const introTimer = setTimeout(() => {
         setShowIntro(false);
-      }, 8000);
+        sessionStorage.setItem("aix8c_intro_seen", "true");
+      }, 2500);
 
       return () => clearTimeout(introTimer);
     }

@@ -1,216 +1,147 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
-import ScrollReveal from './ScrollReveal';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const PortfolioSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
+  const [mode, setMode] = useState<'business' | 'technical'>('business');
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+import React from 'react';
+import { motion } from 'framer-motion';
 
+const PortfolioSection = () => {
   return (
-    <motion.section 
-      ref={sectionRef}
-      id="portfolio" 
-      className="py-24 relative bg-aix-black overflow-hidden"
-    >
-      <motion.div 
-        className="absolute inset-0 bg-constellation opacity-20"
-        style={{ y: backgroundY }}
+    <section id="portfolio" className="py-24 relative bg-aix-black overflow-hidden">
+      <motion.div
+        className="section-cinematic-mask absolute top-0 left-0 right-0 h-28 z-20 pointer-events-none"
+        initial={{ clipPath: "inset(0 100% 0 0)" }}
+        whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true, amount: 0.1 }}
       />
-      
+      <div className="absolute inset-0 bg-constellation opacity-20" />
       <div className="container mx-auto px-4 relative z-10">
-        <ScrollReveal direction="scale" delay={0.2}>
-          <h2 className="text-4xl md:text-6xl font-bold mb-16 text-center font-serif">
-            <span className="gold-text-gradient">Casos de Transformação Digital</span>
-          </h2>
-        </ScrollReveal>
-        
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.1
-              }
-            }
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {portfolioItems.map((item, index) => (
-            <ScrollReveal key={index} direction="up" delay={0.1 * index}>
-              <PortfolioCard {...item} index={index} />
-            </ScrollReveal>
-          ))}
-        </motion.div>
+        <h2 className="text-4xl md:text-6xl font-bold mb-4 text-center font-serif">
+          <span className="gold-text-gradient">Casos de Transformação Digital</span>
+        </h2>
+        <p className="text-center text-white/75 mb-8 max-w-2xl mx-auto">
+          AI Command Deck: cada projeto como missão com leitura executiva e técnica.
+        </p>
+
+        <div className="flex justify-center gap-3 mb-12">
+          <button onClick={() => setMode('business')} className={`px-5 py-2 rounded-full border ${mode === 'business' ? 'bg-aix-gold text-black border-aix-gold' : 'border-white/30 text-white/85'}`}>Business Impact</button>
+          <button onClick={() => setMode('technical')} className={`px-5 py-2 rounded-full border ${mode === 'technical' ? 'bg-aix-cyan text-black border-aix-cyan' : 'border-white/30 text-white/85'}`}>Technical Architecture</button>
+        </div>
+
+        <p className="text-center text-white/75 mb-14 max-w-2xl mx-auto">
+          Portfólio cinematográfico com foco em impacto mensurável, direção de arte tech e narrativa de produto.
+        </p>
+
+        <div className="portfolio-rail overflow-x-auto pb-6 -mx-2 px-2 md:mx-0 md:px-0">
+          <div className="flex gap-6 md:gap-8 min-w-max md:min-w-0 md:flex-col">
+            {portfolioItems.map((item, index) => (
+              <motion.article
+                key={item.title}
+                className="portfolio-case group relative overflow-hidden rounded-[28px] border border-white/15 w-[88vw] md:w-full min-h-[460px]"
+                className="portfolio-case group relative overflow-hidden rounded-[28px] border border-white/15 w-[88vw] md:w-full md:max-w-none min-h-[420px]"
+                initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
+                whileInView={{ opacity: 1, clipPath: 'inset(0% 0 0 0)' }}
+                transition={{ duration: 1, delay: index * 0.14, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <div className="portfolio-bg absolute inset-0" style={{ backgroundImage: `${item.gradient}, url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+                <div className="portfolio-overlay absolute inset-0" />
+
+                <div className={`absolute inset-0 z-10 p-8 md:p-14 flex ${index % 2 ? 'items-end justify-end text-right' : 'items-end justify-start text-left'}`}>
+                  <div className="max-w-2xl">
+                    <p className="text-aix-gold font-mono text-xs md:text-sm mb-3 tracking-[0.22em] uppercase">{String(index + 1).padStart(2, '0')} • {item.result}</p>
+                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-4 font-serif leading-tight">{item.title}</h3>
+                    <p className="text-white/85 mb-4 text-base md:text-lg">{item.description}</p>
+
+                    {mode === 'business' ? (
+                      <ul className={`space-y-1 text-sm text-white/85 mb-5 ${index % 2 ? 'items-end' : ''}`}>
+                        {item.business.map((point) => <li key={point}>• {point}</li>)}
+                      </ul>
+                    ) : (
+                      <ul className={`space-y-1 text-sm text-aix-cyan/95 mb-5 ${index % 2 ? 'items-end' : ''}`}>
+                        {item.technical.map((point) => <li key={point}>▸ {point}</li>)}
+                      </ul>
+                    )}
+
+                    <div className={`flex flex-wrap gap-2 mb-6 ${index % 2 ? 'justify-end' : 'justify-start'}`}>
+                      {item.tags.map((tag) => <span key={tag} className="text-xs px-3 py-2 rounded-full bg-black/55 border border-white/20 backdrop-blur-sm">{tag}</span>)}
+                    </div>
+                    <button data-magnetic className="portfolio-cta w-fit px-7 py-3 rounded-full border border-white/45 bg-black/45 backdrop-blur-md text-white hover:border-aix-gold">Abrir Dossiê</button>
+                <div
+                  className="portfolio-bg absolute inset-0"
+                  style={{
+                    backgroundImage: `${item.gradient}, url(${item.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+
+                <div className="portfolio-overlay absolute inset-0" />
+
+                <div className={`absolute inset-0 z-10 p-8 md:p-14 flex ${index % 2 ? 'items-end justify-end text-right' : 'items-end justify-start text-left'}`}>
+                  <div className="max-w-2xl">
+                    <p className="text-aix-gold font-mono text-xs md:text-sm mb-3 tracking-[0.22em] uppercase">
+                      {String(index + 1).padStart(2, '0')} • {item.result}
+                    </p>
+                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-4 font-serif leading-tight">{item.title}</h3>
+                    <p className="text-white/85 mb-5 text-base md:text-lg">{item.description}</p>
+                    <div className={`flex flex-wrap gap-2 mb-6 ${index % 2 ? 'justify-end' : 'justify-start'}`}>
+                      {item.tags.map((tag) => (
+                        <span key={tag} className="text-xs px-3 py-2 rounded-full bg-black/55 border border-white/20 backdrop-blur-sm">{tag}</span>
+                      ))}
+                    </div>
+                    <button data-magnetic className="portfolio-cta w-fit px-7 py-3 rounded-full border border-white/45 bg-black/45 backdrop-blur-md text-white hover:border-aix-gold">
+                      Ver Caso
+                    </button>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
       </div>
-    </motion.section>
-  );
-};
-
-const PortfolioCard = ({ 
-  title, 
-  description, 
-  impact,
-  tags, 
-  link,
-  index
-}: { 
-  title: string; 
-  description: string; 
-  impact: string;
-  tags: string[]; 
-  link: string;
-  index: number;
-}) => {
-  return (
-    <motion.a 
-      href={link} 
-      target="_blank" 
-      rel="noopener noreferrer" 
-      className="block group h-full"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      viewport={{ once: true }}
-    >
-      <motion.div 
-        className="glass-card h-full p-8 border border-aix-purple/20 relative overflow-hidden"
-        whileHover={{ 
-          y: -10,
-          boxShadow: "0 20px 40px rgba(6,182,212,0.3)"
-        }}
-        transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      >
-        {/* Animated background gradient */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-aix-purple/10 via-transparent to-aix-cyan/10 opacity-0"
-          whileHover={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        />
-        
-        {/* Card number indicator */}
-        <motion.div
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-aix-gold/20 flex items-center justify-center text-aix-gold text-sm font-bold"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          transition={{ delay: 0.3 + index * 0.1, type: "spring" }}
-        >
-          {String(index + 1).padStart(2, '0')}
-        </motion.div>
-
-        <motion.h3 
-          className="text-2xl font-bold mb-4 group-hover:purple-text-gradient transition-all font-serif relative z-10"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 + index * 0.1 }}
-        >
-          {title}
-        </motion.h3>
-        
-        <motion.p 
-          className="text-white/80 mb-4 leading-relaxed relative z-10"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 + index * 0.1 }}
-        >
-          {description}
-        </motion.p>
-        
-        <motion.div 
-          className="mb-6 p-4 bg-aix-purple/10 rounded-lg border border-aix-purple/30 relative z-10"
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 + index * 0.1 }}
-        >
-          <p className="text-aix-gold font-bold text-sm">IMPACTO MENSURÁVEL:</p>
-          <p className="text-white/90 text-sm mt-1">{impact}</p>
-        </motion.div>
-        
-        <motion.div 
-          className="flex flex-wrap gap-2 relative z-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5 + index * 0.1 }}
-        >
-          {tags.map((tag, tagIndex) => (
-            <motion.span 
-              key={tagIndex} 
-              className="text-xs px-3 py-2 rounded-full bg-aix-cyan/20 text-aix-cyan border border-aix-cyan/40 font-mono"
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6 + index * 0.1 + tagIndex * 0.05 }}
-              whileHover={{ scale: 1.1 }}
-            >
-              {tag}
-            </motion.span>
-          ))}
-        </motion.div>
-
-        {/* Hover glow effect */}
-        <motion.div
-          className="absolute inset-0 rounded-xl opacity-0"
-          style={{
-            background: "linear-gradient(45deg, rgba(6,182,212,0.1), rgba(139,92,246,0.1))"
-          }}
-          whileHover={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        />
-      </motion.div>
-    </motion.a>
+    </section>
   );
 };
 
 const portfolioItems = [
   {
-    title: "Automação Neural Multicanal",
-    description: "Sistema de atendimento integrado com IA para grande operadora de telecomunicações, processando consultas complexas através de múltiplos canais simultaneamente.",
-    impact: "Redução de 47% no tempo médio de resolução e aumento de 68% na satisfação do cliente",
-    tags: ["GPT-4", "Automação", "Multicanal", "NLP"],
-    link: "#"
+    title: 'Orchestrator AI — Missão Enterprise',
+    description: 'Orquestração multiagente com governança de contexto, roteamento e observabilidade para operações críticas.',
+    result: 'Escala operacional com controle e segurança',
+    tags: ['Multi-agent', 'Governance', 'Observability', 'LLMOps'],
+    image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
+    gradient: 'radial-gradient(circle at 20% 20%, rgba(6,182,212,.55), rgba(2,6,23,.85) 55%)',
+    business: ['Redução de gargalos manuais de operação', 'Padronização de decisões de agentes', 'Aumento de confiabilidade para escala'],
+    technical: ['Orquestrador central com regras de roteamento', 'Camada de memória contextual', 'Telemetria para tracing e avaliação contínua']
   },
   {
-    title: "Modelo Preditivo Financeiro",
-    description: "Implementação de arquitetura de machine learning para prever tendências de mercado com análise em tempo real de múltiplas fontes de dados financeiros.",
-    impact: "Precisão preditiva de 83% com ROI de 340% em decisões de investimento",
-    tags: ["ML", "Previsão", "Finanças", "Big Data"],
-    link: "#"
+    title: 'Clinic Intuition AI — Missão Healthcare',
+    description: 'Assistência inteligente para jornadas clínicas, com foco em precisão de contexto e segurança de dados.',
+    result: 'Experiência clínica mais rápida e assertiva',
+    tags: ['Healthcare AI', 'Data Privacy', 'Conversational'],
+    image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
+    gradient: 'radial-gradient(circle at 70% 30%, rgba(139,92,246,.55), rgba(2,6,23,.85) 55%)',
+    business: ['Melhoria da experiência de atendimento', 'Menor tempo de resposta ao paciente', 'Ganhos operacionais na equipe'],
+    technical: ['Fluxos de prompt controlados por intenção', 'Arquitetura preparada para compliance', 'Design de fallback para segurança operacional']
   },
   {
-    title: "Plataforma IA Educacional",
-    description: "Desenvolvimento de ecossistema personalizado de aprendizado adaptativo que utiliza IA para criar percursos educacionais individualizados em tempo real.",
-    impact: "Melhoria de 65% na retenção de conhecimento e 40% de redução no tempo de aprendizado",
-    tags: ["EdTech", "Personalização", "LLMs", "Analytics"],
-    link: "#"
-  },
-  {
-    title: "Assistente Conversacional E-commerce",
-    description: "Assistente virtual inteligente que compreende contexto e intenção do usuário, oferecendo recomendações personalizadas e suporte especializado.",
-    impact: "Aumento de 23% na conversão e redução de 18% em devoluções",
-    tags: ["E-commerce", "Chatbot", "NLP", "Recomendação"],
-    link: "#"
-  },
-  {
-    title: "Sistema de Forecast Neural",
-    description: "Arquitetura de IA para previsão de demanda em tempo real, integrando dados de vendas, sazonalidade e fatores externos para otimização da cadeia.",
-    impact: "Redução de 31% em custos operacionais e 45% de melhoria na precisão de estoque",
-    tags: ["Supply Chain", "Previsão", "Otimização", "IoT"],
-    link: "#"
-  },
-  {
-    title: "UX Conversacional Bancária",
-    description: "Redesenho completo da experiência digital bancária utilizando interfaces conversacionais inteligentes e análise comportamental avançada.",
-    impact: "Aumento de 42% na satisfação do cliente e 28% na adoção de produtos digitais",
-    tags: ["Banking", "UX", "NLP", "Behavioral"],
-    link: "#"
+    title: 'Crime Scene Mapper AI — Missão Forense',
+    description: 'Plataforma de análise e mapeamento com IA para leitura de cenários complexos e síntese investigativa.',
+    result: 'Leitura estratégica com suporte analítico',
+    tags: ['Forensic AI', 'Mapping', 'Pattern Analysis'],
+    image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png',
+    gradient: 'radial-gradient(circle at 50% 0%, rgba(245,158,11,.45), rgba(2,6,23,.85) 62%)',
+    business: ['Acelera análise de informação crítica', 'Aumenta consistência de interpretação', 'Apoia tomada de decisão técnica'],
+    technical: ['Pipeline de pré-processamento de evidências', 'Camada de inferência orientada a padrões', 'Output estruturado para investigação']
   }
+  { title: 'Automação Neural Multicanal', description: 'Sistema de atendimento integrado com IA para grande operadora, com roteamento inteligente e contexto contínuo.', result: 'Redução de 47% no tempo de resolução', tags: ['GPT-4', 'Automação', 'NLP'], image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png', gradient: 'radial-gradient(circle at 20% 20%, rgba(6,182,212,.55), rgba(2,6,23,.85) 55%)' },
+  { title: 'Modelo Preditivo Financeiro', description: 'Arquitetura de ML para antecipar movimentos de mercado com ingestão de múltiplas fontes em tempo real.', result: 'ROI de 340% em decisões de investimento', tags: ['ML', 'Finanças', 'Forecast'], image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png', gradient: 'radial-gradient(circle at 70% 30%, rgba(139,92,246,.55), rgba(2,6,23,.85) 55%)' },
+  { title: 'Plataforma IA Educacional', description: 'Ecossistema adaptativo de aprendizado personalizado com trilhas dinâmicas por perfil comportamental.', result: '65% de melhoria na retenção', tags: ['EdTech', 'LLMs', 'Analytics'], image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png', gradient: 'radial-gradient(circle at 50% 0%, rgba(245,158,11,.45), rgba(2,6,23,.85) 62%)' },
+  { title: 'Assistente Conversacional E-commerce', description: 'Assistente com intenção contextual e recomendação personalizada no funil de compra.', result: 'Aumento de 23% na conversão', tags: ['E-commerce', 'Chatbot', 'Recomendação'], image: '/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png', gradient: 'radial-gradient(circle at 20% 70%, rgba(34,197,94,.40), rgba(2,6,23,.88) 58%)' }
 ];
 
 export default PortfolioSection;
