@@ -47,6 +47,12 @@ if ! run_step "Gate final de typecheck" "npm run typecheck"; then
 fi
 if ! run_step "Gate final de build" "npm run build"; then
   FAILED=1
+if has_npm_script format; then
+  npm run format || true
+fi
+
+if has_npm_script lint; then
+  npm run lint -- --fix || true
 fi
 
 npm audit fix --audit-level=high || true
