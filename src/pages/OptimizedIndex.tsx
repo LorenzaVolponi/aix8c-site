@@ -33,6 +33,10 @@ import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimiz
 
 const OptimizedIndexContent = () => {
   const [showIntro, setShowIntro] = useState(false);
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return sessionStorage.getItem("aix8c_intro_seen") !== "true";
+  });
   const [isReady, setIsReady] = useState(false);
   
   // Always call hooks - never conditionally
@@ -84,6 +88,17 @@ const OptimizedIndexContent = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (isReady && !isInitialLoading) {
+      // Intro curta e só 1x por sessão para reduzir fricção
+      const introTimer = setTimeout(() => {
+        setShowIntro(false);
+        sessionStorage.setItem("aix8c_intro_seen", "true");
+      }, 2500);
+
+      return () => clearTimeout(introTimer);
+    }
+  }, [isReady, isInitialLoading]);
 
   // Show loading screen while initializing or during initial loading
   if (!isReady || isInitialLoading) {
