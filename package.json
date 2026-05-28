@@ -4,21 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
-    "lint": "eslint .",
-    "preview": "vite preview",
+    "dev": "node scripts/static-server.mjs",
+    "build": "node scripts/static-build.mjs",
+    "build:dev": "node scripts/static-build.mjs",
+    "lint": "node scripts/lint-no-deps.mjs",
+    "preview": "node scripts/static-server.mjs",
     "auto-fix": "./scripts/auto-fix.sh",
     "pr:governance": "node ./scripts/pr-governance.mjs",
     "typecheck": "tsc --noEmit",
     "ci:verify": "npm run lint && npm run typecheck && npm run build",
-    "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build",
+    "ship": "npm run ci:verify",
     "healthcheck:runtime": "./scripts/runtime-healthcheck.sh",
     "healthcheck:runtime:full": "npm run healthcheck:runtime && npm run ci:verify",
-    "vercel:build": "./scripts/vercel-guard.sh"
-    "healthcheck:runtime": "./scripts/runtime-healthcheck.sh"
-    "ship": "npm ci && npm run lint -- --fix && npm run typecheck && npm run build"
+    "vercel:build": "./scripts/vercel-guard.sh",
+    "vite:dev": "vite",
+    "vite:build": "vite build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
