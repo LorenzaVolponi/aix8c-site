@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export VITE_BASE_PATH="/"
-echo "[vercel-guard] VITE_BASE_PATH=${VITE_BASE_PATH}"
-
-echo "[vercel-guard] Running production build..."
-npm run build
-
-if [ ! -f "dist/index.html" ]; then
 echo "[vercel-guard] Running dependency-free static build..."
 npm run build
 

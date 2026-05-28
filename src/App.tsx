@@ -81,7 +81,6 @@ function App() {
           <Sonner position="top-right" />
         </BrowserRouter>
       </AppErrorBoundary>
-
     </QueryClientProvider>
   );
 }

@@ -4,7 +4,6 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: process.env.VERCEL ? "/" : (process.env.VITE_BASE_PATH || "/"),
   base: process.env.VERCEL ? "/" : process.env.VITE_BASE_PATH || "/",
   server: {
     host: "::",

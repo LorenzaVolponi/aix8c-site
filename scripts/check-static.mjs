@@ -23,7 +23,7 @@ for (const file of requiredFiles.filter((file) => existsSync(file))) {
 }
 
 const html = existsSync('site/index.html') ? await readFile('site/index.html', 'utf8') : '';
-for (const token of ['<title>', 'meta name="description"', 'id="contato"', 'href="/styles.css"', 'src="/main.js"']) {
+for (const token of ['<title>', 'meta name="description"', 'id="contato"', 'id="neural-stage"', 'href="/styles.css"', 'src="/main.js"']) {
   if (!html.includes(token)) failures.push(`HTML sem requisito: ${token}`);
 }
 
