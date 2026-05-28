@@ -83,6 +83,24 @@ const accessPaths = [
   ['Quero provar autoridade', 'Converter repertório, código, laboratório e pensamento em evidência pública de alto impacto.'],
 ];
 
+
+const resonanceLayers = [
+  ['Origem', 'AIX8C preserva a nave original: curiosidade, IA, aprendizagem e convite para atravessar mares digitais.'],
+  ['Refino', 'VOLPONI lapida essa origem em linguagem premium: menos ruído, mais presença, método e gravidade.'],
+  ['Oferta', 'Estratégia, IA, automação, narrativa e experiência visual passam a operar como um único sistema.'],
+  ['Prova', 'O GitHub funciona como laboratório vivo: código público, protótipos, testes e execução rastreável.'],
+  ['Acesso', 'A conversa começa como leitura de campo: entender tensão, direção, possibilidade e artefato necessário.'],
+];
+
+const valueArtifacts = [
+  ['Mapa de Campo', 'Diagnóstico estratégico para separar ruído, desejo, risco e oportunidade real.'],
+  ['Protótipo Operante', 'Primeira versão funcional para testar IA, fluxo, interface ou narrativa sem excesso.'],
+  ['Sistema Oracular', 'Camada de perguntas, respostas e provocação para orientar decisão e presença.'],
+  ['Identidade Cinematográfica', 'Linguagem visual, copy, atmosfera e interface com assinatura rara.'],
+  ['Arquivo de Autoridade', 'Organização pública de repertório, código, tese e evidência técnica.'],
+  ['Automação Inteligente', 'Workflows, agentes e processos desenhados para transformar ambiguidade em execução.'],
+];
+
 const transformationCases = [
   ['Ideia dispersa', 'Sistema vivo', 'A intuição é traduzida em tese, fluxos, protótipo e presença digital pronta para evoluir.'],
   ['Conhecimento invisível', 'Autoridade pública', 'Repertório, código e narrativa passam a operar como prova clara de execução.'],
@@ -160,6 +178,10 @@ const Index = () => {
         <section id="sobre" className="mx-auto grid max-w-6xl gap-8 px-6 py-24 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">A Presença por Trás do Campo</p><h2 className="font-serif text-6xl">Inteligência, estratégia e sistemas simbólicos.</h2></div><div className="text-lg text-white/75"><p>VOLPONI é uma identidade digital e simbólica dedicada à intersecção entre inteligência artificial, estratégia, sistemas visuais e transformação humana.</p><p className="mt-5">Por meio de código, design, experimentação com IA e pensamento estratégico, VOLPONI constrói artefatos digitais que transformam ideias em sistemas vivos.</p></div></section>
 
         <section id="conexao" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Conexão Autoral</p><h2 className="font-serif text-6xl">Quem sou encontra o que ofereço.</h2></div><p className="text-lg text-white/70">VOLPONI nasce da união entre curiosidade técnica, sensibilidade simbólica e execução. O que ofereço não é uma vitrine de serviços: é uma travessia para transformar ideias em sistemas, presença e inteligência aplicada.</p></div><div className="grid gap-5 md:grid-cols-4">{offerings.map(([title, description]) => <article key={title} className="rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</div></section>
+
+        <section id="ressonancia" className="mx-auto grid max-w-7xl gap-6 px-6 py-24 md:grid-cols-[.95fr_1.05fr]"><article className="flex min-h-[34rem] flex-col justify-between rounded-[2rem] border border-[#B08D57]/25 bg-[radial-gradient(circle_at_18%_20%,rgba(122,15,27,.36),transparent_18rem),linear-gradient(135deg,rgba(243,238,230,.055),rgba(255,255,255,.012))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Câmara de Ressonância</p><h2 className="font-serif text-6xl leading-[.88] md:text-8xl">O que você sente aqui é parte do método.</h2></div><p className="max-w-xl text-white/70">O site precisa provar, antes de explicar, que tecnologia também pode ter alma, precisão, atmosfera e consequência.</p></article><div className="grid gap-3">{resonanceLayers.map(([title, description]) => <article key={title} className="grid gap-3 rounded-[1.4rem] border border-white/15 bg-white/[.04] p-5 md:grid-cols-[7rem_1fr]"><strong className="font-serif text-3xl text-[#B08D57]">{title}</strong><span className="text-white/70">{description}</span></article>)}</div></section>
+
+        <section id="artefatos" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Artefatos de Valor</p><h2 className="font-serif text-6xl">O que sai do campo precisa continuar vivo.</h2></div><p className="text-lg text-white/70">Entregas desenhadas para conectar estratégia, IA, narrativa, estética e execução sem perder a força autoral.</p></div><div className="grid gap-5 md:grid-cols-3">{valueArtifacts.map(([title, description]) => <article key={title} className="flex min-h-72 flex-col justify-between rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><small className="uppercase tracking-[0.18em] text-[#B08D57]">Artefato</small><div><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></div></article>)}</div></section>
 
         <section id="transformacao" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Teatro de Transformação</p><h2 className="font-serif text-6xl">O valor aparece quando a forma muda.</h2></div><p className="text-lg text-white/70">Uma leitura clara do que VOLPONI faz: atravessar o bruto, revelar estrutura e entregar artefatos que continuam pensando.</p></div><div className="grid gap-5 md:grid-cols-4">{transformationCases.map(([before, after, description]) => <article key={before} className="flex min-h-96 flex-col justify-between rounded-[2rem] border border-white/15 bg-[linear-gradient(180deg,rgba(122,15,27,.20),rgba(255,255,255,.018))] p-6"><div><small className="uppercase tracking-[0.18em] text-white/45">Antes</small><b className="block font-serif text-4xl">{before}</b></div><div className="text-right"><small className="uppercase tracking-[0.18em] text-white/45">Depois</small><b className="block font-serif text-4xl text-[#B08D57]">{after}</b></div><p className="text-white/65">{description}</p></article>)}</div></section>
 
