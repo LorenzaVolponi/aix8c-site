@@ -66,10 +66,53 @@ const proofStack = [
   ['Estratégia Simbólica', 'Narrativa, capital, presença digital e arquitetura de decisão trabalhando juntas.'],
 ];
 
+const intelligenceMap = [
+  ['IA', 'Agentes, automações e sistemas que ampliam decisão.'],
+  ['Código', 'Execução visível, protótipos e arquitetura técnica.'],
+  ['Símbolo', 'Linguagem, imagem e presença que organizam percepção.'],
+  ['Narrativa', 'Estruturas de sentido para ideias complexas.'],
+  ['Capital', 'Leitura estratégica de valor, poder e futuro.'],
+  ['Presença', 'Campo digital que cria gravidade sem explicar demais.'],
+];
+
+const accessPaths = [
+  ['Tenho uma ideia bruta', 'Transformar intuição em arquitetura: tese, mapa de execução, protótipo e primeira presença digital.'],
+  ['Preciso de IA aplicada', 'Desenhar agentes, automações e fluxos que simplificam complexidade sem perder estratégia.'],
+  ['Quero uma presença rara', 'Criar identidade digital premium com linguagem visual, narrativa e experiência cinematográfica.'],
+  ['Tenho caos operacional', 'Organizar processos, decisões e sistemas em uma camada inteligente de execução.'],
+  ['Quero provar autoridade', 'Converter repertório, código, laboratório e pensamento em evidência pública de alto impacto.'],
+];
+
+
+const resonanceLayers = [
+  ['Origem', 'AIX8C preserva a nave original: curiosidade, IA, aprendizagem e convite para atravessar mares digitais.'],
+  ['Refino', 'VOLPONI lapida essa origem em linguagem premium: menos ruído, mais presença, método e gravidade.'],
+  ['Oferta', 'Estratégia, IA, automação, narrativa e experiência visual passam a operar como um único sistema.'],
+  ['Prova', 'O GitHub funciona como laboratório vivo: código público, protótipos, testes e execução rastreável.'],
+  ['Acesso', 'A conversa começa como leitura de campo: entender tensão, direção, possibilidade e artefato necessário.'],
+];
+
+const valueArtifacts = [
+  ['Mapa de Campo', 'Diagnóstico estratégico para separar ruído, desejo, risco e oportunidade real.'],
+  ['Protótipo Operante', 'Primeira versão funcional para testar IA, fluxo, interface ou narrativa sem excesso.'],
+  ['Sistema Oracular', 'Camada de perguntas, respostas e provocação para orientar decisão e presença.'],
+  ['Identidade Cinematográfica', 'Linguagem visual, copy, atmosfera e interface com assinatura rara.'],
+  ['Arquivo de Autoridade', 'Organização pública de repertório, código, tese e evidência técnica.'],
+  ['Automação Inteligente', 'Workflows, agentes e processos desenhados para transformar ambiguidade em execução.'],
+];
+
+const transformationCases = [
+  ['Ideia dispersa', 'Sistema vivo', 'A intuição é traduzida em tese, fluxos, protótipo e presença digital pronta para evoluir.'],
+  ['Conhecimento invisível', 'Autoridade pública', 'Repertório, código e narrativa passam a operar como prova clara de execução.'],
+  ['Interface comum', 'Experiência cinematográfica', 'A tela deixa de ser vitrine e se torna ambiente, atmosfera e memória.'],
+  ['Processo confuso', 'Orquestração inteligente', 'Ambiguidade vira sequência, automação e decisão assistida por IA.'],
+];
+
 const Index = () => {
   const reduce = useReducedMotion();
   const [soundOn, setSoundOn] = useState(false);
   const [answer, setAnswer] = useState(oracle[0][1]);
+  const [accessPath, setAccessPath] = useState(accessPaths[0]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -77,17 +120,6 @@ const Index = () => {
     if (soundOn) audioRef.current.play().catch(() => undefined);
     else audioRef.current.pause();
   }, [soundOn]);
-
-  useEffect(() => {
-    if (!audioRef.current) return;
-    if (soundOn) audioRef.current.play().catch(() => undefined);
-    else audioRef.current.pause();
-  }, [soundOn]);
-
-  const particleStyle = useMemo(
-    () => ({ transform: `translate(${mouse.x * 0.01}px, ${mouse.y * 0.01}px)` }),
-    [mouse.x, mouse.y],
-  );
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050505] text-[#F3EEE6]">
@@ -131,6 +163,8 @@ const Index = () => {
 
         <section id="prova" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Sistema de Prova</p><h2 className="font-serif text-6xl">Autoridade sem gritar.</h2></div><p className="text-lg text-white/70">O campo sustenta reputação por evidência: código, protótipo, estética, estratégia e execução.</p></div><div className="grid gap-5 md:grid-cols-4">{proofStack.map(([title, description]) => <article key={title} className="flex min-h-80 flex-col justify-end rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</div></section>
 
+        <section id="constelacao" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Constelação de Inteligência</p><h2 className="font-serif text-6xl">O campo não é linear. Ele conecta forças.</h2></div><p className="text-lg text-white/70">VOLPONI opera como uma arquitetura viva onde inteligência artificial, código, símbolo, narrativa, capital e presença criam um sistema de gravidade.</p></div><div className="relative min-h-[36rem] overflow-hidden rounded-[2rem] border border-[#B08D57]/25 bg-white/[.03] p-6"><div className="absolute left-1/2 top-1/2 grid h-52 w-52 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#B08D57]/40 bg-[#B08D57]/10"><b className="font-serif text-4xl">VOLPONI</b></div><div className="grid gap-4 md:grid-cols-3">{intelligenceMap.map(([title, description]) => <article key={title} className="relative z-10 rounded-3xl border border-white/15 bg-black/40 p-5 backdrop-blur-xl"><strong className="block font-serif text-4xl text-[#B08D57]">{title}</strong><span className="text-sm text-white/65">{description}</span></article>)}</div></div></section>
+
         <section id="territorios" className="mx-auto max-w-7xl px-6 py-24"><h2 className="font-serif text-6xl">Territórios de Inteligência</h2><div className="mt-10 grid gap-5 md:grid-cols-3">{territories.map(([title, description]) => <article key={title} className="rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</div></section>
 
         <section id="sistemas-vivos" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 max-w-4xl"><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Ateliê de Sistemas Vivos</p><h2 className="font-serif text-6xl">Da ambiguidade ao artefato raro.</h2><p className="mt-5 text-white/70">Um protocolo autoral para converter estratégia, IA, código e símbolo em sistemas que respiram.</p></div><div className="grid gap-5 md:grid-cols-5">{protocol.map(([title, description], index) => <article key={title} className="rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><span className="text-xs uppercase tracking-[0.22em] text-[#B08D57]">0{index + 1}</span><h3 className="mt-10 font-serif text-2xl">{title}</h3><p className="mt-4 text-sm text-white/70">{description}</p></article>)}</div></section>
@@ -144,6 +178,16 @@ const Index = () => {
         <section id="sobre" className="mx-auto grid max-w-6xl gap-8 px-6 py-24 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">A Presença por Trás do Campo</p><h2 className="font-serif text-6xl">Inteligência, estratégia e sistemas simbólicos.</h2></div><div className="text-lg text-white/75"><p>VOLPONI é uma identidade digital e simbólica dedicada à intersecção entre inteligência artificial, estratégia, sistemas visuais e transformação humana.</p><p className="mt-5">Por meio de código, design, experimentação com IA e pensamento estratégico, VOLPONI constrói artefatos digitais que transformam ideias em sistemas vivos.</p></div></section>
 
         <section id="conexao" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Conexão Autoral</p><h2 className="font-serif text-6xl">Quem sou encontra o que ofereço.</h2></div><p className="text-lg text-white/70">VOLPONI nasce da união entre curiosidade técnica, sensibilidade simbólica e execução. O que ofereço não é uma vitrine de serviços: é uma travessia para transformar ideias em sistemas, presença e inteligência aplicada.</p></div><div className="grid gap-5 md:grid-cols-4">{offerings.map(([title, description]) => <article key={title} className="rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</div></section>
+
+        <section id="ressonancia" className="mx-auto grid max-w-7xl gap-6 px-6 py-24 md:grid-cols-[.95fr_1.05fr]"><article className="flex min-h-[34rem] flex-col justify-between rounded-[2rem] border border-[#B08D57]/25 bg-[radial-gradient(circle_at_18%_20%,rgba(122,15,27,.36),transparent_18rem),linear-gradient(135deg,rgba(243,238,230,.055),rgba(255,255,255,.012))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Câmara de Ressonância</p><h2 className="font-serif text-6xl leading-[.88] md:text-8xl">O que você sente aqui é parte do método.</h2></div><p className="max-w-xl text-white/70">O site precisa provar, antes de explicar, que tecnologia também pode ter alma, precisão, atmosfera e consequência.</p></article><div className="grid gap-3">{resonanceLayers.map(([title, description]) => <article key={title} className="grid gap-3 rounded-[1.4rem] border border-white/15 bg-white/[.04] p-5 md:grid-cols-[7rem_1fr]"><strong className="font-serif text-3xl text-[#B08D57]">{title}</strong><span className="text-white/70">{description}</span></article>)}</div></section>
+
+        <section id="artefatos" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Artefatos de Valor</p><h2 className="font-serif text-6xl">O que sai do campo precisa continuar vivo.</h2></div><p className="text-lg text-white/70">Entregas desenhadas para conectar estratégia, IA, narrativa, estética e execução sem perder a força autoral.</p></div><div className="grid gap-5 md:grid-cols-3">{valueArtifacts.map(([title, description]) => <article key={title} className="flex min-h-72 flex-col justify-between rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><small className="uppercase tracking-[0.18em] text-[#B08D57]">Artefato</small><div><h3 className="font-serif text-3xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></div></article>)}</div></section>
+
+        <section id="transformacao" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Teatro de Transformação</p><h2 className="font-serif text-6xl">O valor aparece quando a forma muda.</h2></div><p className="text-lg text-white/70">Uma leitura clara do que VOLPONI faz: atravessar o bruto, revelar estrutura e entregar artefatos que continuam pensando.</p></div><div className="grid gap-5 md:grid-cols-4">{transformationCases.map(([before, after, description]) => <article key={before} className="flex min-h-96 flex-col justify-between rounded-[2rem] border border-white/15 bg-[linear-gradient(180deg,rgba(122,15,27,.20),rgba(255,255,255,.018))] p-6"><div><small className="uppercase tracking-[0.18em] text-white/45">Antes</small><b className="block font-serif text-4xl">{before}</b></div><div className="text-right"><small className="uppercase tracking-[0.18em] text-white/45">Depois</small><b className="block font-serif text-4xl text-[#B08D57]">{after}</b></div><p className="text-white/65">{description}</p></article>)}</div></section>
+
+        <section className="mx-auto max-w-5xl px-6 py-20 text-center"><div className="border-y border-[#B08D57]/25 py-16"><p className="font-serif text-4xl leading-tight md:text-6xl">Eu não construo páginas para preencher espaço. Construo campos para que ideias, pessoas e sistemas sejam percebidos com a força que merecem.</p></div></section>
+
+        <section id="ritual-acesso" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Ritual de Acesso</p><h2 className="font-serif text-6xl">Escolha o ponto de entrada.</h2></div><p className="text-lg text-white/70">Uma camada de orientação para transformar necessidade em direção. O site começa a responder como campo, não como vitrine.</p></div><div className="grid gap-6 md:grid-cols-[.85fr_1.15fr]"><div className="grid gap-3">{accessPaths.map((path) => <button key={path[0]} onClick={() => setAccessPath(path)} className={`rounded-2xl border p-4 text-left transition ${accessPath[0] === path[0] ? 'border-[#B08D57]/60 bg-[#B08D57]/10' : 'border-white/15 bg-white/[.04]'}`}>{path[0]}</button>)}</div><article className="flex min-h-96 flex-col justify-between rounded-[2rem] border border-white/15 bg-white/[.04] p-7"><div><div className="grid h-24 w-24 place-items-center rounded-full border border-[#B08D57]/40 font-serif text-4xl text-[#B08D57]">I</div><h3 className="mt-8 font-serif text-5xl">{accessPath[0]}</h3><p className="mt-5 text-xl text-white/70">{accessPath[1]}</p></div><a href="#contato" className="mt-8 inline-flex w-fit rounded-full border border-[#B08D57]/60 bg-[#B08D57]/10 px-7 py-3">Solicitar Acesso</a></article></div></section>
 
         <section id="contato" className="mx-auto grid max-w-6xl gap-8 px-6 py-28 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Contato / Acesso Privado</p><h2 className="font-serif text-6xl">Solicitar Acesso</h2><p className="mt-5 text-white/70">Para colaborações, experimentos estratégicos, protótipos de IA, sistemas simbólicos ou projetos de identidade digital, entre no campo.</p></div><form className="grid gap-4 rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><input className="rounded-xl border border-white/15 bg-black/30 p-4" placeholder="Nome" /><input className="rounded-xl border border-white/15 bg-black/30 p-4" placeholder="E-mail" /><select className="rounded-xl border border-white/15 bg-black/30 p-4"><option>Protótipo de IA</option><option>Identidade Digital</option><option>Narrativa Estratégica</option><option>Experiência WebGL</option><option>Colaboração</option><option>Outro</option></select><textarea className="min-h-32 rounded-xl border border-white/15 bg-black/30 p-4" placeholder="Mensagem" /><button className="rounded-full border border-[#B08D57]/60 bg-[#B08D57]/10 px-7 py-3">Iniciar Conversa Privada</button></form></section>
       </main>
