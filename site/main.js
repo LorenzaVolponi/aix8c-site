@@ -6,6 +6,7 @@ const canvas = document.querySelector('#volponi-stage');
 const atmosphereButtons = document.querySelectorAll('.atmosphere-toggle, .atmosphere-inline');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+const chapters = document.querySelectorAll('[data-chapter]');
 let audioContext;
 let audioNodes;
 let audioEnabled = false;

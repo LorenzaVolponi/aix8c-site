@@ -59,6 +59,11 @@
 
     <canvas id="volponi-stage" aria-hidden="true"></canvas>
     <div class="mist-layer" aria-hidden="true"></div>
+    <div class="cinema-vignette" aria-hidden="true"></div>
+    <div class="light-leak" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
     <div class="grain" aria-hidden="true"></div>
     <div class="cursor" aria-hidden="true"></div>
 
@@ -85,17 +90,30 @@
     <main id="top" data-scroll-root>
       <section class="chapter hero" data-chapter="entrada">
         <div class="hero-horizon" aria-hidden="true"></div>
+        <div class="aperture aperture-left" aria-hidden="true"></div>
+        <div class="aperture aperture-right" aria-hidden="true"></div>
         <div class="hero-content reveal split-text">
           <p class="kicker">entrada no universo</p>
           <h1>VOLPONI</h1>
           <p class="hero-subtitle">Uma linguagem entre sombra, água, memória e criação.</p>
           <p class="hero-alt">Arte, símbolo e inteligência sensorial em estado de travessia.</p>
+          <div class="hero-orbit" aria-hidden="true">
+            <span>água</span><span>diamante</span><span>flor</span><span>memória</span>
+          </div>
           <div class="hero-actions">
             <a class="btn primary magnetic" href="#manifesto">Entrar no universo</a>
             <a class="btn ghost magnetic" href="#fragmentos">Ver fragmentos</a>
           </div>
         </div>
         <p class="core-phrase reveal">VOLPONI não se apresenta. <br />VOLPONI emerge.</p>
+        <div class="scene-caption reveal" aria-hidden="true">
+          <span>cena 00</span>
+          <strong>submersão inicial</strong>
+        </div>
+      </section>
+
+      <section class="cinematic-interlude" aria-label="Respiração cinematográfica">
+        <p class="reveal">uma travessia em sete câmaras de sombra, água e luz</p>
       </section>
 
       <section id="manifesto" class="chapter manifesto section-shell" data-chapter="manifesto">
@@ -118,6 +136,7 @@
           <h2>Fragmentos de Eternidade</h2>
           <p>Obras, frases e atmosferas como relíquias encontradas depois da maré.</p>
         </div>
+        <div class="fragment-grid cinematic-depth">
         <div class="fragment-grid">
           <article class="fragment-card tall reveal magnetic" data-depth="0.12">
             <div class="artwork ocean" aria-hidden="true"></div>
@@ -284,6 +303,12 @@
           <p>Uma ambiência gerada no navegador sugere mar distante, vento leve, texturas cristalinas, ruído atmosférico e silêncio espacial.</p>
           <button class="btn primary magnetic atmosphere-inline" type="button" aria-pressed="false">Ativar atmosfera</button>
         </div>
+      </section>
+
+      <section class="closing-ritual" aria-hidden="true">
+        <span>VOLPONI</span>
+        <span>não se apresenta</span>
+        <span>emerge</span>
       </section>
 
       <section id="contato" class="chapter contact section-shell" data-chapter="contato">
