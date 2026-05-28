@@ -59,10 +59,16 @@ A configuração de rotas e headers está em `vercel.json`.
 
 ## Estrutura principal
 
-- `site/index.html`: conteúdo, SEO, schema e estrutura da página.
-- `site/styles.css`: visual responsivo, hero, cards e seções.
-- `site/main.js`: interações leves de ano automático e reveal on scroll.
-- `scripts/build-static.mjs`: build sem dependências.
-- `scripts/check-static.mjs`: validação sem dependências.
-- `scripts/serve-static.mjs`: servidor local sem dependências.
-- `scripts/healthcheck-static.mjs`: build + smoke test HTTP local.
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Automação de manutenção (CI/CD)
+
+Este repositório agora inclui automações para manutenção contínua de PRs:
+
+- **PR Auto Fix** (`.github/workflows/pr-auto-fix.yml` + `scripts/auto-fix.sh`): executa fluxo definitivo (instalação, lint `--fix`, audit fix, build, gates finais), commita correções e comenta relatório automático na PR.
+- **PR Merge Conflict Assist** (`.github/workflows/pr-merge-conflict-assist.yml`): tenta sincronizar `main` na branch da PR; se houver conflito, comenta os arquivos conflitantes.
+- **PR Governance Bot** (`.github/workflows/pr-governance.yml` + `scripts/pr-governance.mjs`): por padrão só monitora. Via `workflow_dispatch` você pode habilitar:
+  - fechar todas as PRs abertas (`close_open_prs=true`);
+  - tentar merge automático de PRs limpas (`merge_ready_prs=true`).
+
+> ⚠️ Recomendado: usar branch protection + required checks antes de habilitar automações destrutivas.

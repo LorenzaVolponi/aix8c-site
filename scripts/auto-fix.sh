@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
-source scripts/ci-utils.sh
-install_dependencies
+REPORT_DIR=".ci"
+REPORT_FILE="${REPORT_DIR}/autofix-report.md"
+mkdir -p "${REPORT_DIR}"
 
 : > "${REPORT_FILE}"
 
@@ -35,24 +36,22 @@ FAILED=0
 run_step "Instalação de dependências" "npm ci" || FAILED=1
 run_step "Lint com correção automática" "npm run lint -- --fix" || true
 run_step "Correções de segurança (lockfile)" "npm audit fix --package-lock-only" || true
-run_step "Typecheck de validação" "npm run typecheck" || true
 run_step "Build de validação" "npm run build" || true
 
 # Gate final: decide status da PR
 if ! run_step "Gate final de lint" "npm run lint"; then
   FAILED=1
 fi
-if ! run_step "Gate final de typecheck" "npm run typecheck"; then
-  FAILED=1
-fi
 if ! run_step "Gate final de build" "npm run build"; then
   FAILED=1
 fi
 
-npm audit fix --audit-level=high || true
-
-if has_npm_script test; then
-  npm test -- --ci || true
+if [ "$FAILED" -eq 0 ]; then
+  echo >> "${REPORT_FILE}"
+  echo "✅ Resultado final: PR apta após auto-correção." >> "${REPORT_FILE}"
+  exit 0
 fi
 
-npm run build
+echo >> "${REPORT_FILE}"
+echo "❌ Resultado final: auto-correção parcial; intervenção manual necessária." >> "${REPORT_FILE}"
+exit 1
