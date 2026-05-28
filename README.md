@@ -5,13 +5,36 @@ Site institucional da AIX8C em modo estático e sem dependências de pacote para
 ## Rodar localmente
 
 ```bash
-npm ci --offline --ignore-scripts --no-audit --progress=false
+./scripts/bootstrap-dev.sh
+npm install
 npm run dev
 ```
 
-O comando `npm run dev` serve a pasta `site/` em `http://127.0.0.1:8080`.
+Se quiser subir direto já acessível na rede local:
 
-## Validar e gerar build
+```bash
+npm run dev -- --host 0.0.0.0 --port 5173
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Troubleshooting rápido (quando o site não abre)
+
+1. Teste acesso ao registry:
+   ```bash
+   curl -I https://registry.npmjs.org/react
+   ```
+2. Se retornar `403`/`CONNECT tunnel failed`, o bloqueio é de proxy/firewall (infra), não do código.
+3. Rode:
+   ```bash
+   ./scripts/bootstrap-dev.sh
+   ```
+
+## Scripts de automação
 
 ```bash
 npm run lint
