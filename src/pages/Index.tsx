@@ -1,46 +1,25 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-
-const fragments = [
-  { title: 'Oceano Interno', phrase: 'A maré aprende o nome de quem atravessa sem mapa.', category: 'Água' },
-  { title: 'A Alma e as Máscaras', phrase: 'Toda defesa também é uma forma de oração.', category: 'Máscara' },
-  { title: 'Diamante em Ruptura', phrase: 'A pressão não quebra: lapida.', category: 'Diamante' },
-  { title: 'A Casa das Marés', phrase: 'Entre ruínas e sal, a memória floresce.', category: 'Memória' },
-  { title: 'Memória em Flor', phrase: 'A delicadeza pode ser insurgente.', category: 'Flor' },
-  { title: 'Horizonte de Vidro', phrase: 'O futuro reflete aquilo que ousamos olhar.', category: 'Horizonte' },
-];
-
-const symbols = [
-  ['Água', 'Emoção, travessia, profundidade, renascimento'],
-  ['Diamante', 'Pressão, lapidação, valor, permanência'],
-  ['Flores', 'Delicadeza, beleza insurgente, vida'],
-  ['Máscaras', 'Identidade, defesa, performance social'],
-  ['Horizonte', 'Futuro, desejo, deslocamento'],
-  ['Neblina', 'Mistério, memória, sonho'],
-  ['Luz', 'Revelação, consciência, ruptura'],
-] as const;
+import React, { useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import ManifestoSection from "@/components/ManifestoSection";
+import FragmentosEternidadeSection from "@/components/FragmentosEternidadeSection";
+import LinguagemSection from "@/components/LinguagemSection";
+import GaleriaSensorialSection from "@/components/GaleriaSensorialSection";
+import UniversoSimbolicoSection from "@/components/UniversoSimbolicoSection";
+import AtmosferaSonoraSection from "@/components/AtmosferaSonoraSection";
+import ContatoSection from "@/components/ContatoSection";
+import Footer from "@/components/Footer";
 
 const Index = () => {
-  const reduce = useReducedMotion();
-  const [soundOn, setSoundOn] = useState(false);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
   useEffect(() => {
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouch) return;
-    const c = document.createElement('div');
-    c.className = 'custom-cursor';
-    document.body.appendChild(c);
-    const onMove = (e: MouseEvent) => {
-      c.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      setMouse({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => {
-      c.remove();
-      window.removeEventListener('mousemove', onMove);
-    };
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    let cursor: HTMLDivElement | null = null;
+
+    if (!isTouch) {
+      cursor = document.createElement("div");
+      cursor.className = "custom-cursor";
+      document.body.appendChild(cursor);
+    }
   }, []);
 
   useEffect(() => {
@@ -55,6 +34,22 @@ const Index = () => {
   );
 
   return (
+    <div className="min-h-screen bg-aix-black text-white relative">
+      <div className="stage-transition-layer" />
+      <div className="relative z-10">
+        <Navbar />
+        <main>
+          <HeroSection />
+          <ManifestoSection />
+          <FragmentosEternidadeSection />
+          <LinguagemSection />
+          <GaleriaSensorialSection />
+          <UniversoSimbolicoSection />
+          <AtmosferaSonoraSection />
+          <ContatoSection />
+        </main>
+        <Footer />
+      </div>
     <div className="min-h-screen bg-[#07090f] text-[#f6f3ef] overflow-x-hidden">
       <audio ref={audioRef} loop src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8d42cd5f7.mp3" />
       <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#07090f]/65 backdrop-blur-xl">
