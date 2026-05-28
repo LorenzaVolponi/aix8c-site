@@ -25,15 +25,6 @@ window.addEventListener('load', () => {
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-const updateScrollProgress = () => {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = max > 0 ? window.scrollY / max : 0;
-  root.style.setProperty('--scroll-progress', progress.toFixed(4));
-};
-
-window.addEventListener('scroll', updateScrollProgress, { passive: true });
-updateScrollProgress();
-
 if (!reducedMotion) {
   window.addEventListener('wheel', (event) => {
     event.preventDefault();
@@ -65,6 +56,15 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     if (reducedMotion) window.scrollTo({ top: smoothTarget, behavior: 'auto' });
   });
 });
+const year = document.querySelector('#year');
+const cursor = document.querySelector('.cursor');
+const canvas = document.querySelector('#neural-stage');
+const ctx = canvas?.getContext('2d');
+
+if (year) year.textContent = new Date().getFullYear();
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
 window.addEventListener('pointermove', (event) => {
   pointer.x = event.clientX;
@@ -78,6 +78,8 @@ window.addEventListener('pointermove', (event) => {
 }, { passive: true });
 
 document.querySelectorAll('.magnetic').forEach((item) => {
+const magneticItems = document.querySelectorAll('.magnetic');
+magneticItems.forEach((item) => {
   item.addEventListener('pointerenter', () => cursor?.classList.add('is-active'));
   item.addEventListener('pointerleave', () => {
     cursor?.classList.remove('is-active');
@@ -92,13 +94,6 @@ document.querySelectorAll('.magnetic').forEach((item) => {
     item.style.transform = `translate3d(${x}px, ${y}px, 0) rotateX(${-y * 0.025}deg) rotateY(${x * 0.025}deg)`;
   }, { passive: true });
 });
-
-const chapterObserver = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) body.dataset.scene = entry.target.dataset.chapter || '';
-  }
-}, { threshold: 0.42 });
-chapters.forEach((chapter) => chapterObserver.observe(chapter));
 
 const revealObserver = new IntersectionObserver((entries) => {
   for (const entry of entries) {
@@ -148,34 +143,27 @@ function createAtmosphere() {
   const master = audioContext.createGain();
   const low = audioContext.createOscillator();
   const shimmer = audioContext.createOscillator();
-  const breath = audioContext.createOscillator();
   const lowGain = audioContext.createGain();
   const shimmerGain = audioContext.createGain();
-  const breathGain = audioContext.createGain();
   const filter = audioContext.createBiquadFilter();
 
   low.type = 'sine';
   low.frequency.value = 58;
   shimmer.type = 'triangle';
   shimmer.frequency.value = 392;
-  breath.type = 'sine';
-  breath.frequency.value = 0.07;
   lowGain.gain.value = 0.045;
   shimmerGain.gain.value = 0.012;
-  breathGain.gain.value = 0.018;
   filter.type = 'lowpass';
   filter.frequency.value = 820;
   master.gain.value = 0;
 
   low.connect(lowGain).connect(filter).connect(master);
   shimmer.connect(shimmerGain).connect(filter).connect(master);
-  breath.connect(breathGain).connect(filter).connect(master);
   master.connect(audioContext.destination);
   low.start();
   shimmer.start();
-  breath.start();
 
-  audioNodes = { master, low, shimmer, breath };
+  audioNodes = { master, low, shimmer };
 }
 
 function setAtmosphere(enabled) {
@@ -214,7 +202,7 @@ if (canvas && !reducedMotion) {
         float d = distance(p, pointer);
         p += normalize(p - pointer) * smoothstep(0.42, 0.0, d) * 0.035;
         gl_Position = vec4(p, 0.0, 1.0);
-        gl_PointSize = mix(1.1, 4.8, fract(a_seed * 7.7));
+        gl_PointSize = mix(1.1, 3.4, fract(a_seed * 7.7));
         v_seed = a_seed;
       }
     `;
@@ -224,7 +212,7 @@ if (canvas && !reducedMotion) {
       void main() {
         vec2 uv = gl_PointCoord - 0.5;
         float d = length(uv);
-        float alpha = smoothstep(0.5, 0.0, d) * 0.82;
+        float alpha = smoothstep(0.5, 0.0, d) * 0.72;
         vec3 pearl = vec3(0.86, 0.92, 1.0);
         vec3 gold = vec3(0.66, 0.52, 0.29);
         vec3 color = mix(pearl, gold, step(0.86, fract(v_seed * 9.3)));
@@ -243,7 +231,7 @@ if (canvas && !reducedMotion) {
     gl.linkProgram(program);
     gl.useProgram(program);
 
-    const count = window.innerWidth < 760 ? 180 : 430;
+    const count = window.innerWidth < 760 ? 140 : 320;
     const data = new Float32Array(count * 3);
     for (let index = 0; index < count; index += 1) {
       data[index * 3] = Math.random() * 2 - 1;
@@ -290,4 +278,91 @@ if (canvas && !reducedMotion) {
     requestAnimationFrame(render);
     window.addEventListener('resize', resize, { passive: true });
   }
+    const x = (event.clientX - rect.left - rect.width / 2) * 0.12;
+    const y = (event.clientY - rect.top - rect.height / 2) * 0.12;
+    item.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }, { passive: true });
+});
+
+const reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.16 });
+  reveals.forEach((element) => observer.observe(element));
+} else {
+  reveals.forEach((element) => element.classList.add('visible'));
+}
+
+if (canvas && ctx && !reducedMotion) {
+  const particles = Array.from({ length: 72 }, (_, index) => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    vx: (Math.random() - 0.5) * 0.42,
+    vy: (Math.random() - 0.5) * 0.42,
+    radius: index % 7 === 0 ? 2.2 : 1.2,
+  }));
+
+  const resize = () => {
+    const scale = window.devicePixelRatio || 1;
+    canvas.width = Math.floor(window.innerWidth * scale);
+    canvas.height = Math.floor(window.innerHeight * scale);
+    canvas.style.width = `${window.innerWidth}px`;
+    canvas.style.height = `${window.innerHeight}px`;
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (const particle of particles) {
+      const dx = pointer.x - particle.x;
+      const dy = pointer.y - particle.y;
+      const distance = Math.hypot(dx, dy);
+
+      if (distance < 180) {
+        particle.vx -= dx * 0.000012;
+        particle.vy -= dy * 0.000012;
+      }
+
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+
+      if (particle.x < -20) particle.x = window.innerWidth + 20;
+      if (particle.x > window.innerWidth + 20) particle.x = -20;
+      if (particle.y < -20) particle.y = window.innerHeight + 20;
+      if (particle.y > window.innerHeight + 20) particle.y = -20;
+
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(248, 195, 93, 0.82)';
+      ctx.fill();
+    }
+
+    for (let i = 0; i < particles.length; i += 1) {
+      for (let j = i + 1; j < particles.length; j += 1) {
+        const a = particles[i];
+        const b = particles[j];
+        const distance = Math.hypot(a.x - b.x, a.y - b.y);
+        if (distance < 132) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(56, 232, 255, ${0.18 * (1 - distance / 132)})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  };
+
+  resize();
+  draw();
+  window.addEventListener('resize', resize, { passive: true });
 }
