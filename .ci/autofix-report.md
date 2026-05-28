@@ -1,36 +1,12 @@
 # Relatório de Auto-Correção
 
 - ✅ Instalação de dependências: sucesso
-- ❌ Lint com correção automática: falhou
-
-```
-
-> vite_react_shadcn_ts@0.0.0 lint
-> eslint . --fix
-
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.4
-
-TypeError: Error while loading rule '@typescript-eslint/no-unused-expressions': Cannot read properties of undefined (reading 'allowShortCircuit')
-Occurred while linting /home/runner/work/aix8c-site/aix8c-site/src/App.tsx
-    at Object.create (/home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/rules/no-unused-expressions.js:85:5)
-    at create (/home/runner/work/aix8c-site/aix8c-site/node_modules/@typescript-eslint/eslint-plugin/dist/rules/no-unused-expressions.js:28:32)
-    at Object.create (/home/runner/work/aix8c-site/aix8c-site/node_modules/@typescript-eslint/utils/dist/eslint-utils/RuleCreator.js:31:20)
-    at createRuleListeners (/home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/linter/linter.js:1019:15)
-    at /home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/linter/linter.js:1151:7
-    at Array.forEach (<anonymous>)
-    at runRules (/home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/linter/linter.js:1085:31)
-    at #flatVerifyWithoutProcessors (/home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/linter/linter.js:2115:4)
-    at Linter._verifyWithFlatConfigArrayAndWithoutProcessors (/home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/linter/linter.js:2203:43)
-    at Linter._verifyWithFlatConfigArray (/home/runner/work/aix8c-site/aix8c-site/node_modules/eslint/lib/linter/linter.js:2306:15)
-```
+- ✅ Lint com correção automática: sucesso
 - ❌ Correções de segurança (lockfile): falhou
 
 ```
 
-up to date, audited 483 packages in 6s
+up to date, audited 487 packages in 8s
 
 76 packages are looking for funding
   run `npm fund` for details
@@ -46,17 +22,24 @@ node_modules/esbuild
   vite  <=6.4.1
   Depends on vulnerable versions of esbuild
   node_modules/vite
+    @vitejs/plugin-react-swc  <=3.7.1
+    Depends on vulnerable versions of vite
+    node_modules/@vitejs/plugin-react-swc
+    lovable-tagger  <=1.1.9
+    Depends on vulnerable versions of vite
+    node_modules/lovable-tagger
 
 
-2 moderate severity vulnerabilities
+4 moderate severity vulnerabilities
+
+To address issues that do not require attention, run:
+  npm audit fix
 
 To address all issues (including breaking changes), run:
   npm audit fix --force
 ```
-- ✅ Typecheck de validação: sucesso
 - ✅ Build de validação: sucesso
 - ✅ Gate final de lint: sucesso
-- ✅ Gate final de typecheck: sucesso
 - ✅ Gate final de build: sucesso
 
-❌ Resultado final: auto-correção parcial; intervenção manual necessária.
+✅ Resultado final: PR apta após auto-correção.

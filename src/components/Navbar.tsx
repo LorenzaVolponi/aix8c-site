@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Zap, Navigation, User, FolderOpen, Bot, type LucideIcon } from 'lucide-react';
+import { Menu, X, Sparkles, ScrollText, Gem, Languages, Image, Orbit, Music, Send, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { href: '#sobre', label: 'Sobre', icon: User, id: 'sobre' },
-  { href: '#sobre-nos', label: 'Sobre Nós', icon: Navigation, id: 'sobre-nos' },
-  { href: '#expertise', label: 'Expertise', icon: Zap, id: 'expertise' },
-  { href: '#portfolio', label: 'Portfólio', icon: FolderOpen, id: 'portfolio' },
-  { href: '#aussy', label: 'Aussy', icon: Bot, id: 'aussy' }
+  { href: '#home', label: 'Entrada', icon: Sparkles, id: 'home' },
+  { href: '#manifesto', label: 'Manifesto', icon: ScrollText, id: 'manifesto' },
+  { href: '#fragmentos', label: 'Fragmentos', icon: Gem, id: 'fragmentos' },
+  { href: '#linguagem', label: 'Linguagem', icon: Languages, id: 'linguagem' },
+  { href: '#galeria', label: 'Galeria', icon: Image, id: 'galeria' },
+  { href: '#universo', label: 'Universo', icon: Orbit, id: 'universo' },
+  { href: '#atmosfera', label: 'Atmosfera', icon: Music, id: 'atmosfera' },
+  { href: '#contato', label: 'Entre no campo', icon: Send, id: 'contato' }
 ];
 
 const Navbar = () => {
@@ -23,13 +26,12 @@ const Navbar = () => {
       setVisible(current < 80 || current < lastScroll.current);
       lastScroll.current = current;
 
-      const sections = navLinks.map(l => l.id);
       let active = 'home';
-      sections.forEach((id) => {
+      navLinks.forEach(({ id }) => {
         const el = document.getElementById(id);
         if (!el) return;
         const r = el.getBoundingClientRect();
-        if (r.top <= 130 && r.bottom >= 130) active = id;
+        if (r.top <= 140 && r.bottom >= 140) active = id;
       });
       setActiveSection(active);
     };
@@ -43,7 +45,7 @@ const Navbar = () => {
     setMobileMenuOpen(false);
     const element = document.getElementById(href.replace('#', ''));
     if (element) {
-      const y = element.getBoundingClientRect().top + window.scrollY - 80;
+      const y = element.getBoundingClientRect().top + window.scrollY - 88;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
@@ -57,12 +59,12 @@ const Navbar = () => {
       >
         <div className='container mx-auto flex justify-between items-center px-6 py-4'>
           <a href='#' className='logo-stagger text-2xl md:text-3xl font-bold font-serif gold-text-gradient' onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            {'AIX8C'.split('').map((letter, i) => <span key={`${letter}-${i}`}>{letter}</span>)}
+            {'VOLPONI'.split('').map((letter, i) => <span key={`${letter}-${i}`}>{letter}</span>)}
           </a>
 
-          <div className='hidden md:flex space-x-8 items-center'>
+          <div className='hidden md:flex gap-6 items-center'>
             {navLinks.map((link) => (
-              <NavLink key={link.id} href={link.href} isActive={activeSection === link.id} onClick={() => handleNavClick(link.href)} icon={link.icon}>
+              <NavLink key={link.id} isActive={activeSection === link.id} onClick={() => handleNavClick(link.href)} icon={link.icon}>
                 {link.label}
               </NavLink>
             ))}
@@ -76,9 +78,9 @@ const Navbar = () => {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div className='fixed inset-0 z-40 md:hidden bg-aix-black/95 backdrop-blur-xl flex flex-col justify-center items-center space-y-8' initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div className='fixed inset-0 z-40 md:hidden bg-aix-black/95 backdrop-blur-xl flex flex-col justify-center items-center space-y-6 px-6' initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             {navLinks.map((link) => (
-              <button key={link.id} onClick={() => handleNavClick(link.href)} className='text-2xl text-white/90 hover:text-aix-gold'>
+              <button key={link.id} onClick={() => handleNavClick(link.href)} className='text-xl text-white/90 hover:text-aix-gold'>
                 {link.label}
               </button>
             ))}
@@ -89,9 +91,9 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ children, isActive, onClick, icon: Icon }: { href: string; children: React.ReactNode; isActive?: boolean; onClick?: () => void; icon: LucideIcon; }) => (
-  <button onClick={onClick} data-cursor='nav-link' className={cn('nav-underline relative text-white/90 hover:text-white font-medium text-lg flex items-center space-x-2', isActive && 'text-aix-gold')}>
-    <Icon size={18} className={cn(isActive ? 'text-aix-gold' : 'text-white/70')} />
+const NavLink = ({ children, isActive, onClick, icon: Icon }: { children: React.ReactNode; isActive?: boolean; onClick?: () => void; icon: LucideIcon; }) => (
+  <button onClick={onClick} data-cursor='nav-link' className={cn('nav-underline relative text-white/90 hover:text-white font-medium text-sm flex items-center space-x-2', isActive && 'text-aix-gold')}>
+    <Icon size={15} className={cn(isActive ? 'text-aix-gold' : 'text-white/70')} />
     <span>{children}</span>
   </button>
 );

@@ -1,0 +1,60 @@
+name: Site Guardian
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  guardian:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Run site guardian smoke check
+        id: guardian
+        continue-on-error: true
+        run: bash scripts/site-guardian.sh
+
+      - name: Open incident issue on failure
+        if: steps.guardian.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `🚨 Site Guardian failure - ${new Date().toISOString()}`;
+            const body = [
+              'Site Guardian detectou falha no smoke check de disponibilidade.',
+              '',
+              `- Workflow: ${context.workflow}`,
+              `- Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              `- Commit: ${context.sha}`,
+              '',
+              'Ações sugeridas:',
+              '1. Verificar logs do workflow;',
+              '2. Rodar localmente: `bash scripts/site-guardian.sh`;',
+              '3. Validar build/deploy mais recente.'
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['incident', 'availability', 'automated']
+            });
+
+      - name: Fail job when guardian fails
+        if: steps.guardian.outcome == 'failure'
+        run: exit 1
