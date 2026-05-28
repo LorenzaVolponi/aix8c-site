@@ -3,33 +3,33 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "04:30"
-    open-pull-requests-limit: 15
-    versioning-strategy: increase-if-necessary
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+    open-pull-requests-limit: 10
+    groups:
+      non-major:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
-      - "security"
-    groups:
-      react-stack:
-        patterns:
-          - "react*"
-          - "@types/react*"
-      vite-stack:
-        patterns:
-          - "vite*"
-          - "@vitejs/*"
-      lint-stack:
-        patterns:
-          - "eslint*"
-          - "typescript*"
-    ignore:
-      - dependency-name: "node"
-  - package-ecosystem: "github-actions"
+      - "maintenance"
+
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "05:00"
+      interval: "weekly"
+      day: "monday"
+      time: "06:30"
+    open-pull-requests-limit: 5
+    allow:
+      - dependency-type: "direct"
     labels:
       - "dependencies"
-      - "github-actions"
+      - "major-update"

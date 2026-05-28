@@ -1,19 +1,10 @@
-# AIX8C Site
+# Projeto Vite + React + TypeScript
 
-Site institucional da AIX8C em modo estático e sem dependências de pacote para garantir que instalação, build, preview e deploy rodem mesmo em ambientes com registry npm bloqueado.
-
-## Rodar localmente
+## Setup local
 
 ```bash
-./scripts/bootstrap-dev.sh
 npm install
 npm run dev
-```
-
-Se quiser subir direto já acessível na rede local:
-
-```bash
-npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
 ## Build
@@ -22,53 +13,53 @@ npm run dev -- --host 0.0.0.0 --port 5173
 npm run build
 ```
 
-## Troubleshooting rápido (quando o site não abre)
-
-1. Teste acesso ao registry:
-   ```bash
-   curl -I https://registry.npmjs.org/react
-   ```
-2. Se retornar `403`/`CONNECT tunnel failed`, o bloqueio é de proxy/firewall (infra), não do código.
-3. Rode:
-   ```bash
-   ./scripts/bootstrap-dev.sh
-   ```
-
 ## Scripts de automação
 
 ```bash
-npm run lint
-npm run typecheck
-npm run build
-npm run preview
+bash scripts/check-env.sh
+bash scripts/security-check.sh
+bash scripts/build-check.sh
+bash scripts/auto-fix.sh
+bash scripts/api-healthcheck.sh
+bash scripts/site-guardian.sh
+bash scripts/deploy-all.sh
 ```
 
-- `npm run lint` e `npm run typecheck` executam validações locais em Node.js, sem ESLint/TypeScript externos.
-- `npm run build` copia `public/` e `site/` para `dist/`.
-- `npm run preview` serve `dist/` em `http://127.0.0.1:4173`.
+## CI/CD e automações
 
-## Deploy Vercel
+Este repositório possui automação completa com GitHub Actions:
 
-A Vercel usa `npm run vercel:build`, que executa o build estático e valida a presença de `dist/index.html`.
+- `ci.yml`: valida push e pull request com pipeline de build + healthcheck de preview.
+- `security.yml`: checagens de segurança, detecção de secrets, validação de `.env` e relatório.
+- `auto-fix.yml`: manutenção automática (manual e agendada), cria branch e abre PR com labels.
+- `deploy.yml`: valida build em `main` e permite deploy via integração GitHub/Vercel ou Vercel CLI.
+- `dependabot-automerge.yml`: habilita automerge para PRs do Dependabot de patch/minor.
+- `labeler.yml`: aplica labels automáticas por tipo de alteração.
+- `stale.yml`: gerencia issues/PRs inativas.
+- `auto-merge-maintenance.yml`: habilita auto-merge para PRs automatizadas (com bloqueio por label `no-automerge`/`major-update`).
+- `site-guardian.yml`: monitora disponibilidade com smoke check recorrente e abre issue automática de incidente em falha.
 
-```bash
-npm run vercel:build
-```
+## Dependências automáticas
 
-A configuração de rotas e headers está em `vercel.json`.
+Dependabot configurado para updates semanais:
+- patch/minor agrupados em PRs de manutenção.
+- major updates em PRs separados.
 
-## Estrutura principal
+## Secrets opcionais (GitHub)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Para deploy via Vercel CLI:
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
 
-## Automação de manutenção (CI/CD)
+## Segurança
 
-Este repositório agora inclui automações para manutenção contínua de PRs:
+- `.env` ignorado por padrão.
+- `.env.example` disponível como referência.
+- Workflows usam permissões mínimas.
+- Sem push direto automático em `main` nas rotinas de auto-fix.
+- `SECURITY.md` com política de reporte.
 
-- **PR Auto Fix** (`.github/workflows/pr-auto-fix.yml` + `scripts/auto-fix.sh`): executa fluxo definitivo (instalação, lint `--fix`, audit fix, build, gates finais), commita correções e comenta relatório automático na PR.
-- **PR Merge Conflict Assist** (`.github/workflows/pr-merge-conflict-assist.yml`): tenta sincronizar `main` na branch da PR; se houver conflito, comenta os arquivos conflitantes.
-- **PR Governance Bot** (`.github/workflows/pr-governance.yml` + `scripts/pr-governance.mjs`): por padrão só monitora. Via `workflow_dispatch` você pode habilitar:
-  - fechar todas as PRs abertas (`close_open_prs=true`);
-  - tentar merge automático de PRs limpas (`merge_ready_prs=true`).
+## Observação sobre backend/API
 
-> ⚠️ Recomendado: usar branch protection + required checks antes de habilitar automações destrutivas.
+Este projeto atual é frontend (Vite/React) e não expõe backend/API próprio no repositório. O `scripts/api-healthcheck.sh` valida a disponibilidade do app em preview (`/`) como healthcheck de deploy.
