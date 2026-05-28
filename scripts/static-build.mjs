@@ -50,30 +50,49 @@ const html = String.raw`<!doctype html>
       }
       body::selection { background: rgba(217,232,255,.24); }
       a, button { color: inherit; }
-      .grain, .mist, .cursor, #volponi-canvas { pointer-events: none; position: fixed; inset: 0; }
-      .grain { z-index: 1; opacity: .28; mix-blend-mode: screen; background-image: radial-gradient(circle, rgba(255,255,255,.14) 0 1px, transparent 1px); background-size: 34px 34px; filter: contrast(170%); }
-      .mist { z-index: 2; opacity: .7; background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(217,232,255,.09), transparent 18rem); transition: background .2s linear; }
-      #volponi-canvas { z-index: 0; opacity: .84; }
+      .grain, .mist, .cursor, .cinema-vignette, .liquid-light, .constellation, #volponi-canvas { pointer-events: none; position: fixed; inset: 0; }
+      .grain { z-index: 1; opacity: .25; mix-blend-mode: screen; background-image: radial-gradient(circle, rgba(255,255,255,.14) 0 1px, transparent 1px); background-size: 34px 34px; filter: contrast(170%); }
+      .mist { z-index: 2; opacity: .72; background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(217,232,255,.10), transparent 18rem); transition: background .2s linear; }
+      .cinema-vignette { z-index: 4; background: radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,.32) 72%, rgba(0,0,0,.78) 100%), linear-gradient(90deg, rgba(0,0,0,.34), transparent 12%, transparent 88%, rgba(0,0,0,.34)); }
+      .liquid-light { z-index: 1; opacity: .62; mix-blend-mode: screen; filter: blur(18px); background: conic-gradient(from var(--spin,0deg) at 50% 48%, transparent, rgba(217,232,255,.08), rgba(70,101,128,.18), transparent, rgba(184,160,106,.07), transparent); animation: liquidSpin 28s linear infinite; }
+      .constellation { z-index: 2; opacity: .38; background-image: radial-gradient(circle at 12% 24%, rgba(217,232,255,.9) 0 1px, transparent 2px), radial-gradient(circle at 72% 18%, rgba(184,160,106,.8) 0 1px, transparent 2px), radial-gradient(circle at 82% 62%, rgba(217,232,255,.75) 0 1px, transparent 2px), radial-gradient(circle at 24% 78%, rgba(169,160,189,.85) 0 1px, transparent 2px); }
+      #volponi-canvas { z-index: 0; opacity: .9; }
       .cursor { z-index: 100; width: 18px; height: 18px; border: 1px solid rgba(246,241,232,.75); border-radius: 999px; inset: auto; transform: translate(-50%, -50%); transition: width .25s ease, height .25s ease, border-color .25s ease, background .25s ease; }
       .cursor.is-hover { width: 54px; height: 54px; border-color: rgba(217,232,255,.9); background: rgba(217,232,255,.06); }
       .loader { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; background: #05070c; transition: opacity .8s ease, visibility .8s ease; }
       .loader.is-gone { opacity: 0; visibility: hidden; }
-      .loader__mark { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 9vw, 8rem); letter-spacing: .13em; animation: emerge 1.8s cubic-bezier(.2,.8,.2,1) both; }
+      .loader__mark { position: relative; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 9vw, 8rem); letter-spacing: .13em; animation: emerge 1.8s cubic-bezier(.2,.8,.2,1) both; }
+      .loader__mark::after { content: ''; position: absolute; left: 50%; bottom: -.8rem; width: min(52vw, 28rem); height: 1px; transform: translateX(-50%); background: linear-gradient(90deg, transparent, rgba(217,232,255,.75), transparent); box-shadow: 0 0 28px rgba(217,232,255,.48); }
       .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem clamp(1.25rem, 4vw, 4rem); background: rgba(7,9,15,.45); border-bottom: 1px solid var(--line); backdrop-filter: blur(22px); }
       .nav__brand { font-family: 'Cormorant Garamond', serif; letter-spacing: .24em; font-size: 1.1rem; }
       .nav__links { display: flex; gap: clamp(.8rem, 2vw, 1.8rem); align-items: center; color: rgba(246,241,232,.7); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em; }
       .nav__links a { text-decoration: none; }
       .sound { border: 1px solid var(--line); background: rgba(255,255,255,.03); border-radius: 999px; padding: .7rem 1rem; font: inherit; text-transform: uppercase; letter-spacing: .16em; font-size: .68rem; cursor: none; }
       .chapter { position: relative; z-index: 5; padding: clamp(6rem, 13vw, 12rem) clamp(1.25rem, 5vw, 5rem); }
+      .aix-opening { min-height: 100vh; display: grid; align-items: center; overflow: hidden; }
+      .aix-opening::before { content: ''; position: absolute; inset: 12vh 8vw auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,232,255,.45), rgba(184,160,106,.28), transparent); box-shadow: 0 0 42px rgba(217,232,255,.25); }
+      .aix-shell { width: min(74rem, 100%); margin: 0 auto; display: grid; gap: clamp(2rem, 5vw, 4rem); }
+      .aix-title { font-size: clamp(4rem, 16vw, 13rem); line-height: .78; letter-spacing: .08em; text-shadow: 0 0 70px rgba(217,232,255,.18); }
+      .aix-subtitle { color: rgba(217,232,255,.72); letter-spacing: .22em; text-transform: uppercase; font-size: clamp(.72rem, 1.4vw, 1rem); }
+      .aix-copy { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(1.25rem, 4vw, 3rem); color: rgba(246,241,232,.76); }
+      .aix-panel { border: 1px solid rgba(246,241,232,.14); border-radius: 2rem; padding: clamp(1.25rem, 3vw, 2.3rem); background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.018)); backdrop-filter: blur(22px); box-shadow: 0 30px 90px rgba(0,0,0,.28); }
+      .aix-panel h2 { font-size: clamp(1.8rem, 4vw, 3.2rem); margin-bottom: 1rem; }
+      .aix-values { display: grid; gap: .8rem; margin-top: 1rem; }
+      .aix-values div { border-left: 1px solid rgba(217,232,255,.32); padding-left: 1rem; }
+      .aix-mantra { margin-top: 1.5rem; color: #e6dece; font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 3vw, 2.4rem); line-height: 1.05; }
       .hero { min-height: 100vh; display: grid; place-items: center; text-align: center; overflow: hidden; }
-      .hero::after { content: ''; position: absolute; left: 8vw; right: 8vw; bottom: 16vh; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,232,255,.45), transparent); box-shadow: 0 0 40px rgba(217,232,255,.32); }
+      .hero::before { content: ''; position: absolute; z-index: 1; left: 50%; bottom: 9vh; width: 72vw; height: 36vw; max-height: 28rem; transform: translateX(-50%) perspective(900px) rotateX(64deg); border-radius: 50%; border: 1px solid rgba(217,232,255,.12); background: radial-gradient(ellipse at center, rgba(217,232,255,.09), transparent 62%); filter: blur(.2px); }
+      .hero::after { content: ''; position: absolute; z-index: 1; left: 8vw; right: 8vw; bottom: 16vh; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,232,255,.55), rgba(184,160,106,.28), rgba(217,232,255,.55), transparent); box-shadow: 0 0 46px rgba(217,232,255,.38); }
       .kicker { color: rgba(246,241,232,.58); text-transform: uppercase; letter-spacing: .28em; font-size: .72rem; }
       h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; margin: 0; }
       h1 { font-size: clamp(5rem, 18vw, 16rem); line-height: .78; letter-spacing: .09em; text-shadow: 0 0 60px rgba(217,232,255,.22); }
       h2 { font-size: clamp(3.2rem, 8vw, 8rem); line-height: .9; letter-spacing: -.035em; }
       h3 { font-size: clamp(2rem, 4vw, 4.6rem); line-height: .96; }
       p { line-height: 1.75; }
-      .hero__text { max-width: 76rem; margin: auto; }
+      .hero__text { max-width: 76rem; margin: auto; position: relative; z-index: 3; }
+      .hero__text::before, .hero__text::after { content: '✦'; position: absolute; color: rgba(217,232,255,.42); font-size: clamp(1.8rem, 4vw, 4rem); filter: drop-shadow(0 0 22px rgba(217,232,255,.35)); animation: floatGlyph 7s ease-in-out infinite; }
+      .hero__text::before { left: -7vw; top: 14%; }
+      .hero__text::after { right: -5vw; bottom: 20%; animation-delay: -3s; color: rgba(184,160,106,.38); }
       .hero__sub { max-width: 48rem; margin: 2rem auto 2.5rem; color: rgba(246,241,232,.76); font-size: clamp(1.15rem, 2vw, 1.55rem); }
       .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem; }
       .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 3.4rem; padding: 0 1.4rem; border: 1px solid rgba(246,241,232,.23); border-radius: 999px; text-decoration: none; background: rgba(255,255,255,.035); backdrop-filter: blur(18px); cursor: none; transition: border-color .35s ease, transform .35s ease, background .35s ease; }
@@ -90,8 +109,10 @@ const html = String.raw`<!doctype html>
       .card:nth-child(3n+1) { grid-column: span 7; min-height: 29rem; }
       .card::before { content: ''; position: absolute; inset: 0; background: var(--art); opacity: .95; transition: transform .7s ease, filter .7s ease; }
       .card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 20%, rgba(7,9,15,.88)); }
+      .card .specular { position: absolute; z-index: 1; inset: -30%; background: linear-gradient(115deg, transparent 38%, rgba(217,232,255,.18), transparent 56%); transform: translateX(-40%) rotate(8deg); transition: transform .9s ease; }
       .card:hover { transform: translateY(-10px) rotateX(2deg); border-color: rgba(217,232,255,.4); box-shadow: 0 30px 80px rgba(0,0,0,.45); }
       .card:hover::before { transform: scale(1.08); filter: saturate(1.15); }
+      .card:hover .specular { transform: translateX(40%) rotate(8deg); }
       .card__content { position: absolute; z-index: 2; left: 1.35rem; right: 1.35rem; bottom: 1.35rem; }
       .card small { color: rgba(217,232,255,.68); text-transform: uppercase; letter-spacing: .18em; }
       .card p { color: rgba(246,241,232,.74); max-width: 28rem; }
@@ -113,11 +134,13 @@ const html = String.raw`<!doctype html>
       .reveal { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform .9s ease; }
       .reveal.is-visible { opacity: 1; transform: translateY(0); }
       @keyframes emerge { from { opacity: 0; transform: translateY(28px); filter: blur(18px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+      @keyframes liquidSpin { to { --spin: 360deg; transform: scale(1.08) rotate(1turn); } }
+      @keyframes floatGlyph { 0%, 100% { transform: translate3d(0,0,0) rotate(0deg); opacity: .34; } 50% { transform: translate3d(0,-18px,0) rotate(10deg); opacity: .72; } }
       @media (max-width: 840px) {
         body { cursor: auto; }
         .cursor { display: none; }
         .nav__links a { display: none; }
-        .manifesto, .language { grid-template-columns: 1fr; }
+        .manifesto, .language, .aix-copy { grid-template-columns: 1fr; }
         .fragment-grid { display: block; }
         .card, .card:nth-child(3n+1) { margin-bottom: 1rem; min-height: 24rem; }
         .symbol-grid { grid-template-columns: 1fr; }
@@ -132,14 +155,19 @@ const html = String.raw`<!doctype html>
   </head>
   <body>
     <canvas id="volponi-canvas" aria-hidden="true"></canvas>
+    <div class="liquid-light" aria-hidden="true"></div>
+    <div class="constellation" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
     <div class="mist" aria-hidden="true"></div>
+    <div class="cinema-vignette" aria-hidden="true"></div>
     <div class="cursor" aria-hidden="true"></div>
-    <div class="loader"><div class="loader__mark">VOLPONI</div></div>
+    <div class="loader"><div class="loader__mark">AIX8C</div></div>
 
     <header class="nav">
-      <div class="nav__brand">VOLPONI</div>
+      <div class="nav__brand">AIX8C</div>
       <div class="nav__links">
+        <a href="#inicio" data-hover>Entrada</a>
+        <a href="#volponi" data-hover>VOLPONI</a>
         <a href="#manifesto" data-hover>Manifesto</a>
         <a href="#fragmentos" data-hover>Fragmentos</a>
         <a href="#linguagem" data-hover>Linguagem</a>
@@ -149,7 +177,45 @@ const html = String.raw`<!doctype html>
     </header>
 
     <main>
-      <section class="chapter hero" id="inicio">
+      <section class="chapter aix-opening" id="inicio">
+        <div class="aix-shell reveal">
+          <div>
+            <p class="kicker">Welcome aboard marujos !</p>
+            <h1 class="aix-title">AIX8C</h1>
+            <p class="aix-subtitle">ARTIFICIAL INTTELIGENCE EXPERIENCE CREATIVE</p>
+          </div>
+          <div class="aix-copy">
+            <article class="aix-panel">
+              <h2>A bordo da nave</h2>
+              <p>(O nome se diz ei ai eksi eiti ci)</p>
+              <p>Aqui, na nossa nave de exploração digital, estamos prontos para navegar pelos mares da Inteligência Artificial.</p>
+              <p>AIX8C, combina inteligência artificial e experiência para criar soluções criativas e contínuas.</p>
+              <div class="aix-values">
+                <div><strong>Missão:</strong><br />Transformar a comunicação entre humanos e máquinas, com soluções inovadoras em IA.</div>
+                <div><strong>Visão:</strong><br />Liderar na criação de experiências imersivas e únicas em IA.</div>
+                <div><strong>Valores:</strong><br />Inovação: Busca constante.<br />Criatividade: Valorização da originalidade.<br />Inspiração: Capacitar e motivar.</div>
+              </div>
+            </article>
+            <article class="aix-panel">
+              <h2>Sobre Mim</h2>
+              <p>Sou Lorenza Volponi, entusiasta da IA, polímata, e pioneira na engenharia de prompt no Brasil, certificada pelo Institute of Management, Technology &amp; Finance (MTF) de Portugal.</p>
+              <p>Democratizar o conhecimento em IA, e capacitar as pessoas para criarem soluções inovadoras e impactantes é o que busco.</p>
+              <p>Além disso, sou apaixonada por música, filosofia e espiritualidade, o que sempre me inspira a buscar novas maneiras de conectar tecnologia e emoção.</p>
+              <p>Tenho certeza de que tenho muito a aprender com você!</p>
+            </article>
+            <article class="aix-panel" style="grid-column: 1 / -1;">
+              <p>Aqui na AIX8C, é seu universo para mergulhar completamente em IA, e estou pronta para te guiar nessa jornada fascinante.</p>
+              <p>Com um time dedicado e apaixonado, ofereço soluções de ponta em automação de chatbots, desenvolvimento de IA, tecnologias inovadoras, e muito mais.</p>
+              <p>Seja você um iniciante curioso ou um profissional experiente, busque superar os desafios e alcançar novas fronteiras. Vamos embarcar nessa aventura rumo ao futuro da tecnologia, explorando as infinitas possibilidades da IA e fazer a diferença no mundo, um código por vez, focando sempre em ensinar, inspirar e aprender!</p>
+              <p class="aix-mantra">SUA NAVEGAÇÃO COMEÇA AQUI<br />E LEMBRE-SE SEMPRE: NUNCA ESTAMOS ATRASADOS PARA O QUE É NOSSO!</p>
+              <p>CONECTE-SE COMIGO E DESCUBRA COMO A IA PODE TRANSFORMAR O SEU MUNDO !</p>
+              <div class="actions"><a class="btn btn--primary" href="#volponi" data-hover>Entrar no universo VOLPONI</a><a class="btn" href="#contato" data-hover>Conecte-se comigo</a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter hero" id="volponi">
         <div class="hero__text reveal">
           <p class="kicker">VOLPONI não se apresenta. VOLPONI emerge.</p>
           <h1>VOLPONI</h1>
@@ -183,7 +249,7 @@ const html = String.raw`<!doctype html>
             ['A Casa das Marés','Memória','Entre ruínas e sal, a memória floresce.','radial-gradient(circle at 70% 18%, rgba(184,160,106,.20), transparent 15rem), linear-gradient(150deg,#0a0d14,#17212d 52%,#0d111a)'],
             ['Memória em Flor','Flor','A delicadeza pode ser insurgente.','radial-gradient(circle at 34% 28%, rgba(115,76,92,.38), transparent 15rem), linear-gradient(145deg,#0a0b10,#211018 60%,#06070b)'],
             ['Horizonte de Vidro','Horizonte','O futuro reflete aquilo que ousamos olhar.','linear-gradient(180deg,#08111d 0 47%,rgba(217,232,255,.32) 48%,#07090f 51% 100%)']
-          ].map(([title, cat, phrase, art]) => `<article class="card reveal" style="--art:${art}"><div class="card__content"><small>${cat}</small><h3>${title}</h3><p>${phrase}</p></div></article>`).join('')}
+          ].map(([title, cat, phrase, art]) => `<article class="card reveal" style="--art:${art}"><div class="specular" aria-hidden="true"></div><div class="card__content"><small>${cat}</small><h3>${title}</h3><p>${phrase}</p></div></article>`).join('')}
         </div>
       </section>
 
@@ -258,7 +324,18 @@ const html = String.raw`<!doctype html>
       }
       function draw(t=0) {
         ctx.clearRect(0,0,w,h);
-        const grad = ctx.createLinearGradient(0,0,w,h); grad.addColorStop(0,'rgba(8,17,29,.45)'); grad.addColorStop(1,'rgba(33,16,24,.20)'); ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
+        const grad = ctx.createLinearGradient(0,0,w,h); grad.addColorStop(0,'rgba(8,17,29,.50)'); grad.addColorStop(.48,'rgba(13,36,53,.24)'); grad.addColorStop(1,'rgba(33,16,24,.22)'); ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
+        for (let wave = 0; wave < 4; wave++) {
+          ctx.beginPath();
+          const base = h * (.54 + wave * .075);
+          for (let x = 0; x <= w; x += 18 * devicePixelRatio) {
+            const y = base + Math.sin(x / (170 * devicePixelRatio) + t / (2100 + wave * 420)) * (10 + wave * 7) * devicePixelRatio;
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = 'rgba(217,232,255,' + (.035 + wave * .018) + ')';
+          ctx.lineWidth = (1 + wave * .35) * devicePixelRatio;
+          ctx.stroke();
+        }
         particles.forEach((p, i) => { p.y -= p.s * devicePixelRatio; p.x += Math.sin(t/2600+i)*.18*devicePixelRatio; if (p.y < -8) p.y = h + 8; ctx.beginPath(); ctx.fillStyle = 'rgba(217,232,255,'+p.a+')'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); });
         if (!reduce) requestAnimationFrame(draw);
       }
