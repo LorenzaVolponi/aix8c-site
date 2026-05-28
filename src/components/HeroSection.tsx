@@ -27,10 +27,13 @@ const HeroSection = () => {
 
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const backgroundY = useTransform(smoothProgress, [0, 1], ["0%", "50%"]);
+  const exitMaskOpacity = useTransform(smoothProgress, [0.45, 0.9], [0, 1]);
 
   return (
     <section 
+      id="home"
       ref={sectionRef}
+      aria-label="Início"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-aix-black"
     >
       {/* Neural Canvas Background */}
@@ -41,6 +44,8 @@ const HeroSection = () => {
         <NeuralCanvas />
       </motion.div>
       
+      <div className="hero-gradient-orb" />
+      <div className="hero-vignette" />
       {/* Enhanced Gradient Overlays - Responsivos */}
       <div 
         className="absolute inset-0 z-10"
@@ -102,6 +107,12 @@ const HeroSection = () => {
           }}
         />
       ))}
+
+
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
+        style={{ opacity: exitMaskOpacity, background: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(2,6,23,.88), rgba(2,6,23,1))' }}
+      />
 
       {/* Mobile-specific adjustments */}
       <div className="block sm:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">

@@ -1,27 +1,53 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIX8C | Lorenza Volponi | Estrategista de Inteligência Artificial</title>
-    <meta name="description" content="Lorenza Volponi - Transformando negócios através de estratégias de inteligência artificial e automação inteligente." />
-    <meta name="author" content="AIX8C" />
-
-    <meta property="og:title" content="AIX8C | Lorenza Volponi | Estrategista de IA" />
-    <meta property="og:description" content="Transformando negócios através de estratégias de inteligência artificial e automação inteligente." />
+    <title>Lorenza Volponi | AIX8C - IA, Prompt Engineering e Automação</title>
+    <meta name="description" content="Lorenza Volponi, Capitã da AIX8C: projetos de IA, prompt engineering, automação e transformação digital com foco em resultado mensurável." />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://aix8c.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
+    <meta property="og:title" content="Lorenza Volponi | AIX8C" />
+    <meta property="og:description" content="Estratégias de IA, automação e prompt engineering para crescimento exponencial." />
+    <meta property="og:url" content="https://aix8c.com/" />
+    <meta property="og:image" content="https://aix8c.com/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="Lorenza Volponi | AIX8C" />
+    <meta name="twitter:description" content="IA, Prompt Engineering e Automação com impacto real." />
+    <meta name="twitter:image" content="https://aix8c.com/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
   </head>
-
   <body>
     <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.renderStaticFallback = function renderStaticFallback() {
+        const root = document.getElementById('root');
+        if (!root) return;
+        root.innerHTML = `
+          <main style="min-height:100vh;display:grid;place-items:center;background:#06070f;color:#fff;font-family:Inter,Arial,sans-serif;padding:24px;">
+            <section style="max-width:760px;width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:28px;">
+              <h1 style="margin:0 0 12px;font-size:2rem;">AIX8C — Lorenza Volponi</h1>
+              <p style="opacity:.9;line-height:1.6;margin:0 0 16px;">
+                O modo completo (React + Vite) precisa das dependências npm instaladas.
+                Enquanto isso, este modo estático mantém o site no ar.
+              </p>
+              <p style="opacity:.8;line-height:1.6;margin:0 0 20px;">
+                Assim que o ambiente liberar acesso ao registry e o build for concluído, a experiência completa volta automaticamente.
+              </p>
+              <button onclick="window.location.reload()" style="padding:10px 16px;border-radius:999px;border:0;background:#f59e0b;color:#161616;font-weight:700;cursor:pointer;">Tentar modo completo</button>
+            </section>
+          </main>
+        `;
+      };
+      setTimeout(() => {
+        const root = document.getElementById('root');
+        if (root && root.childElementCount === 0) window.renderStaticFallback();
+      }, 2500);
+    </script>
+    <script type="module" src="/src/main.tsx" onerror="window.renderStaticFallback()"></script>
   </body>
 </html>

@@ -1,74 +1,63 @@
-# Welcome to your Lovable project
+# AIX8C Site
 
-## Project info
+Site institucional da AIX8C em modo estático e sem dependências de pacote para garantir que instalação, build, preview e deploy rodem mesmo em ambientes com registry npm bloqueado.
 
-**URL**: https://lovable.dev/projects/d5e3729f-9ebc-44dd-80cd-24d951775ce8
+## Rodar localmente
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/d5e3729f-9ebc-44dd-80cd-24d951775ce8) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+./scripts/bootstrap-dev.sh
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Se quiser subir direto já acessível na rede local:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run dev -- --host 0.0.0.0 --port 5173
+```
 
-**Use GitHub Codespaces**
+## Build
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run build
+```
 
-## What technologies are used for this project?
+## Troubleshooting rápido (quando o site não abre)
 
-This project is built with:
+1. Teste acesso ao registry:
+   ```bash
+   curl -I https://registry.npmjs.org/react
+   ```
+2. Se retornar `403`/`CONNECT tunnel failed`, o bloqueio é de proxy/firewall (infra), não do código.
+3. Rode:
+   ```bash
+   ./scripts/bootstrap-dev.sh
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Scripts de automação
 
-## How can I deploy this project?
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm run preview
+```
 
-Simply open [Lovable](https://lovable.dev/projects/d5e3729f-9ebc-44dd-80cd-24d951775ce8) and click on Share -> Publish.
+- `npm run lint` e `npm run typecheck` executam validações locais em Node.js, sem ESLint/TypeScript externos.
+- `npm run build` copia `public/` e `site/` para `dist/`.
+- `npm run preview` serve `dist/` em `http://127.0.0.1:4173`.
 
-## Can I connect a custom domain to my Lovable project?
+## Deploy Vercel
 
-Yes, you can!
+A Vercel usa `npm run vercel:build`, que executa o build estático e valida a presença de `dist/index.html`.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+npm run vercel:build
+```
+
+A configuração de rotas e headers está em `vercel.json`.
+
+## Estrutura principal
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
 
