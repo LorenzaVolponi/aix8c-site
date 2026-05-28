@@ -8,6 +8,10 @@ echo "[vercel-guard] Running production build..."
 npm run build
 
 if [ ! -f "dist/index.html" ]; then
+echo "[vercel-guard] Running dependency-free static build..."
+npm run build
+
+if [ ! -f dist/index.html ]; then
   echo "[vercel-guard] ERRO: dist/index.html não encontrado"
   exit 1
 fi
