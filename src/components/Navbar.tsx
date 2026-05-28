@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Zap, Navigation, User, FolderOpen, Bot, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Menu, X, Zap, Navigation, Home, User, Briefcase, FolderOpen, Bot, type LucideIcon } from 'lucide-react';
+const navLinks = [
+  { href: '#sobre', label: 'Sobre', icon: User, id: 'sobre' },
+  { href: '#sobre-nos', label: 'Sobre Nós', icon: Navigation, id: 'sobre-nos' },
+  { href: '#expertise', label: 'Expertise', icon: Zap, id: 'expertise' },
+  { href: '#portfolio', label: 'Portfólio', icon: FolderOpen, id: 'portfolio' },
+  { href: '#aussy', label: 'Aussy', icon: Bot, id: 'aussy' }
+];
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -87,50 +89,11 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ 
-  href, 
-  children, 
-  isActive, 
-  onClick, 
-  icon: Icon 
-}: { 
-  href: string; 
-  children: React.ReactNode; 
-  isActive?: boolean;
-  onClick?: () => void;
-  icon: LucideIcon;
-}) => (
-  <motion.button 
-    onClick={onClick}
-    className={cn(
-      "relative text-white/90 hover:text-white transition-all duration-300 font-medium text-lg group flex items-center space-x-2",
-      isActive && "text-aix-gold"
-    )}
-    whileHover={{ y: -2 }}
-  >
-    <Icon size={18} className={cn("transition-colors", isActive ? "text-aix-gold" : "text-white/70")} />
-    <span className="relative z-10">{children}</span>
-    
-    {/* Active indicator */}
-    <motion.div
-      className="absolute -bottom-3 left-0 h-0.5 bg-gradient-to-r from-aix-gold via-yellow-400 to-aix-gold"
-      initial={{ scaleX: 0 }}
-      animate={{ scaleX: isActive ? 1 : 0 }}
-      whileHover={{ scaleX: 1 }}
-      transition={{ duration: 0.3 }}
-      style={{ width: '100%', originX: 0 }}
-    />
-    
-    {/* Glow effect */}
-    <motion.div
-      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"
-      style={{
-        textShadow: "0 0 15px rgba(245, 158, 11, 0.5)"
-      }}
-    >
-      {children}
-    </motion.div>
-  </motion.button>
+const NavLink = ({ children, isActive, onClick, icon: Icon }: { href: string; children: React.ReactNode; isActive?: boolean; onClick?: () => void; icon: LucideIcon; }) => (
+  <button onClick={onClick} data-cursor='nav-link' className={cn('nav-underline relative text-white/90 hover:text-white font-medium text-lg flex items-center space-x-2', isActive && 'text-aix-gold')}>
+    <Icon size={18} className={cn(isActive ? 'text-aix-gold' : 'text-white/70')} />
+    <span>{children}</span>
+  </button>
 );
 
 export default Navbar;
