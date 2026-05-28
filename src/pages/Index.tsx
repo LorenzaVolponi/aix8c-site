@@ -78,6 +78,17 @@ const Index = () => {
     else audioRef.current.pause();
   }, [soundOn]);
 
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (soundOn) audioRef.current.play().catch(() => undefined);
+    else audioRef.current.pause();
+  }, [soundOn]);
+
+  const particleStyle = useMemo(
+    () => ({ transform: `translate(${mouse.x * 0.01}px, ${mouse.y * 0.01}px)` }),
+    [mouse.x, mouse.y],
+  );
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#050505] text-[#F3EEE6]">
       <audio ref={audioRef} loop src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8d42cd5f7.mp3" />
