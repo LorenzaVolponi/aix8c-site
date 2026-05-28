@@ -12,6 +12,7 @@ try {
   const response = await fetch(`http://127.0.0.1:${port}/`);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const html = await response.text();
+  if (!html.includes('VOLPONI')) throw new Error('Resposta sem marca VOLPONI');
   if (!html.includes('AIX8C')) throw new Error('Resposta sem marca AIX8C');
   console.log('Runtime healthcheck OK');
 } finally {

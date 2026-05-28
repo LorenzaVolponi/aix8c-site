@@ -1,3 +1,6 @@
+# VOLPONI Site
+
+Experiência digital autoral, sensorial e cinematográfica para a persona VOLPONI. A página é estática, dependency-free e foi desenhada para funcionar como obra viva: manifesto poético, galeria simbólica, partículas WebGL, atmosfera sonora opcional e navegação ritual.
 # AIX8C Site
 
 Site institucional da AIX8C em modo estático e sem dependências de pacote para garantir que instalação, build, preview e deploy rodem mesmo em ambientes com registry npm bloqueado.
@@ -19,6 +22,25 @@ npm run typecheck
 npm run build
 npm run preview
 ```
+
+- `npm run lint` e `npm run typecheck` executam validações locais em Node.js, sem pacotes externos.
+- `npm run build` copia `public/` e `site/` para `dist/`.
+- `npm run preview` serve `dist/` em `http://127.0.0.1:4173`.
+
+## Experiência
+
+A estrutura atual preserva a base estática já criada, mas concentra a narrativa exclusivamente em VOLPONI:
+
+- `Hero`: entrada imersiva no universo, com WebGL e frase-núcleo.
+- `Manifesto`: texto editorial revelado por scroll.
+- `Fragmentos de Eternidade`: galeria viva em grid assimétrico.
+- `A linguagem`: mapa visual de camadas simbólicas.
+- `Galeria sensorial`: percurso horizontal de atmosferas.
+- `Universo simbólico`: mapa de água, diamante, flores, máscaras, horizonte, neblina e luz.
+- `Experiência sonora`: ambiência opcional, nunca iniciada automaticamente.
+- `Contato`: chamada final poética em “Entre no campo”.
+
+## Deploy Vercel
 
 - `npm run lint` e `npm run typecheck` executam validações locais em Node.js, sem ESLint/TypeScript externos.
 - `npm run build` copia `public/` e `site/` para `dist/`.
