@@ -1,11 +1,16 @@
 name: Unified Autopilot (Resolve + Fix + Merge + Deploy)
 
 on:
+  pull_request_target:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
   push:
     branches: [main]
+
+concurrency:
+  group: autopilot-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -16,6 +21,43 @@ permissions:
 
 jobs:
   pr-autopilot:
+    if: github.event_name == 'pull_request_target' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR source
+        id: source
+        run: |
+          if [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "same_repo=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "same_repo=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Comment on fork PR limitations
+        if: steps.source.outputs.same_repo != 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: 'ℹ️ PR de fork detectada: por segurança, a automação não aplica push automático em branches externas. Para merge automático, abra PR a partir de branch dentro deste repositório.'
+            });
+
+      - name: Checkout PR branch (head)
+        if: steps.source.outputs.same_repo == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        if: steps.source.outputs.same_repo == 'true'
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -32,10 +74,27 @@ jobs:
           cache: npm
 
       - name: Configure git
+        if: steps.source.outputs.same_repo == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Try auto-resolve conflicts with base branch
+        if: steps.source.outputs.same_repo == 'true'
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          set +e
+          git fetch origin "${BASE_REF}" --depth=1
+          AUTO_RESOLVE_CODE=true ./scripts/auto-resolve-conflicts.sh "${BASE_REF}"
+          RESOLVE_STATUS=$?
+          set -e
+          if [ "$RESOLVE_STATUS" -ne 0 ]; then
+            echo "auto_resolve_failed=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Install and auto-fix
+        if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed != 'true'
       - name: Try auto-resolve conflicts with main
         run: |
           set +e
@@ -55,6 +114,7 @@ jobs:
           npm run build
 
       - name: Commit auto-fixes
+        if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed != 'true'
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
@@ -63,6 +123,7 @@ jobs:
           fi
 
       - name: Merge PR automatically
+        if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed != 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -74,6 +135,20 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr.number,
               merge_method: 'squash'
+            });
+
+      - name: Comment when auto-resolve fails
+        if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: '⚠️ Não consegui resolver todos os conflitos automaticamente nesta execução. Reenvie a PR sincronizada com a base para nova tentativa automática.'
             });
 
   deploy-main:

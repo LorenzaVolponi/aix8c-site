@@ -71,12 +71,12 @@ const HeroSection = () => {
       />
       
       {/* Profile Image - Responsivo */}
-      <div className="block sm:block md:block lg:block">
+      <div className="relative z-20 block sm:block md:block lg:block">
         <ProfileImage />
       </div>
       
       {/* Main Content - Totalmente Responsivo */}
-      <div className="w-full">
+      <div className="relative z-20 w-full">
         <HeroContent />
       </div>
 
