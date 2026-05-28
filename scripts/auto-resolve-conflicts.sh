@@ -37,6 +37,12 @@ for file in $CONFLICTS; do
       git add "$file" || AUTO_RESOLVED=0
       ;;
     *.ts|*.tsx|*.js|*.jsx|*.css|*.html|*.sh)
+    package-lock.json|bun.lockb|pnpm-lock.yaml|yarn.lock|*.md|*.json)
+      # Mantém versão da branch alvo para reduzir ruptura de automação
+      git checkout --theirs "$file" || AUTO_RESOLVED=0
+      git add "$file" || AUTO_RESOLVED=0
+      ;;
+    *.ts|*.tsx|*.js|*.jsx|*.css)
       if [ "$AUTO_RESOLVE_CODE" = "true" ]; then
         git checkout --ours "$file" || AUTO_RESOLVED=0
         git add "$file" || AUTO_RESOLVED=0
@@ -51,6 +57,7 @@ for file in $CONFLICTS; do
       else
         AUTO_RESOLVED=0
       fi
+      AUTO_RESOLVED=0
       ;;
   esac
 done

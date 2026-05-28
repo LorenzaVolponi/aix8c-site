@@ -2,6 +2,7 @@ name: Unified Autopilot (Resolve + Fix + Merge + Deploy)
 
 on:
   pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
   push:
@@ -57,6 +58,16 @@ jobs:
 
       - name: Setup Node
         if: steps.source.outputs.same_repo == 'true'
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -84,6 +95,18 @@ jobs:
 
       - name: Install and auto-fix
         if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed != 'true'
+      - name: Try auto-resolve conflicts with main
+        run: |
+          set +e
+          AUTO_RESOLVE_CODE=true ./scripts/auto-resolve-conflicts.sh main
+          RESOLVE_STATUS=$?
+          set -e
+          if [ "$RESOLVE_STATUS" -ne 0 ]; then
+            echo "Conflitos não puderam ser resolvidos automaticamente."
+            exit 1
+          fi
+
+      - name: Install and auto-fix
         run: |
           npm ci
           npm run lint -- --fix
@@ -133,24 +156,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - name: Install and verify
         run: |
           npm ci
           npm run ci:verify
+
       - name: Build Pages artifact
         env:
           VITE_BASE_PATH: /aix8c-site/
         run: |
           npm run build
           cp dist/index.html dist/404.html
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
       - name: Deploy pages
         id: deployment
         uses: actions/deploy-pages@v4

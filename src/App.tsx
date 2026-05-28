@@ -72,6 +72,8 @@ function App() {
           <Routes>
             <Route path="/" element={<OptimizedIndex />} />
             <Route path="/optimized" element={<Index />} />
+            <Route path="/" element={<Index />} />
+            <Route path="/optimized" element={<OptimizedIndex />} />
             <Route path="/debug-runtime" element={<RuntimeDebug />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -79,6 +81,7 @@ function App() {
           <Sonner position="top-right" />
         </BrowserRouter>
       </AppErrorBoundary>
+
     </QueryClientProvider>
   );
 }
