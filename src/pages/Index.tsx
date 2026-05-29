@@ -14,6 +14,15 @@ const navItems = [
 ];
 
 
+
+const signatureCollection = [
+  ['Obsidiana', 'Silêncio visual', 'A base escura que permite que cada sinal pareça escolhido, não decorativo.'],
+  ['Rubi', 'Desejo e tensão', 'A energia emocional que atravessa o campo sem virar ruído ou neon genérico.'],
+  ['Ouro velho', 'Valor raro', 'O brilho aparece como lapidação: pouco, preciso, inesquecível.'],
+  ['Vidro líquido', 'Interface viva', 'Camadas translúcidas, reflexos e movimento para tirar o site do plano comum.'],
+  ['Arquivo secreto', 'Prova autoral', 'Código, ideias e protótipos organizados como evidência, não como currículo.'],
+];
+
 const maisonPrinciples = [
   ['Luxo silencioso', 'Preto, rubi, ouro velho e espaço negativo para criar desejo sem gritar.'],
   ['Tecnologia com alma', 'IA, código e automação tratados como linguagem sensível, não como vitrine fria.'],
@@ -186,6 +195,8 @@ const Index = () => {
         <section id="manifesto" className="mx-auto max-w-6xl px-6 py-28 text-center"><h2 className="font-serif text-6xl md:text-8xl">VOLPONI não é uma marca pessoal. É um campo.</h2><p className="mx-auto mt-8 max-w-4xl text-xl text-white/75">Um campo onde inteligência ganha forma. Onde estratégia vira símbolo. Onde código vira linguagem. Onde inteligência artificial vira arquitetura. Onde presença vira gravidade.</p></section>
 
         <section id="maison" className="mx-auto grid max-w-7xl gap-5 px-6 py-24 lg:grid-cols-[1.15fr_1fr_1fr]"><article className="flex min-h-[34rem] flex-col justify-between rounded-[2.4rem] border border-[#B08D57]/30 bg-[radial-gradient(circle_at_16%_18%,rgba(122,15,27,.34),transparent_18rem),linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Maison VOLPONI</p><h2 className="font-serif text-6xl leading-none">O raro aqui não é ornamento. É método.</h2></div><p className="font-serif text-4xl leading-none text-white/85">Estratégia vira forma. Código vira prova. IA vira arquitetura. Presença vira campo.</p></article>{maisonPrinciples.map(([title, description]) => <article key={title} className="min-h-64 rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><small className="uppercase tracking-[0.18em] text-[#B08D57]">Princípio</small><h3 className="mt-8 font-serif text-4xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</section>
+
+        <section id="assinaturas" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Coleção de Assinaturas</p><h2 className="font-serif text-6xl">Uma interface precisa ter matéria.</h2></div><p className="text-lg text-white/70">Cada camada visual carrega função: criar desejo, provar execução, orientar leitura e deixar memória.</p></div><div className="grid gap-4 lg:grid-cols-5">{signatureCollection.map(([name, role, description], index) => <article key={name} className={`relative flex min-h-96 overflow-hidden rounded-[2rem] border border-white/15 bg-[linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.014))] p-5 ${index % 2 ? 'lg:translate-y-8' : ''}`}><div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_18%,rgba(176,141,87,.20),transparent_18rem),radial-gradient(circle_at_70%_78%,rgba(122,15,27,.24),transparent_16rem)]" /><div className="relative flex flex-col justify-between"><small className="uppercase tracking-[0.18em] text-[#B08D57]">{role}</small><strong className="font-serif text-5xl leading-none">{name}</strong><p className="text-white/65">{description}</p></div></article>)}</div></section>
 
         <section id="gravidade" className="mx-auto grid max-w-7xl gap-6 px-6 py-24 md:grid-cols-[1.1fr_.9fr]"><article className="grid min-h-[30rem] place-items-end rounded-[2rem] border border-[#B08D57]/25 bg-[radial-gradient(circle_at_30%_20%,rgba(122,15,27,.34),transparent_20rem),linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Tese de Gravidade</p><h2 className="font-serif text-6xl md:text-8xl">A raridade não grita.</h2><p className="mt-4 text-white/70">Ela organiza o campo ao redor.</p></div></article><div className="grid gap-4">{gravity.map(([name, text]) => <div key={name} className="grid grid-cols-[7rem_1fr] items-center gap-4 border-b border-white/10 py-5"><strong className="font-serif text-3xl text-[#B08D57]">{name}</strong><span className="text-white/75">{text}</span></div>)}</div></section>
 
