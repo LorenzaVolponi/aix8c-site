@@ -30,7 +30,7 @@ jobs:
 
       - name: Open incident issue on failure
         if: steps.guardian.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const title = `🚨 Site Guardian failure - ${new Date().toISOString()}`;

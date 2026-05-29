@@ -35,7 +35,7 @@ jobs:
 
       - name: Comment on fork PR limitations
         if: steps.source.outputs.same_repo != 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -124,7 +124,7 @@ jobs:
 
       - name: Merge PR automatically
         if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed != 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -139,7 +139,7 @@ jobs:
 
       - name: Comment when auto-resolve fails
         if: steps.source.outputs.same_repo == 'true' && env.auto_resolve_failed == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
