@@ -5,11 +5,20 @@ const githubUrl = 'https://github.com/LorenzaVolponi';
 
 const navItems = [
   ['Campo', '#home', 'Entrada, atmosfera e tese central.'],
+  ['Maison', '#maison', 'A tese estética, técnica e simbólica da marca.'],
   ['Laboratório', '#laboratorio', 'Prova técnica, GitHub e protótipos.'],
   ['Territórios', '#territorios', 'Áreas onde estratégia, IA e símbolo convergem.'],
   ['Artefatos', '#artefatos', 'Entregas concretas que continuam vivas.'],
   ['Oráculo', '#oraculo', 'Perguntas para transformar ambiguidade em direção.'],
   ['Acesso', '#ritual-acesso', 'Escolha o ponto de entrada para conversar.'],
+];
+
+
+const maisonPrinciples = [
+  ['Luxo silencioso', 'Preto, rubi, ouro velho e espaço negativo para criar desejo sem gritar.'],
+  ['Tecnologia com alma', 'IA, código e automação tratados como linguagem sensível, não como vitrine fria.'],
+  ['Prova sem currículo', 'GitHub, protótipos e sistemas aparecem como arquivo vivo de execução autoral.'],
+  ['Convite seletivo', 'A conversão acontece como travessia: leitura de campo, direção e conversa privada.'],
 ];
 
 const repos = [
@@ -155,12 +164,13 @@ const Index = () => {
         <section id="home" className="grid min-h-screen place-items-center px-6 pt-24 text-center">
           <motion.div initial={reduce ? false : { opacity: 0, y: 28, filter: 'blur(16px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ duration: 1.2 }} className="max-w-6xl">
             <div className="mx-auto mb-8 aspect-square w-[min(72vw,22rem)] rounded-full bg-[radial-gradient(circle_at_34%_28%,rgba(243,238,230,.28),transparent_10%),radial-gradient(circle_at_48%_52%,rgba(122,15,27,.72),rgba(5,5,5,.42)_42%,rgba(176,141,87,.16)_58%,transparent_70%),conic-gradient(from_18deg,rgba(176,141,87,.05),rgba(122,15,27,.46),rgba(12,44,53,.38),rgba(176,141,87,.22),rgba(5,5,5,.06))] shadow-[0_0_100px_rgba(122,15,27,.28)]" />
-            <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#B08D57]">VOLPONI</p>
-            <h1 className="font-serif text-6xl leading-none md:text-8xl">Inteligência como Objeto Raro.</h1>
-            <p className="mx-auto mt-7 max-w-3xl text-lg text-white/75">VOLPONI é um campo cinematográfico de inteligência onde IA, código, estratégia simbólica e identidade digital convergem.</p>
-            <p className="mt-5 text-sm tracking-[0.12em] text-white/50">Não é um perfil. Não é um portfólio. É um campo de inteligência.</p>
+            <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#B08D57]">Maison digital de inteligência simbólica</p>
+            <h1 className="font-serif text-7xl leading-none tracking-[0.14em] md:text-9xl">VOLPONI</h1>
+            <p className="mx-auto mt-5 font-serif text-4xl leading-none md:text-6xl">Inteligência como Objeto Raro.</p>
+            <p className="mx-auto mt-7 max-w-3xl text-lg text-white/75">Um campo cinematográfico onde IA, código, estratégia simbólica e identidade digital deixam de parecer serviço — e passam a criar gravidade.</p>
+            <p className="mt-5 text-sm tracking-[0.12em] text-white/50">Não é um perfil. Não é um portfólio. É presença técnica, estética e narrativa em estado vivo.</p>
             <div className="mx-auto mt-8 grid max-w-2xl overflow-hidden rounded-3xl border border-[#B08D57]/25 md:grid-cols-3">{[['IA', 'inteligência aplicada'], ['Código', 'prova de execução'], ['Símbolo', 'presença autoral']].map(([title, label]) => <div key={title} className="border-[#B08D57]/20 bg-black/40 p-4 md:border-r"><strong className="block font-serif text-3xl text-[#B08D57]">{title}</strong><span className="text-xs uppercase tracking-[0.16em] text-white/50">{label}</span></div>)}</div>
-            <div className="mt-9 flex flex-wrap justify-center gap-4"><a className="rounded-full border border-[#B08D57]/60 bg-[#B08D57]/10 px-7 py-3" href="#manifesto">Entrar no Campo</a><a className="rounded-full border border-white/20 px-7 py-3" href="#laboratorio">Explorar o Laboratório</a></div>
+            <div className="mt-9 flex flex-wrap justify-center gap-4"><a className="rounded-full border border-[#B08D57]/60 bg-[#B08D57]/10 px-7 py-3" href="#maison">Entrar no Campo</a><a className="rounded-full border border-white/20 px-7 py-3" href="#laboratorio">Explorar o Laboratório</a></div>
           </motion.div>
         </section>
 
@@ -169,11 +179,13 @@ const Index = () => {
         <section id="ordem" className="mx-auto max-w-7xl px-6 py-24"><div className="mb-10 grid gap-6 md:grid-cols-2"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Ordem da Travessia</p><h2 className="font-serif text-6xl">O site agora tem rito, direção e consequência.</h2></div><p className="text-lg text-white/70">Uma sequência premium para conduzir o visitante da presença à prova, da prova ao método, do método ao acesso.</p></div><div className="grid overflow-hidden rounded-[2rem] border border-[#B08D57]/25 md:grid-cols-6">{fieldOrder.map(([number, title, description]) => <article key={number} className="min-h-64 border-[#B08D57]/20 bg-[#0B0B0D]/80 p-5 md:border-r"><small className="text-[#B08D57]">{number}</small><h3 className="mt-16 font-serif text-3xl">{title}</h3><p className="mt-4 text-sm text-white/65">{description}</p></article>)}</div></section>
 
         <section id="aix8c" className="mx-auto grid max-w-6xl gap-6 px-6 py-24 md:grid-cols-2">
-          <article className="rounded-[2rem] border border-white/15 bg-white/[.04] p-7 backdrop-blur-xl"><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Prólogo AIX8C</p><h2 className="mt-4 font-serif text-5xl">Welcome aboard, marujos.</h2><p className="mt-5 text-white/70">(O nome se diz ei ai eksi eiti ci)</p><p className="mt-4 text-white/70">AIX8C combina inteligência artificial e experiência para criar soluções criativas e contínuas.</p></article>
-          <article className="rounded-[2rem] border border-white/15 bg-white/[.04] p-7 backdrop-blur-xl"><h3 className="font-serif text-4xl">Missão, visão e valores</h3><p className="mt-5 text-white/70"><strong>Missão:</strong> transformar a comunicação entre humanos e máquinas, com soluções inovadoras em IA.</p><p className="mt-3 text-white/70"><strong>Visão:</strong> liderar na criação de experiências imersivas e únicas em IA.</p><p className="mt-3 text-white/70"><strong>Valores:</strong> inovação, criatividade e inspiração.</p></article>
+          <article className="rounded-[2rem] border border-white/15 bg-white/[.04] p-7 backdrop-blur-xl"><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Prólogo AIX8C</p><h2 className="mt-4 font-serif text-5xl">Welcome aboard, marujos.</h2><p className="mt-5 text-white/70">(O nome se diz ei ai eksi eiti ci)</p><p className="mt-4 text-white/70">AIX8C é a nave de origem: o ponto onde curiosidade, ensino, IA e coragem experimental começaram a se tornar linguagem.</p></article>
+          <article className="rounded-[2rem] border border-white/15 bg-white/[.04] p-7 backdrop-blur-xl"><h3 className="font-serif text-4xl">Missão, visão e valores</h3><p className="mt-5 text-white/70"><strong>Missão:</strong> transformar a comunicação entre humanos e máquinas com experiências de IA que ensinam, inspiram e funcionam.</p><p className="mt-3 text-white/70"><strong>Visão:</strong> liderar na criação de experiências imersivas e únicas em IA.</p><p className="mt-3 text-white/70"><strong>Valores:</strong> inovação, criatividade e inspiração.</p></article>
         </section>
 
         <section id="manifesto" className="mx-auto max-w-6xl px-6 py-28 text-center"><h2 className="font-serif text-6xl md:text-8xl">VOLPONI não é uma marca pessoal. É um campo.</h2><p className="mx-auto mt-8 max-w-4xl text-xl text-white/75">Um campo onde inteligência ganha forma. Onde estratégia vira símbolo. Onde código vira linguagem. Onde inteligência artificial vira arquitetura. Onde presença vira gravidade.</p></section>
+
+        <section id="maison" className="mx-auto grid max-w-7xl gap-5 px-6 py-24 lg:grid-cols-[1.15fr_1fr_1fr]"><article className="flex min-h-[34rem] flex-col justify-between rounded-[2.4rem] border border-[#B08D57]/30 bg-[radial-gradient(circle_at_16%_18%,rgba(122,15,27,.34),transparent_18rem),linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Maison VOLPONI</p><h2 className="font-serif text-6xl leading-none">O raro aqui não é ornamento. É método.</h2></div><p className="font-serif text-4xl leading-none text-white/85">Estratégia vira forma. Código vira prova. IA vira arquitetura. Presença vira campo.</p></article>{maisonPrinciples.map(([title, description]) => <article key={title} className="min-h-64 rounded-[2rem] border border-white/15 bg-white/[.04] p-6"><small className="uppercase tracking-[0.18em] text-[#B08D57]">Princípio</small><h3 className="mt-8 font-serif text-4xl">{title}</h3><p className="mt-4 text-white/70">{description}</p></article>)}</section>
 
         <section id="gravidade" className="mx-auto grid max-w-7xl gap-6 px-6 py-24 md:grid-cols-[1.1fr_.9fr]"><article className="grid min-h-[30rem] place-items-end rounded-[2rem] border border-[#B08D57]/25 bg-[radial-gradient(circle_at_30%_20%,rgba(122,15,27,.34),transparent_20rem),linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018))] p-8"><div><p className="text-xs uppercase tracking-[0.26em] text-[#B08D57]">Tese de Gravidade</p><h2 className="font-serif text-6xl md:text-8xl">A raridade não grita.</h2><p className="mt-4 text-white/70">Ela organiza o campo ao redor.</p></div></article><div className="grid gap-4">{gravity.map(([name, text]) => <div key={name} className="grid grid-cols-[7rem_1fr] items-center gap-4 border-b border-white/10 py-5"><strong className="font-serif text-3xl text-[#B08D57]">{name}</strong><span className="text-white/75">{text}</span></div>)}</div></section>
 
