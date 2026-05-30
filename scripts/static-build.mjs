@@ -338,5 +338,35 @@ for (const route of routes) {
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`);
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes.map((route) => `  <url><loc>${siteUrl}${route.path === '/' ? '/' : route.path}</loc><changefreq>weekly</changefreq><priority>${route.path === '/' ? '1.0' : '0.8'}</priority></url>`).join('\n')}\n</urlset>\n`);
 writeFileSync(join(dist, 'og-volponi.svg'), `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><defs><radialGradient id="g" cx="50%" cy="45%"><stop offset="0" stop-color="#7A0F1B" stop-opacity="0.75"/><stop offset="0.42" stop-color="#0B0B0D"/><stop offset="1" stop-color="#050505"/></radialGradient></defs><rect width="1200" height="630" fill="url(#g)"/><path d="M120 472h960" stroke="#B08D57" stroke-opacity=".45"/><text x="600" y="282" text-anchor="middle" fill="#F3EEE6" font-size="118" font-family="Georgia,serif" letter-spacing="24">VOLPONI</text><text x="600" y="350" text-anchor="middle" fill="#B08D57" font-size="30" font-family="Arial,sans-serif" letter-spacing="8">INTELIGÊNCIA COMO OBJETO RARO</text></svg>`);
+
+const visualPreviewSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1800" viewBox="0 0 1440 1800" role="img" aria-labelledby="title desc">
+  <title id="title">VOLPONI visual preview</title>
+  <desc id="desc">Preview estático da direção visual VOLPONI com hero, maison, assinaturas, conversão e acesso.</desc>
+  <defs>
+    <radialGradient id="ruby" cx="28%" cy="18%" r="72%"><stop offset="0" stop-color="#7A0F1B" stop-opacity="0.82"/><stop offset="0.48" stop-color="#0B0B0D"/><stop offset="1" stop-color="#050505"/></radialGradient>
+    <linearGradient id="gold" x1="0" x2="1"><stop stop-color="#4B3822"/><stop offset="0.48" stop-color="#B08D57"/><stop offset="1" stop-color="#F3EEE6"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="28"/></filter>
+  </defs>
+  <rect width="1440" height="1800" fill="#050505"/>
+  <rect width="1440" height="1800" fill="url(#ruby)" opacity="0.94"/>
+  <circle cx="1120" cy="300" r="260" fill="#0C2C35" opacity="0.38" filter="url(#soft)"/>
+  <circle cx="240" cy="760" r="220" fill="#7A0F1B" opacity="0.34" filter="url(#soft)"/>
+  <path d="M120 170 C 320 120, 620 120, 1320 168" stroke="#B08D57" stroke-opacity="0.32" fill="none"/>
+  <text x="720" y="214" text-anchor="middle" fill="#B08D57" font-family="Arial, sans-serif" font-size="22" letter-spacing="10">MAISON DIGITAL DE INTELIGÊNCIA SIMBÓLICA</text>
+  <text x="720" y="420" text-anchor="middle" fill="#F3EEE6" font-family="Georgia, serif" font-size="178" letter-spacing="32">VOLPONI</text>
+  <text x="720" y="510" text-anchor="middle" fill="#F3EEE6" opacity="0.9" font-family="Georgia, serif" font-size="62">Inteligência como Objeto Raro.</text>
+  <text x="720" y="590" text-anchor="middle" fill="#CFC7BB" font-family="Arial, sans-serif" font-size="28">IA • código • estratégia simbólica • identidade digital • gravidade</text>
+  <rect x="150" y="720" width="1140" height="310" rx="42" fill="#0B0B0D" opacity="0.78" stroke="#B08D57" stroke-opacity="0.38"/>
+  <text x="210" y="810" fill="#B08D57" font-family="Arial, sans-serif" font-size="20" letter-spacing="8">MAISON VOLPONI</text>
+  <text x="210" y="900" fill="#F3EEE6" font-family="Georgia, serif" font-size="74">O raro não é ornamento.</text>
+  <text x="210" y="980" fill="#F3EEE6" font-family="Georgia, serif" font-size="74">É método.</text>
+  <g transform="translate(150 1110)">
+    ${signatureCollection.map(([name, role], index) => `<g transform="translate(${index * 230} ${(index % 2) * 38})"><rect width="200" height="290" rx="30" fill="#111114" stroke="#B08D57" stroke-opacity="0.28"/><circle cx="132" cy="64" r="62" fill="#7A0F1B" opacity="0.36"/><text x="24" y="56" fill="#B08D57" font-family="Arial" font-size="12" letter-spacing="4">${role.toUpperCase()}</text><text x="24" y="178" fill="#F3EEE6" font-family="Georgia" font-size="38">${name}</text></g>`).join('')}
+  </g>
+  <rect x="150" y="1500" width="1140" height="150" rx="36" fill="#B08D57" opacity="0.11" stroke="#B08D57" stroke-opacity="0.42"/>
+  <text x="210" y="1570" fill="#F3EEE6" font-family="Georgia, serif" font-size="48">Ateliê de Conversão</text>
+  <text x="210" y="1625" fill="#CFC7BB" font-family="Arial, sans-serif" font-size="24">Escuta → Tese → Protótipo → Gravidade</text>
+</svg>`;
+writeFileSync(join(dist, 'volponi-preview.svg'), visualPreviewSvg);
 if (existsSync('public/favicon.ico')) copyFileSync('public/favicon.ico', join(dist, 'favicon.ico'));
 console.log('Static VOLPONI maison generated with indexable routes at dist/');

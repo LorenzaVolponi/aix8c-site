@@ -12,4 +12,9 @@ if [ ! -f "dist/index.html" ]; then
   exit 1
 fi
 
+if [ ! -f "dist/volponi-preview.svg" ]; then
+  echo "[vercel-guard] ERRO: dist/volponi-preview.svg não encontrado"
+  exit 1
+fi
+
 echo "[vercel-guard] Build pronto para deploy na Vercel"
