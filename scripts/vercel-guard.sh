@@ -17,4 +17,9 @@ if [ ! -f "dist/volponi-preview.svg" ]; then
   exit 1
 fi
 
+if [ ! -f "dist/volponi-build-manifest.json" ]; then
+  echo "[vercel-guard] ERRO: dist/volponi-build-manifest.json não encontrado"
+  exit 1
+fi
+
 echo "[vercel-guard] Build pronto para deploy na Vercel"
