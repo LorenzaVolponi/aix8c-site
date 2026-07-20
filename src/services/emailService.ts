@@ -23,14 +23,6 @@ export const sendEmailUltraReliable = async (data: EmailData) => {
       throw new Error('VITE_EMAILJS_PUBLIC_KEY não configurada');
     }
 
-    // Configuração do EmailJS para Lorenza Volponi
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_lorenza';
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_contato';
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
-    if (!publicKey) {
-      throw new Error('VITE_EMAILJS_PUBLIC_KEY não configurada');
-    }
-    
     const templateParams = {
       to_email: CONTACT_EMAIL,
       to_name: 'Lorenza Volponi',
@@ -57,14 +49,16 @@ export const sendEmailUltraReliable = async (data: EmailData) => {
       destinatario: CONTACT_EMAIL,
     };
 
-    const existingContacts = JSON.parse(localStorage.getItem('pending_contacts') || '[]');
-    existingContacts.push(backupData);
-    localStorage.setItem('pending_contacts', JSON.stringify(existingContacts));
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const existingContacts = JSON.parse(window.localStorage.getItem('pending_contacts') || '[]');
+      existingContacts.push(backupData);
+      window.localStorage.setItem('pending_contacts', JSON.stringify(existingContacts));
 
-    console.log('💾 Dados salvos localmente para reenvio posterior');
+      console.log('💾 Dados salvos localmente para reenvio posterior');
+    } else {
+      console.warn('⚠️ Backup local indisponível fora do navegador');
+    }
+
     return { success: true, backup: true };
-    
-    console.log('💾 Dados salvos como backup para contato.lorenzavolponi@gmail.com');
-    return { success: false, backup: true };
   }
 };
