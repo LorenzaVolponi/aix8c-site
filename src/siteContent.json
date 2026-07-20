@@ -1,0 +1,77 @@
+{
+  "brand": "VOLPONI",
+  "tagline": "Inteligência artificial, estratégia simbólica e presença digital premium.",
+  "email": "contato.lorenzavolponi@gmail.com",
+  "github": "https://github.com/LorenzaVolponi",
+  "linkedin": "https://www.linkedin.com/in/lorenzavolponi/",
+  "image": "/lovable-uploads/f1bfad97-5b75-4ee1-a58f-9418600e75b6.png",
+  "nav": [
+    ["Manifesto", "#manifesto"],
+    ["Campo", "#campo"],
+    ["Laboratório", "#laboratorio"],
+    ["Serviços", "#servicos"],
+    ["Método", "#metodo"],
+    ["Contato", "#contato"]
+  ],
+  "routes": [
+    ["/", "VOLPONI | Inteligência Artificial, Estratégia e Presença Digital Premium"],
+    ["/laboratorio", "Laboratório VOLPONI | Projetos, Protótipos e Sistemas de IA"],
+    ["/servicos", "Serviços VOLPONI | IA Aplicada, Automação e Narrativa"],
+    ["/metodo", "Método VOLPONI | Da Ideia Bruta ao Sistema Vivo"],
+    ["/sobre", "Sobre Lorenza Volponi | Estratégia, IA e Sistemas Simbólicos"],
+    ["/contato", "Contato VOLPONI | Solicitar Leitura de Campo"]
+  ],
+  "proof": [
+    ["09+", "repositórios públicos organizados como prova técnica"],
+    ["06", "territórios conectados: IA, código, narrativa, design, automação e estratégia"],
+    ["100%", "experiência indexável, responsiva e orientada à próxima ação"]
+  ],
+  "manifesto": [
+    "Um site não deveria ser apenas uma vitrine. Ele deveria funcionar como campo: organizar percepção, sustentar confiança e abrir uma decisão.",
+    "A inteligência artificial só vira vantagem quando encontra linguagem, critério, contexto e uma pessoa capaz de formular perguntas melhores.",
+    "VOLPONI existe para transformar ideias raras em sistemas visíveis: presença, prova, método, produto e narrativa trabalhando juntos."
+  ],
+  "fieldLayers": [
+    ["Presença", "A primeira camada cria atmosfera, diferenciação e memória antes de qualquer explicação racional."],
+    ["Prova", "O laboratório público mostra execução, repertório técnico e capacidade de transformar abstração em código."],
+    ["Método", "A travessia organiza decisões, prioridades e protótipos para reduzir ruído e acelerar clareza."],
+    ["Conversão", "O convite final não grita venda: abre uma leitura de campo para entender tensão, desejo e direção."]
+  ],
+  "projects": [
+    ["gameshow", "Experiência interativa que mistura jogo, decisão e inteligência artificial para criar produto memorável.", "Produto IA"],
+    ["giria-ai", "Pesquisa cultural assistida por IA para ler sinais sociais emergentes e traduzir linguagem de comunidades.", "Cultura digital"],
+    ["clinic-intuition-ai", "Tutor inteligente para estudantes de medicina treinarem raciocínio clínico e tomada de decisão.", "Educação médica"],
+    ["robo-wise", "Robo-advisor para organizar decisões financeiras e transformar acompanhamento em sistema claro.", "Fintech"],
+    ["orchestrator--ai", "Orquestrador para converter ideias vagas em planos de execução, etapas e próximos movimentos.", "Agentes"],
+    ["crime-scene-mapper-ai", "Reconstrução 3D e leitura espacial para simulações forenses com apoio de IA.", "3D + IA"],
+    ["newsai", "Monitor de notícias de IA em tempo real para acompanhar sinais, tendências e mudanças de contexto.", "Radar IA"],
+    ["aix8c-site", "Presença digital autoral construída com React, automação e uma estética de laboratório criativo.", "Web premium"]
+  ],
+  "services": [
+    ["Presença digital premium", "Landing pages, portfólios e páginas de autoridade com direção narrativa, atmosfera visual, performance e SEO técnico."],
+    ["Protótipos com IA", "Agentes, prompts, automações e interfaces para transformar uma ideia abstrata em algo que pode ser testado."],
+    ["Arquitetura narrativa", "Tese, posicionamento, copy, hierarquia de mensagem e estrutura editorial para ideias difíceis de explicar."],
+    ["Sistemas de decisão", "Mapas, fluxos, dashboards leves e frameworks para reduzir ruído e orientar execução."],
+    ["Automação de bastidores", "Rotinas para atendimento, triagem, conteúdo, pesquisa, documentação e operações repetitivas."],
+    ["Direção criativa com IA", "Imagens, moodboards, conceitos, prompts visuais e linguagem para transformar estética em sistema." ]
+  ],
+  "method": [
+    ["01", "Escuta de campo", "Ler contexto, tensão, desejo, risco, oportunidade, público e objetivo real antes de desenhar qualquer tela."],
+    ["02", "Arquitetura de sentido", "Transformar ambiguidade em tese, ordem, linguagem, mapa de seções, prioridade e critérios de decisão."],
+    ["03", "Protótipo operante", "Construir uma primeira versão funcional, bonita e testável, com IA aplicada somente onde amplia valor."],
+    ["04", "Lapidação técnica", "Refinar responsividade, acessibilidade, performance, SEO, microinterações e clareza de conversão."],
+    ["05", "Entrega estratégica", "Documentar próximos passos, riscos, oportunidades e formas de evoluir a presença como sistema vivo." ]
+  ],
+  "cases": [
+    ["Ideia dispersa", "Sistema vivo", "A intuição ganha tese, arquitetura, fluxo, protótipo e presença digital pronta para evoluir."],
+    ["Conhecimento invisível", "Autoridade pública", "Repertório, GitHub, narrativa e interface passam a operar como prova visível de execução."],
+    ["Interface comum", "Experiência memorável", "A tela deixa de parecer template e passa a funcionar como ambiente, atmosfera e lembrança."],
+    ["Processo confuso", "Orquestração inteligente", "Ambiguidade vira sequência, automação, critérios e decisão assistida por IA." ]
+  ],
+  "faq": [
+    ["Que tipo de projeto faz sentido para VOLPONI?", "Projetos que precisam unir clareza estratégica, tecnologia, IA e presença visual: portfólios, landing pages, protótipos, agentes e sistemas de decisão."],
+    ["A entrega é só design?", "Não. A entrega combina narrativa, UX, código, SEO, automação e arquitetura de decisão. A estética é consequência de um sistema bem formulado."],
+    ["Como começa?", "Começa por uma leitura de campo: entender contexto, tensão, objetivo, prazo e o artefato mais útil para destravar a próxima etapa."],
+    ["A IA entra em tudo?", "Não. IA entra onde aumenta clareza, velocidade, personalização ou capacidade operacional. Quando não ajuda, ela fica fora." ]
+  ]
+}
