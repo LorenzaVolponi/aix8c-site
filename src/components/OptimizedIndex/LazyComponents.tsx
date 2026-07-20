@@ -5,4 +5,5 @@ export const SobreNosSection = lazy(() => import("@/components/OptimizedIndex/So
 export const JornadaSection = lazy(() => import("@/components/OptimizedIndex/JornadaSection"));
 export const PortfolioSection = lazy(() => import("@/components/OptimizedIndex/PortfolioSection"));
 export const AussySection = lazy(() => import("@/components/AussySection"));
+export const ContatoSection = lazy(() => import("@/components/OptimizedIndex/ContatoSection"));
 export const Footer = lazy(() => import("@/components/Footer"));
