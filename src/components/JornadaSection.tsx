@@ -162,7 +162,6 @@ const JornadaSection = () => {
                     <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
                       <motion.div 
                         className="glass-card skill-card-at skill-mask p-6 group transition-all duration-300"
-                        className="glass-card skill-card-at p-6 group transition-all duration-300"
                         whileHover={{ scale: 1.02, y: -5 }}
                       >
                         <div className="flex items-center gap-3 mb-3">
@@ -245,13 +244,6 @@ const JornadaSection = () => {
                     initial={{ opacity: 0, scale: 0.8, clipPath: "inset(100% 0 0 0)" }}
                     whileInView={{ opacity: 1, scale: 1, clipPath: "inset(0% 0 0 0)" }}
                     viewport={{ once: true, amount: 0.3 }}
-                    className="glass-card skill-card-at skill-mask p-6 group transition-all duration-300"
-                    initial={{ opacity: 0, scale: 0.8, clipPath: "inset(100% 0 0 0)" }}
-                    whileInView={{ opacity: 1, scale: 1, clipPath: "inset(0% 0 0 0)" }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    className="glass-card skill-card-at p-6 group transition-all duration-300"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     whileHover={{ y: -5 }}
                     onMouseMove={(e) => {

@@ -96,12 +96,12 @@ const HeroContent = () => {
         className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4"
         variants={itemVariants}
       >
-        <button data-magnetic className="w-full sm:w-auto bg-gradient-to-r from-aix-gold to-yellow-400 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
+        <a data-magnetic href="#portfolio" className="w-full sm:w-auto bg-gradient-to-r from-aix-gold to-yellow-400 text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base">
           Explorar Projetos
-        </button>
-        <button data-magnetic className="w-full sm:w-auto border-2 border-aix-cyan text-aix-cyan px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-aix-cyan hover:text-black transition-all duration-300 text-sm sm:text-base">
+        </a>
+        <a data-magnetic href="#contato" className="w-full sm:w-auto border-2 border-aix-cyan text-aix-cyan px-8 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold hover:bg-aix-cyan hover:text-black transition-all duration-300 text-sm sm:text-base">
           Falar Comigo
-        </button>
+        </a>
       </motion.div>
     </motion.div>
   );
