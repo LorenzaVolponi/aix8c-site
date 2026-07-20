@@ -21,6 +21,7 @@ import {
   JornadaSection,
   PortfolioSection,
   AussySection,
+  ContatoSection,
   Footer
 } from "@/components/OptimizedIndex/LazyComponents";
 
@@ -142,6 +143,10 @@ const OptimizedIndexContent = () => {
         
         <Suspense fallback={<PremiumLoader message="Carregando Aussy..." />}>
           <AussySection />
+        </Suspense>
+
+        <Suspense fallback={<PremiumLoader message="Carregando contato..." />}>
+          <ContatoSection />
         </Suspense>
       </main>
       
