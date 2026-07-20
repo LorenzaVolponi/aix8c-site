@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sparkles, ScrollText, Gem, Languages, Image, Orbit, Music, Send, type LucideIcon } from 'lucide-react';
+import { Menu, X, Sparkles, User, Brain, Route, Briefcase, Orbit, Send, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
   { href: '#home', label: 'Entrada', icon: Sparkles, id: 'home' },
-  { href: '#manifesto', label: 'Manifesto', icon: ScrollText, id: 'manifesto' },
-  { href: '#fragmentos', label: 'Fragmentos', icon: Gem, id: 'fragmentos' },
-  { href: '#linguagem', label: 'Linguagem', icon: Languages, id: 'linguagem' },
-  { href: '#galeria', label: 'Galeria', icon: Image, id: 'galeria' },
-  { href: '#universo', label: 'Universo', icon: Orbit, id: 'universo' },
-  { href: '#atmosfera', label: 'Atmosfera', icon: Music, id: 'atmosfera' },
-  { href: '#contato', label: 'Entre no campo', icon: Send, id: 'contato' }
+  { href: '#sobre', label: 'Sobre', icon: User, id: 'sobre' },
+  { href: '#sobre-nos', label: 'Pilares', icon: Brain, id: 'sobre-nos' },
+  { href: '#jornada', label: 'Jornada', icon: Route, id: 'jornada' },
+  { href: '#portfolio', label: 'Portfólio', icon: Briefcase, id: 'portfolio' },
+  { href: '#aussy', label: 'Aussy', icon: Orbit, id: 'aussy' },
+  { href: '#contato', label: 'Contato', icon: Send, id: 'contato' }
 ];
 
 const Navbar = () => {
