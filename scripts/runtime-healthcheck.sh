@@ -2,13 +2,13 @@
 set -euo pipefail
 
 npm run build >/tmp/runtime-build.log
-npm run preview -- --host 127.0.0.1 --port 4173 >/tmp/runtime-preview.log 2>&1 &
+PORT=4173 npm run preview >/tmp/runtime-preview.log 2>&1 &
 PID=$!
 trap 'kill ${PID} >/dev/null 2>&1 || true' EXIT
 
 for _ in {1..20}; do
-  if curl -fsS http://127.0.0.1:4173/ | grep -q 'VOLPONI'; then
-  if curl -fsS http://127.0.0.1:4173/ | grep -q 'AIX8C'; then
+  HTML="$(curl -fs http://127.0.0.1:4173/ || true)"
+  if [[ "${HTML}" == *"VOLPONI"* && "${HTML}" == *"Diamond Intelligence Studio"* && "${HTML}" == *"id=\"portfolio\""* ]]; then
     echo "Runtime healthcheck OK"
     exit 0
   fi
