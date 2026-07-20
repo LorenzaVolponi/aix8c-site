@@ -359,7 +359,6 @@
   .site-footer {
     flex-direction: column;
   }
-}
 
 @media (max-width: 560px) {
   .hero-section {
@@ -383,7 +382,6 @@
   .nav-button {
     display: none;
   }
-}
 
 .layer-grid,
 .case-grid {
