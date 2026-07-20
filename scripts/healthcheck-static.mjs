@@ -8,13 +8,36 @@ await new Promise((resolve, reject) => {
 
 const server = spawn(process.execPath, ['scripts/serve-static.mjs', 'dist', '--port', String(port)], { stdio: ['ignore', 'pipe', 'pipe'] });
 try {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  const response = await fetch(`http://127.0.0.1:${port}/`);
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  const html = await response.text();
-  if (!html.includes('VOLPONI')) throw new Error('Resposta sem marca VOLPONI');
-  if (!html.includes('AIX8C')) throw new Error('Resposta sem marca AIX8C');
-  console.log('Runtime healthcheck OK');
+  let html = '';
+  let lastError;
+
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    try {
+      const response = await fetch(`http://127.0.0.1:${port}/`);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      html = await response.text();
+      break;
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+  }
+
+  if (!html) throw lastError || new Error('Preview estático não respondeu');
+
+  const requiredTokens = [
+    'VOLPONI',
+    'Diamond Intelligence Studio',
+    'id="portfolio"',
+    'https://github.com/LorenzaVolponi/gameshow',
+    'application/ld+json',
+  ];
+
+  for (const token of requiredTokens) {
+    if (!html.includes(token)) throw new Error(`Resposta sem requisito: ${token}`);
+  }
+
+  console.log('Static healthcheck OK');
 } finally {
   server.kill('SIGTERM');
 }

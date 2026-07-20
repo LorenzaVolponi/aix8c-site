@@ -32,7 +32,6 @@ import { useAdvancedSEO } from "@/hooks/useAdvancedSEO";
 import { injectAdvancedMeta, preloadCriticalResources } from "@/utils/seoOptimizations";
 
 const OptimizedIndexContent = () => {
-  const [showIntro, setShowIntro] = useState(false);
   const [showIntro, setShowIntro] = useState(() => {
     if (typeof window === "undefined") return true;
     return sessionStorage.getItem("aix8c_intro_seen") !== "true";
