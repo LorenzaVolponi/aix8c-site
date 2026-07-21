@@ -1,104 +1,121 @@
 import { BrowserRouter } from 'react-router-dom';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import content from './siteContent.json';
 import './App.css';
 
+const techStack = ['React', 'TypeScript', 'IA aplicada', 'Automação', 'UX narrativa', 'SEO técnico'];
+
 function App() {
-  const briefMail = `mailto:${content.email}?subject=Leitura%20de%20campo%20VOLPONI`;
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const heroLift = useTransform(scrollYProgress, [0, 0.35], reduceMotion ? [0, 0] : [0, -120]);
+  const orbDrift = useTransform(scrollYProgress, [0, 0.5], reduceMotion ? [0, 0] : [0, 180]);
+  const briefMail = `mailto:${content.email}?subject=Leitura%20de%20campo%20VOLPONI&body=Contexto%20do%20projeto:%0AObjetivo:%0APrazo:%0AReferências:`;
 
   return (
     <BrowserRouter>
       <div className="volponi-site">
         <div className="ambient-noise" aria-hidden="true" />
-        <header className="site-nav">
+        <motion.div className="parallax-orb orb-one" style={{ y: orbDrift }} aria-hidden="true" />
+        <motion.div className="parallax-orb orb-two" style={{ y: heroLift }} aria-hidden="true" />
+
+        <header className="site-nav glass-nav">
           <a className="brand-mark" href="#home" aria-label="VOLPONI início">{content.brand}</a>
           <nav aria-label="Navegação principal">
             {content.nav.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
           </nav>
-          <a className="nav-button" href="#contato">Solicitar leitura</a>
+          <a className="nav-button" href="#contato">Contato</a>
         </header>
 
         <main>
           <section id="home" className="hero-section">
-            <div className="hero-copy">
-              <p className="eyebrow">AI • estratégia • presença</p>
-              <h1>Inteligência em estado raro.</h1>
-              <p className="lead">{content.tagline} Um campo digital para transformar ambiguidade em forma, prova e ação.</p>
+            <motion.div className="hero-copy" style={{ y: heroLift }}>
+              <p className="eyebrow">portfólio profissional • IA • produto digital</p>
+              <h1>Lorenza Volponi constrói inteligência em forma de produto.</h1>
+              <p className="lead">Portfólio de IA aplicada, automação e experiências web premium para transformar problemas ambíguos em sistemas claros, bonitos e testáveis.</p>
               <div className="actions">
-                <a className="button primary" href="#contato">Começar travessia</a>
-                <a className="button" href="#laboratorio">Ver laboratório</a>
+                <a className="button primary" href="#laboratorio">Ver projetos</a>
+                <a className="button" href={briefMail}>Começar conversa</a>
               </div>
-              <div className="proof-strip">
-                {content.proof.map(([value, label]) => <article key={value}><strong>{value}</strong><span>{label}</span></article>)}
+              <div className="stack-strip" aria-label="Competências principais">
+                {techStack.map((item) => <span key={item}>{item}</span>)}
               </div>
-            </div>
-            <aside className="visual-orb" aria-label="Objeto visual VOLPONI">
-              <img src={content.image} alt="Identidade visual AIX8C e VOLPONI" />
+            </motion.div>
+
+            <aside className="hero-glass-card" aria-label="Síntese profissional VOLPONI">
+              <div className="signature-orb" />
+              <div className="identity-card glass-panel">
+                <span>VOLPONI / AIX8C</span>
+                <strong>IA aplicada + presença digital</strong>
+                <p>Estratégia, código e estética trabalhando como prova de competência.</p>
+              </div>
+              <div className="proof-grid">
+                {content.proof.map(([value, label]) => <article className="glass-panel" key={value}><strong>{value}</strong><span>{label}</span></article>)}
+              </div>
             </aside>
           </section>
 
-          <section id="manifesto" className="section-shell manifesto-section">
-            <p className="eyebrow">manifesto</p>
-            <h2>Menos vitrine. Mais campo de decisão.</h2>
-            <div className="manifesto-grid">{content.manifesto.map((item) => <article key={item}>{item}</article>)}</div>
-          </section>
-
-          <section id="campo" className="section-shell">
-            <p className="eyebrow">arquitetura do campo</p>
-            <h2>Uma presença construída em camadas.</h2>
-            <div className="layer-grid">
-              {content.fieldLayers.map(([title, text]) => <article className="surface-card" key={title}><h3>{title}</h3><p>{text}</p></article>)}
+          <section id="manifesto" className="section-shell split-section manifesto-section">
+            <div>
+              <p className="eyebrow">identidade</p>
+              <h2>Menos template. Mais assinatura.</h2>
+            </div>
+            <div className="rich-copy">
+              <p>Este portfólio existe para provar uma competência: combinar IA, narrativa, design e execução técnica em experiências que parecem raras — mas funcionam como produto.</p>
+              <p>A estética glassmorphism e o parallax não são decoração. São uma linguagem de precisão, profundidade e presença.</p>
             </div>
           </section>
 
-          <section id="laboratorio" className="section-shell">
-            <p className="eyebrow">laboratório público</p>
-            <h2>Código como prova. Interface como memória.</h2>
+          <section id="campo" className="section-shell">
+            <p className="eyebrow">competências</p>
+            <h2>Onde estratégia vira sistema.</h2>
+            <div className="layer-grid">
+              {content.fieldLayers.map(([title, text]) => <article className="surface-card glass-panel" key={title}><h3>{title}</h3><p>{text}</p></article>)}
+            </div>
+          </section>
+
+          <section id="laboratorio" className="section-shell featured-section">
+            <div className="section-heading">
+              <p className="eyebrow">laboratório público</p>
+              <h2>Projetos como evidência, não enfeite.</h2>
+              <p className="lead">Cada experimento aponta uma capacidade: formular, prototipar, integrar IA, criar interface e transformar complexidade em uso.</p>
+            </div>
             <div className="project-grid">
               {content.projects.map(([name, text, tag]) => (
-                <article className="surface-card" key={name}>
-                  <small>{tag}</small><h3>{name}</h3><p>{text}</p>
-                  <a href={`${content.github}/${name}`} target="_blank" rel="noreferrer">Ver no GitHub →</a>
+                <article className="project-card glass-panel" key={name}>
+                  <small>{tag}</small>
+                  <h3>{name}</h3>
+                  <p>{text}</p>
+                  <a href={`${content.github}/${name}`} target="_blank" rel="noreferrer">Abrir GitHub →</a>
                 </article>
               ))}
             </div>
           </section>
 
           <section id="servicos" className="section-shell">
-            <p className="eyebrow">serviços</p>
-            <h2>O que construímos.</h2>
-            <div className="service-grid">{content.services.map(([title, text]) => <article className="surface-card" key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
+            <p className="eyebrow">ofertas</p>
+            <h2>O que posso construir com você.</h2>
+            <div className="service-grid">{content.services.map(([title, text]) => <article className="surface-card glass-panel" key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
           </section>
 
           <section id="metodo" className="section-shell">
             <p className="eyebrow">método</p>
-            <h2>Da ideia bruta ao sistema vivo.</h2>
-            <div className="method-grid">{content.method.map(([number, title, text]) => <article className="method-card" key={number}><small>{number}</small><h3>{title}</h3><p>{text}</p></article>)}</div>
+            <h2>Da ideia bruta ao protótipo operante.</h2>
+            <div className="method-grid">{content.method.map(([number, title, text]) => <article className="method-card glass-panel" key={number}><small>{number}</small><h3>{title}</h3><p>{text}</p></article>)}</div>
           </section>
 
-          <section className="section-shell">
-            <p className="eyebrow">transformações</p>
-            <h2>O antes e depois que importa.</h2>
-            <div className="case-grid">{content.cases.map(([before, after, text]) => <article className="surface-card" key={before}><small>{before}</small><h3>{after}</h3><p>{text}</p></article>)}</div>
-          </section>
-
-          <section id="sobre" className="section-shell split-section">
+          <section id="sobre" className="section-shell split-section about-section">
             <div><p className="eyebrow">sobre</p><h2>Lorenza Volponi.</h2></div>
-            <div><p className="lead">Uma presença dedicada à intersecção entre inteligência artificial, linguagem, design, estratégia e sistemas. A proposta é transformar complexidade em forma, beleza em direção e IA em execução concreta.</p><div className="actions"><a className="button" href={content.github} target="_blank" rel="noreferrer">GitHub</a><a className="button" href="#contato">Conversar</a></div></div>
-          </section>
-
-          <section className="section-shell">
-            <p className="eyebrow">perguntas</p>
-            <h2>Clareza antes do briefing.</h2>
-            <div className="faq-list">{content.faq.map(([question, answer]) => <details key={question} className="faq-item"><summary>{question}</summary><p>{answer}</p></details>)}</div>
+            <div className="rich-copy"><p>Construo presença digital e sistemas com IA para quem precisa transformar repertório, intuição e problema complexo em algo visível, navegável e executável.</p><div className="actions"><a className="button" href={content.github} target="_blank" rel="noreferrer">GitHub</a><a className="button" href={content.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div></div>
           </section>
 
           <section id="contato" className="section-shell split-section contact-section">
-            <div><p className="eyebrow">acesso</p><h2>Solicite uma leitura de campo.</h2><p className="lead">Envie o contexto do projeto, a tensão atual e o tipo de transformação desejada. A resposta começa pela direção, não pelo excesso.</p></div>
-            <aside className="contact-panel"><a href={`mailto:${content.email}`}>{content.email}</a><a href={content.github} target="_blank" rel="noreferrer">github.com/LorenzaVolponi</a><a href={content.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/lorenzavolponi</a><a className="button primary" href={briefMail}>Enviar briefing</a></aside>
+            <div><p className="eyebrow">contato</p><h2>Vamos transformar caos em arquitetura?</h2><p className="lead">Me envie o contexto, o objetivo e o que precisa ficar mais claro. Eu respondo com direção.</p></div>
+            <aside className="contact-panel glass-panel"><a href={`mailto:${content.email}`}>{content.email}</a><a href={content.github} target="_blank" rel="noreferrer">github.com/LorenzaVolponi</a><a href={content.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/lorenzavolponi</a><a className="button primary" href={briefMail}>Enviar briefing</a></aside>
           </section>
         </main>
 
-        <footer className="site-footer"><strong>{content.brand}</strong><span>© {new Date().getFullYear()} Lorenza Volponi. Inteligência, estratégia e presença digital.</span></footer>
+        <footer className="site-footer"><strong>{content.brand}</strong><span>© {new Date().getFullYear()} Lorenza Volponi. IA, automação e presença digital premium.</span></footer>
       </div>
     </BrowserRouter>
   );
